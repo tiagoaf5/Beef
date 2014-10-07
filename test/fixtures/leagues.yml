@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  score_correct: 1
+  score_difference: 1
+  score_prediction: 1
+  user_id: 
+
+two:
+  name: MyString
+  score_correct: 1
+  score_difference: 1
+  score_prediction: 1
+  user_id: 

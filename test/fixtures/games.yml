@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  team1_name: MyString
+  team2_name: MyString
+  team1_goals: 1
+  team2_goals: 1
+  time: 2014-10-07
+  championship_id: 
+
+two:
+  team1_name: MyString
+  team2_name: MyString
+  team1_goals: 1
+  team2_goals: 1
+  time: 2014-10-07
+  championship_id: 
