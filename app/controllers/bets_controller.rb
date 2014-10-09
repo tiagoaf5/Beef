@@ -14,7 +14,10 @@ class BetsController < ApplicationController
 
   # GET /bets/new
   def new
+
     @bet = Bet.new
+    @bet.user_id = current_user.id
+
   end
 
   # GET /bets/1/edit

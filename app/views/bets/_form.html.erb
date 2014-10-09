@@ -11,27 +11,19 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <span class="field">
     <%= f.label :team1_goals %><br>
     <%= f.number_field :team1_goals %>
-  </div>
-  <div class="field">
+  </span>
+  <span class="field">
     <%= f.label :team2_goals %><br>
     <%= f.number_field :team2_goals %>
-  </div>
-  <div class="field">
+  </span>
+  <span class="field">
     <%= f.label :score %><br>
     <%= f.number_field :score %>
-  </div>
-  <div class="field">
-    <%= f.label :user_id %><br>
-    <%= f.text_field :user_id %>
-  </div>
-  <div class="field">
-    <%= f.label :game_id %><br>
-    <%= f.text_field :game_id %>
-  </div>
-  <div class="actions">
+  </span>
+  <span class="actions">
     <%= f.submit %>
-  </div>
+  </span>
 <% end %>
