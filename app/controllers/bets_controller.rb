@@ -14,10 +14,7 @@ class BetsController < ApplicationController
 
   # GET /bets/new
   def new
-
     @bet = Bet.new
-    @bet.user_id = current_user.id
-
   end
 
   # GET /bets/1/edit
@@ -27,7 +24,12 @@ class BetsController < ApplicationController
   # POST /bets
   # POST /bets.json
   def create
-    @bet = Bet.new(bet_params)
+    if current_user
+      bet_params[:user_id] = current_user.id
+      @bet = Bet.new(bet_params)
+    else
+      redirect_to new_user_session_path, notice: 'You are not logged in.'
+    end
 
     respond_to do |format|
       if @bet.save
