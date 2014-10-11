@@ -3,16 +3,29 @@
     <div><%=u.email %></div>
 <% end %>
 
-<table>
-  <% @bets.each do |u| %>
-      <tr>
-        <td><%=u.game.team1_name%></td>
-        <td><%= u.team1_goals %></td>
-        <td>-</td>
-        <td><%= u.team2_goals %></td>
-        <td><%=u.game.team2_name%></td>
-        <td><%= u.user.email %></td>
-      </tr>
-  <% end %>
-</table>
+<div class="container">
+
+    <% @bets.each_with_index do |n, i| %>
+
+        <% if n %>
+
+          <h3><%= @users.find(i).email %></h3><br>
+          <table class="table">
+            <% n.each do |k| %>
+                <tr>
+                  <td><%= k.game.team1_name %></td>
+                  <td><%= k.team1_goals %></td>
+                  <td><%= k.team2_goals %></td>
+                  <td><%= k.game.team2_name %></td>
+                  <td>*<%= k.score %>*</td>
+                </tr>
+            <% end %>
+          </table>
+        <% end %>
+
+    <% end %>
+
+</div>
+
+
 

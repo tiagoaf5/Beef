@@ -63,7 +63,12 @@ class LeaguesController < ApplicationController
 
   def scoreboard
     @users = @league.users
-    @bets = @league.bets
+    @bets = []
+    join = @league.bets
+    @users.each do |u|
+      @bets[u.id] = join.where(user_id: u.id)
+
+    end
   end
 
   private
