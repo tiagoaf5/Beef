@@ -1,5 +1,5 @@
 class LeaguesController < ApplicationController
-  before_action :set_league, only: [:show, :edit, :update, :destroy]
+  before_action :set_league, only: [:show, :edit, :update, :destroy, :scoreboard]
 
   # GET /leagues
   # GET /leagues.json
@@ -59,6 +59,11 @@ class LeaguesController < ApplicationController
       format.html { redirect_to leagues_url, notice: 'League was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def scoreboard
+    @users = @league.users
+    @bets = @league.bets
   end
 
   private

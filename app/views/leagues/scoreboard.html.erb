@@ -1,0 +1,18 @@
+<h1>Hello World</h1>
+<% @users.each do |u| %>
+    <div><%=u.email %></div>
+<% end %>
+
+<table>
+  <% @bets.each do |u| %>
+      <tr>
+        <td><%=u.game.team1_name%></td>
+        <td><%= u.team1_goals %></td>
+        <td>-</td>
+        <td><%= u.team2_goals %></td>
+        <td><%=u.game.team2_name%></td>
+        <td><%= u.user.email %></td>
+      </tr>
+  <% end %>
+</table>
+
