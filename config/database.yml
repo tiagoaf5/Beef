@@ -19,7 +19,7 @@ default: &default
   encoding: SQL_ASCII
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
-  host: localhost
+  #host: localhost ISTOPODESERPRECISOAQUANDOPRODUÇÂO
   pool: 5
   #username: beef_db
   #password: beef_db
