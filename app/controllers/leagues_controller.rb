@@ -64,11 +64,15 @@ class LeaguesController < ApplicationController
   def scoreboard
     @users = @league.users
     @bets = []
+    @score = []
     join = @league.bets
     @users.each do |u|
-      @bets[u.id] = join.where(user_id: u.id)
-
+      @bets[u.id] = join.where(user_id: u.id).order(:game_id)
+      @score[u.id] = [@bets[u.id].sum(:score)]
+      @score[u.id] << 1
     end
+
+
   end
 
   private
