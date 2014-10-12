@@ -26,7 +26,12 @@
       <% end %>
   <% end %>
 
+  <h1>Leaderboard</h1>
   <table>
+    <tr>
+      <td>User</td>
+      <td>Total</td>
+    </tr>
     <% @users.each do |user| %>
         <tr>
           <td><%= user.email %></td>
