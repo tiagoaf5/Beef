@@ -2,42 +2,41 @@
 <header class="header-11 bg-turquoise">
   <div class="navbar navbar-default navbar-static-top bg-turquoise">
     <div class="container">
-      <div class="row">
-        <div class="navbar col-sm-12" role="navigation">
-          <div class="navbar-header">
-            <!--<button type="button" class="navbar-toggle"></button>-->
-            <a class="brand" href="#"><img src="img/logo@2x.png" width="50" height="50" align="middle" alt="logo"></a>
-          </div>
-          <div>
-            <h3>Be&f</h3>
-          </div>
-          <div class="collapse navbar-collapse pull-right">
-            <ul style="list-style-type:none"> <!--class="nav pull-left"-->
-              <li class="active"><a href="#">HOME</a></li>
-              <li>
-                <% if not user_signed_in? %>
-                    <a href="#fakelink" class="btn btn-xs btn-inverse">Sign in</a>
-                    <a href="#fakelink" class="btn btn-xs btn-inverse">Sign up</a>
-                <% end %>
-              </li>
-              <li><% if user_signed_in? %><%= link_to "Sign out", destroy_user_session_path, :method => :delete %><% end %></li>
-            </ul>
-          </div>
+      <div class="navbar" role="navigation">
+        <div>
+          <!--<button type="button" class="navbar-toggle"></button>-->
+          <a class="brand" href="#"><img src="img/logo@2x.png" width="50" height="50" align="middle" alt="logo"></a>
         </div>
+        <div class="navbar-header">
+          <h3>Be&f</h3>
+        </div>
+      <p><br></p>
+      <div class="collapse navbar-collapse pull-right">
+        <ul style="list-style-type:none" class="list-inline"> <!--class=" pull-left">-->
+          <li class="active"><a href="#">HOME</a></li>
+          <% if not user_signed_in? %>
+              <li><%= link_to "Sign in" %></li>
+              <li><%= link_to "Sign up" %></li>
+              <!--<li><a href="#fakelink" class="btn btn-xs btn-inverse">Sign in</a></li>
+              <li><a href="#fakelink" class="btn btn-xs btn-inverse">Sign up</a></li>-->
+          <% end %>
+          <li><% if user_signed_in? %><%= link_to "Sign out", destroy_user_session_path, :method => :delete %><% end %></li>
+        </ul>
       </div>
     </div>
-  </div>
+      </div>
+ </div>
 </header>
 
 <section class="header-11-sub bg-midnight-blue">
   <div class="container">
     <div class="row">
-      <div class="col-sm-offset-1 col-sm-4">
+      <div class="col-sm-offset-1 col-sm-3">
         <% if not user_signed_in? %>
             <%= render 'devise/sessions/new' %>
         <% end %>
       </div>
-      <div class="col-sm-7 hidden-xs">
+      <div class="col-sm-offset-1 col-sm-7 hidden-xs">
         <div class="flex-video widescreen" style="margin: 0;text-align:left;">
           <iframe width="560" height="400" src="//www.youtube.com/embed/_l0x3bwn07g" frameborder="0" allowfullscreen></iframe></div>
       </div>
