@@ -31,3 +31,46 @@
 <br>
 
 <%= link_to 'New League', new_league_path %>
+
+<!-- Display leagues>championships>games for the bet history functionality -->
+
+<% @leagues.each do |league| %>
+
+  <h1>League <%= league.name %></h1>
+
+  <% league.championships.each do |championship| %>
+
+    <h2>Championship <%= championship.name %></h2>
+
+    <table class="table">
+    <% championship.games.order("time desc").each do |game| %>
+      <tr>
+        <td><%= game.team1_name %></td>
+        <td><%= game.team1_goals %> : <%= game.team2_goals %></td>
+        <td><%= game.team2_name %></td>
+        <td><%= game.time %></td>
+
+        <% if game.time < Time.now %>
+          <td><button type="button" class="beth btn btn-default" data-container="body" data-toggle="popover" data-placement="bottom"
+            data-html="true" data-content= "
+              <table class='table'>
+              <% game.bets.where(:league_id => league.id).each do |bet| %>
+               <tr>
+                 <td><%= bet.user.email %></td>
+                 <td><%= bet.team1_goals %> : <%= bet.team2_goals %></td>
+                 <td><%= bet.score %></td>
+               </tr>
+              <% end %>
+              </table>
+            ">
+              Bets History
+          </button></td>
+        <% end %>
+      </tr>
+    <% end %>
+    </table>
+
+  <% end %>
+
+
+<% end %>

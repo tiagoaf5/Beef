@@ -19,6 +19,7 @@ default: &default
   encoding: SQL_ASCII
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
+  #host: localhost ISTOPODESERPRECISOAQUANDOPRODUÇÂO
   pool: 5
   #username: beef_db
   #password: beef_db
@@ -84,6 +85,7 @@ test:
 #
 production:
   <<: *default
+  encoding: UTF-8
   database: beef_production
-  username: beef
-  password: <%= ENV['beef_DATABASE_PASSWORD'] %>
+  username: beef1234
+  password: beef1234 #<%= ENV['beef_DATABASE_PASSWORD'] %>

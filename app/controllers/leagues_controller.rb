@@ -1,5 +1,5 @@
 class LeaguesController < ApplicationController
-  before_action :set_league, only: [:show, :edit, :update, :destroy]
+  before_action :set_league, only: [:show, :edit, :update, :destroy, :scoreboard]
 
   # GET /leagues
   # GET /leagues.json
@@ -59,6 +59,20 @@ class LeaguesController < ApplicationController
       format.html { redirect_to leagues_url, notice: 'League was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def scoreboard
+    @users = @league.users
+    @bets = []
+    @score = []
+    join = @league.bets
+    @users.each do |u|
+      @bets[u.id] = join.where(user_id: u.id).order(:game_id)
+      @score[u.id] = [@bets[u.id].sum(:score)]
+      @score[u.id] << 1
+    end
+
+
   end
 
   private
