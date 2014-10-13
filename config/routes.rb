@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+
+  get "myleagues/index"
+
   resources :bets
 
   resources :leagues
