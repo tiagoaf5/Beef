@@ -24,24 +24,22 @@ class BetsController < ApplicationController
   # POST /bets
   # POST /bets.json
   def create
-    if current_user
-      #logger.info current_user.id
-      logger.info bet_params
-      @bet= Bet.new(bet_params.merge(:user_id => current_user.id))
-    else
-      redirect_to new_user_session_path, notice: 'You are not logged in.'
-    end
-
-    respond_to do |format|
-      if @bet.save
-        format.html { redirect_to @bet, notice: 'Bet was successfully created.' }
-        format.json { render :show, status: :created, location: @bet }
+    #bet_params_json['user_id'] = current_user.id
+    #puts params[:team1goals]
+      if current_user
+        #bet_params['user_id'] = current_user.id
+        #logger.info current_user.id
+        @bet= Bet.new(:team1_goals => params[:team1goals], :team2_goals => params[:team2goals], :score => params[:score], :game_id => params[:game_id], :league_id => params[:league_id])
       else
-        format.html { render :new }
-        format.json { render json: @bet.errors, status: :unprocessable_entity }
+        redirect_to new_user_session_path, notice: 'You are not logged in.'
+      end
+      #logger.info "asd"
+      if @bet.save
+        render :json => { } # send back any data if necessary
+      else
+        render :json => { }, :status => 501
       end
     end
-  end
 
   # PATCH/PUT /bets/1
   # PATCH/PUT /bets/1.json
@@ -77,4 +75,8 @@ class BetsController < ApplicationController
     def bet_params
       params.require(:bet).permit(:team1_goals, :team2_goals, :score, :user_id, :game_id)
     end
+
+  def bet_params_json
+    params.permit(:team1_goals, :team2_goals, :score, :user_id, :game_id)
+  end
 end
