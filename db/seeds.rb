@@ -34,10 +34,28 @@ def save_matchday_to_db matchday
   end
 end
 
+def points_for_bet bet, game, league
+  bet_team1_goals = bet.team1_goals
+  bet_team2_goals = bet.team2_goals
+  game_team1_goals = game.team1_goals
+  game_team2_goals = game.team2_goals
+
+  if bet_team1_goals == game_team1_goals and bet_team2_goals == game_team2_goals
+    league.score_correct
+  elsif bet_team1_goals - bet_team2_goals == game_team1_goals - game_team2_goals
+    league.score_difference
+  elsif (bet_team1_goals > bet_team2_goals and game_team1_goals > game_team2_goals) or (bet_team1_goals < bet_team2_goals and game_team1_goals < game_team2_goals)
+    league.score_prediction
+  else
+    0
+  end
+end
+
 def random_bets user, league
   league.championships.each do |championship|
     championship.games.each do |game|
       bet = Bet.create! team1_goals: rand(4), team2_goals: rand(4)
+      bet.update! score: points_for_bet(bet, game, league) if game.team1_goals?
       game.bets << bet
       user.bets << bet
       league.bets << bet
