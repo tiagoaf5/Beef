@@ -10,7 +10,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <div class="navbar-brand">League 1</div>
+        <div class="navbar-brand"><%=@league.name%></div>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
@@ -19,27 +19,31 @@
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Leagues <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="#">League 1</a></li>
-              <li><a href="#">League 2</a></li>
-              <li><a href="#">League 3</a></li>
+              <% if @myleagues %>
+              <% @myleagues.each do |myleague|%>
+                <li><%= link_to myleague.league.name, league_path(myleague.league)%></li>
+              <%end%>
+              <%end%>
             </ul>
           </li>
-          <li><a href="#">New League</a></li>
+          <li><%= link_to "New League", new_league_path%></li>
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
 </div>
 <div class="container">
-  <div class="col-md-3">
-      <ul class="nav nav-pills nav-stacked ">
+  <% if @league.id != nil %>
+        <div class="col-md-3">
+  <ul class="nav nav-pills nav-stacked ">
         <li id="board"><%= link_to raw(("<span class='fui-list'></span>")+" Leader Board"), league_scoreboard_path%></li>
-        <li id="games"><%= link_to raw(("<span class='fui-radio-checked'></span>")+" Games"), new_user_session_path%></li>
-        <li id="bet"><%= link_to raw(("<span class='fui-time'></span>")+" Bet History"), new_user_session_path%></li>
-        <li id="admin"><%= link_to raw(("<span class='fui-gear'></span>")+" Admin"), new_user_session_path%></li>
+        <li id="games"><%= link_to raw(("<span class='fui-radio-checked'></span>")+" Games"), league_path%></li>
+        <li id="bet"><%= link_to raw(("<span class='fui-time'></span>")+" Bet History"), league_path%></li>
+        <li id="admin"><%= link_to raw(("<span class='fui-gear'></span>")+" Admin"), league_path%></li>
       </ul>
   </div>
-  <div class="col-md-9">
+  <%end%>
+    <div class="col-md-9">
       <div class="panel panel-default">
         <div class="panel-body">
           <div class="container">
@@ -49,7 +53,6 @@
     </div>
   </div>
 </div>
-
 <br/>
 
 <% end %>

@@ -1,16 +1,20 @@
 class LeaguesController < ApplicationController
+  before_action :list_mine
   before_action :set_league, only: [:show, :edit, :update, :destroy, :scoreboard]
 
   # GET /leagues
   # GET /leagues.json
   def index
-    @leagues = League.all
+    #@leagues = League.all
+    (@myleagues && @myleagues.size != 0) ? redirect_to(league_path(@myleagues.first.league)) : redirect_to(new_league_path)
   end
 
   # GET /leagues/1
   # GET /leagues/1.json
   def show
+    redirect_to(league_scoreboard_path)
   end
+
 
   # GET /leagues/new
   def new
@@ -94,4 +98,13 @@ class LeaguesController < ApplicationController
     def league_params
       params.require(:league).permit(:name, :score_correct, :score_difference, :score_prediction, :user_id)
     end
+
+    def list_mine
+      if(user_signed_in?)
+          @myleagues = LeagueUser.where(user_id: current_user.id)
+      else
+          @myleagues = nil
+      end
+    end
+
 end
