@@ -4,7 +4,7 @@ class LeaguesController < ApplicationController
   # GET /leagues
   # GET /leagues.json
   def index
-    @leagues = League.all
+    @leagues = League.all.includes(:bets)
   end
 
   # GET /leagues/1
@@ -65,11 +65,22 @@ class LeaguesController < ApplicationController
     @users = @league.users
     @bets = []
     @score = []
+    @nabo = []
     join = @league.bets
+
+    games = @league.championships.take.games
+    matchdays = games.group(:matchday).count.map{|k,v| k}
+
     @users.each do |u|
       @bets[u.id] = join.where(user_id: u.id).order(:game_id)
       @score[u.id] = [@bets[u.id].sum(:score)]
-      @score[u.id] << 1
+
+      matchdays.sort.each do |day|
+        @nabo << day
+        bets_matchday = games.where(matchday: day).map{ |match| match.bets.where(user_id: u.id).sum(:score) }.sum
+        @score[u.id] << bets_matchday
+      end
+
     end
 
 
