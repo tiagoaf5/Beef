@@ -1,0 +1,14 @@
+// Place all the styles related to the welcome controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.nav-pills > li > a
+{
+  color: #1abc9c;
+}
+
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus
+{
+  color: #1abc9c;
+  background-color: #34495e;
+}
