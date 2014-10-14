@@ -26,20 +26,20 @@ class BetsController < ApplicationController
   def create
     #bet_params_json['user_id'] = current_user.id
     #puts params[:team1goals]
-      if current_user
-        #bet_params['user_id'] = current_user.id
-        #logger.info current_user.id
-        @bet= Bet.new(:team1_goals => params[:team1goals], :team2_goals => params[:team2goals], :score => params[:score], :game_id => params[:game_id], :league_id => params[:league_id])
-      else
-        redirect_to new_user_session_path, notice: 'You are not logged in.'
-      end
-      #logger.info "asd"
-      if @bet.save
-        render :json => { } # send back any data if necessary
-      else
-        render :json => { }, :status => 501
-      end
+    if current_user
+      #bet_params['user_id'] = current_user.id
+      #logger.info current_user.id
+      @bet= Bet.new(bet_params.merge(:user_id => current_user.id))
+    else
+      redirect_to new_user_session_path, notice: 'You are not logged in.'
     end
+    #logger.info "asd"
+    if @bet.save
+      render :json => { } # send back any data if necessary
+    else
+      render :json => { }, :status => 501
+    end
+  end
 
   # PATCH/PUT /bets/1
   # PATCH/PUT /bets/1.json

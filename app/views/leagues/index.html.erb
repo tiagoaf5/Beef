@@ -41,24 +41,24 @@
   <h1>League <%= league.name %></h1>
 
   <% league.championships.each do |championship| %>
-
     <h2 class="championship" id=<%= championship.id %> >Championship <%= championship.name %></h2>
-
     <table class="table">
     <% championship.games.order("time desc").each do |game| %>
       <tr id=<%= game.id %>>
         <td><%= game.team1_name %></td>
-        <% if game.time > DateTime.parse("2014-08-23 11:45:00 UTC") %>
-            <% if league.bets.where("game_id = " + game.id.to_s) %>
-                <td><input class="first_goals" type="text"  size="1" name="firstGoals" value=<%= game></td> <td>:</td> <td><input class="second_goals" size="1" type="text" name="secondGoals">
-                <button class="bet_submit_new">Edit bet</button></td>
-            <% else %>
-                <td><input class="first_goals" type="text"  size="1" name="firstGoals"></td> <td>:</td> <td><input class="second_goals" size="1" type="text" name="secondGoals">
-                <button class="bet_submit_new">Submit Bet</button></td>
-            <% end %>
-        <% else %>
-            <td><%= game.team1_goals %></td> <td>:</td> <td><%= game.team2_goals %></td>
-        <% end %>
+          <% if game.time > DateTime.parse("2014-08-23 11:45:00 UTC") && user_signed_in? %>
+              <% if !(bet = league.bets.where(league_id: league.id, user_id: current_user.id).first).nil? %>
+                  <td><input class="first_goals" type="text"  size="1" name="firstGoals" value=<%= bet.team1_goals %> ></td>
+                  <td>:</td>
+                  <td id=<%= bet.id %> ><input class="second_goals" size="1" type="text" name="secondGoals" value=<%= bet.team2_goals %>>
+                      <button class="bet_submit_edit">Edit bet</button></td>
+              <% else %>
+                  <td><input class="first_goals" type="text"  size="1" name="firstGoals"></td> <td>:</td> <td><input class="second_goals" size="1" type="text" name="secondGoals">
+          <button class="bet_submit_new">Submit Bet</button></td>
+              <% end %>
+          <% else %>
+              <td><%= game.team1_goals %></td> <td>:</td> <td><%= game.team2_goals %></td>
+          <% end %>
         <td><%= game.team2_name %></td>
         <td><%= game.time %></td>
         <td>
