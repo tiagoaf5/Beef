@@ -1,4 +1,4 @@
-<h1>Hello World</h1>
+<!--<h1>Hello World</h1>
 <% @users.each do |u| %>
     <div><%=u.email %></div>
 <% end %>
@@ -24,20 +24,30 @@
             <% end %>
           </table>
       <% end %>
-  <% end %>
+  <% end %> -->
 
-  <h1>Leaderboard</h1>
-  <table>
+  <h2>Leaderboard</h2>
+  <table class="table table-responsive">
+    <thead class="text-center">
     <tr>
-      <td>User</td>
-      <td>Total</td>
+      <th>User</th>
+      <th>Total</th>
+      <% @match_days.each do |matchday| %>
+          <th>Match day <%= matchday %></th>
+      <% end %>
     </tr>
+    </thead>
+    <tbody class="">
     <% @users.each do |user| %>
         <tr>
           <td><%= user.email %></td>
-          <td><%= @score[user.id].first%> </td>
+          <% @score[user.id].each do |score| %>
+              <td><%= score %> </td>
+          <% end %>
         </tr>
     <% end %>
+    </tbody>
+
   </table>
   <%= @score.as_json%>
   <h1><%= @matchdays %></h1>
