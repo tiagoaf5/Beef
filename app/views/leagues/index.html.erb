@@ -44,9 +44,13 @@
 
     <table class="table">
     <% championship.games.order("time desc").each do |game| %>
-      <tr>
+      <tr id=<%= game.id %>>
         <td><%= game.team1_name %></td>
-        <td><%= game.team1_goals %> : <%= game.team2_goals %></td>
+        <% if game.time < Time.now %>
+            <td><input class="first_goals" type="text" name="firstGoals"> : <input class="second_goals" type="text" name="secondGoals"><button class="bet_submit">Submit Bet</button></td>
+        <% else %>
+            <td><%= game.team1_goals %> : <%= game.team2_goals %></td>
+        <% end %>
         <td><%= game.team2_name %></td>
         <td><%= game.time %></td>
 

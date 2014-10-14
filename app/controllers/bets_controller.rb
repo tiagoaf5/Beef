@@ -24,9 +24,19 @@ class BetsController < ApplicationController
   # POST /bets
   # POST /bets.json
   def create
+    unless post_params.nil?
+      @post = Post.new(post_params)
+      if @post.save
+        flash[:success] = 'Post added successfully'
+        redirect_to action: :new
+      else
+        flash[:error] = 'Post cannot add. Please try again after some time'
+        redirect_to action: :new
+      end
+    end
+
     if current_user
       #logger.info current_user.id
-      logger.info bet_params
       @bet= Bet.new(bet_params.merge(:user_id => current_user.id))
     else
       redirect_to new_user_session_path, notice: 'You are not logged in.'
