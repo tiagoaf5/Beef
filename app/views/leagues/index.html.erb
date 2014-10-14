@@ -1,3 +1,5 @@
+<!-- Default content - hidden for prototype -->
+<% if false %>
 <h1>Listing leagues</h1>
 
 <table>
@@ -31,7 +33,9 @@
 <br>
 
 <%= link_to 'New League', new_league_path %>
+<% end %>
 
+<!-- ********************************************************************* -->
 <!-- Display leagues>championships>games for the bet history functionality -->
 
 <% @leagues.each do |league| %>
@@ -46,15 +50,17 @@
     <% championship.games.order("time desc").each do |game| %>
       <tr>
         <td><%= game.team1_name %></td>
-        <td><%= game.team1_goals %> : <%= game.team2_goals %></td>
+        <td><%= game.team1_goals %></td>
+        <td>:</td>
+        <td><%= game.team2_goals %></td>
         <td><%= game.team2_name %></td>
         <td><%= game.time %></td>
-
-        <% if game.time < Time.now %>
-          <td><button type="button" class="beth btn btn-default" data-container="body" data-toggle="popover" data-placement="bottom"
+        <td>
+        <% if game.time < DateTime.parse("2014-08-23 11:45:00 UTC") %> <!-- Time.now -->
+          <button type="button" class="beth btn btn-link" data-container="body" data-toggle="popover" data-placement="left"
             data-html="true" data-content= "
-              <table class='table'>
-              <% game.bets.where(:league_id => league.id).each do |bet| %>
+              <table class='table bets_history'>
+              <% game.bets.where(league_id: league.id).each do |bet| %>
                <tr>
                  <td><%= bet.user.email %></td>
                  <td><%= bet.team1_goals %> : <%= bet.team2_goals %></td>
@@ -64,8 +70,9 @@
               </table>
             ">
               Bets History
-          </button></td>
+          </button>
         <% end %>
+        </td>
       </tr>
     <% end %>
     </table>
