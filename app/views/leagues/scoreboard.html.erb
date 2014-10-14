@@ -1,4 +1,10 @@
-<h1>Hello World</h1>
+<% content_for :leagues_c do %>
+
+    <script>
+        $("#board").addClass("active");
+    </script>
+
+<!--<h1>Hello World</h1>
 <% @users.each do |u| %>
     <div><%=u.email %></div>
 <% end %>
@@ -24,25 +30,77 @@
             <% end %>
           </table>
       <% end %>
-  <% end %>
-
-  <h1>Leaderboard</h1>
-  <table>
+  <% end %> 
+-->
+ <!-- <h2>Leaderboard</h2>-->
+  <table class="table table-responsive">
+    <thead class="text-center">
     <tr>
-      <td>User</td>
-      <td>Total</td>
+      <th>User</th>
+      <th>Total</th>
+      <% @match_days.each do |matchday| %>
+          <th>Match day <%= matchday %></th>
+      <% end %>
     </tr>
+    </thead>
+    <tbody class="">
     <% @users.each do |user| %>
         <tr>
           <td><%= user.email %></td>
-          <td><%= @score[user.id].first%> </td>
+          <% @score[user.id].each do |score| %>
+              <td><%= score %> </td>
+          <% end %>
         </tr>
     <% end %>
+    </tbody>
+
   </table>
   <%= @score.as_json%>
   <h1><%= @matchdays %></h1>
   <h2><%= @nabo %></h2>
 </div>
 
+<!--    <div class="container">
 
+      <% @bets.each_with_index do |n, i| %>
+
+          <% if n %>
+
+              <h3><%= @users.find(i).email %></h3>
+              <h4><%= @score[i] %></h4><br>
+              <table class="table">
+                <% n.each do |k| %>
+                    <tr>
+                      <td><%= k.game.team1_name %></td>
+                      <td><%= k.team1_goals %></td>
+                      <td><%= k.team2_goals %></td>
+                      <td><%= k.game.team2_name %></td>
+                      <td>*<%= k.score %>*</td>
+                      <td><%= k.game.matchday %></td>
+                    </tr>
+                <% end %>
+              </table>
+          <% end %>
+      <% end %>
+
+
+      <h1>Leaderboard</h1>
+      <table>
+        <tr>
+          <td>User</td>
+          <td>Total</td>
+        </tr>
+        <% @users.each do |user| %>
+            <tr>
+              <td><%= user.email %></td>
+              <td><%= @score[user.id].first %> </td>
+            </tr>
+        <% end %>
+      </table>
+      <%= @score.as_json %>
+      <h1><%= @matchdays %></h1>
+
+      <h2><%= @nabo %></h2>
+    </div>-->
+<% end %>
 
