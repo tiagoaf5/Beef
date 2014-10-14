@@ -1,2 +1,0 @@
-class MyleaguesController < ApplicationController
-end

@@ -73,8 +73,7 @@
   </div>
 </div>-->
 
-<%= yield %>
-<!-- footer-2 -->
+<%= content_for?(:content) ? yield(:content) : yield %><!-- footer-2 -->
 <footer class="footer-2 bg-midnight-blue">
   <div class="container">
     <div class="social-btns pull-right">

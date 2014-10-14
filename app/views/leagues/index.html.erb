@@ -1,4 +1,5 @@
 <!-- Default content - hidden for prototype -->
+
 <% if false %>
 <h1>Listing leagues</h1>
 
@@ -35,9 +36,6 @@
 <%= link_to 'New League', new_league_path %>
 <% end %>
 
-<!-- ********************************************************************* -->
-<!-- Display leagues>championships>games for the bet history functionality -->
-
 <% @leagues.each do |league| %>
 
   <h1>League <%= league.name %></h1>
@@ -56,7 +54,7 @@
         <td><%= game.team2_name %></td>
         <td><%= game.time %></td>
         <td>
-        <% if game.time < DateTime.parse("2014-08-23 11:45:00 UTC") %> <!-- Time.now -->
+        <% if game.time < DateTime.parse("2014-08-23 11:45:00 UTC") %>
           <button type="button" class="beth btn btn-link" data-container="body" data-toggle="popover" data-placement="left"
             data-html="true" data-content= "
               <table class='table bets_history'>
