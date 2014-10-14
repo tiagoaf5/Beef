@@ -24,7 +24,13 @@ class BetsController < ApplicationController
   # POST /bets
   # POST /bets.json
   def create
-    @bet = Bet.new(bet_params)
+    if current_user
+      #logger.info current_user.id
+      logger.info bet_params
+      @bet= Bet.new(bet_params.merge(:user_id => current_user.id))
+    else
+      redirect_to new_user_session_path, notice: 'You are not logged in.'
+    end
 
     respond_to do |format|
       if @bet.save
