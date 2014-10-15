@@ -7,7 +7,7 @@ class LeaguesController < ApplicationController
   def index
     #@leagues = League.all
     (@myleagues && @myleagues.size != 0) ? redirect_to(league_path(@myleagues.first.league)) : redirect_to(new_league_path)
-  #  @leagues = League.all.includes(:bets)
+    #  @leagues = League.all.includes(:bets)
   end
 
   # GET /leagues/1
@@ -70,42 +70,60 @@ class LeaguesController < ApplicationController
     @users = @league.users
     @bets = []
     @score = []
-    join = @league.bets
 
+    join = @league.bets
     games = @league.championships.take.games
+
     @match_days = games.group(:matchday).count.map{|k,v| k}.sort
+
+
 
     @users.each do |u|
       @bets[u.id] = join.where(user_id: u.id).order(:game_id)
-      @score[u.id] = [@bets[u.id].sum(:score)]
+      @score[u.id] = []
+      # @score[u.id] = [@bets[u.id].sum(:score)]
 
       @match_days.each do |day|
-        bets_matchday = games.where(matchday: day).map{ |match| match.bets.where(user_id: u.id).sum(:score) }.sum
-        @score[u.id] << bets_matchday
+        @score[u.id] << games.where(matchday: day).map{ |match| match.bets.where(user_id: u.id).sum(:score) }.sum
       end
-
+      @score[u.id] << @bets[u.id].sum(:score)
     end
 
+    @users_order = get_users_score_order @score
 
   end
 
+
+
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_league
-      @league = League.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_league
+    @league = League.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def league_params
-      params.require(:league).permit(:name, :score_correct, :score_difference, :score_prediction, :user_id)
-    end
+# Never trust parameters from the scary internet, only allow the white list through.
+  def league_params
+    params.require(:league).permit(:name, :score_correct, :score_difference, :score_prediction, :user_id)
+  end
 
-    def list_mine
-      if(user_signed_in?)
-          @myleagues = LeagueUser.where(user_id: current_user.id)
-      else
-          @myleagues = nil
+  def list_mine
+    if(user_signed_in?)
+      @myleagues = LeagueUser.where(user_id: current_user.id)
+    else
+      @myleagues = nil
+    end
+  end
+
+  def get_users_score_order score
+    users_order = []
+    score.each_with_index do |v, k|
+      if v
+        users_order << [k, v[0]]
       end
     end
+
+    users_order = users_order.sort_by { |v| 0 - v[1] }
+    users_order.map { |v| v[0] }
+  end
 
 end
