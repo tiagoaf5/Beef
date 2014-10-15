@@ -76,8 +76,6 @@ class LeaguesController < ApplicationController
 
     @match_days = games.group(:matchday).count.map{|k,v| k}.sort
 
-
-
     @users.each do |u|
       @bets[u.id] = join.where(user_id: u.id).order(:game_id)
       @score[u.id] = []
@@ -118,7 +116,7 @@ class LeaguesController < ApplicationController
     users_order = []
     score.each_with_index do |v, k|
       if v
-        users_order << [k, v[0]]
+        users_order << [k, v.last] # order by total
       end
     end
 

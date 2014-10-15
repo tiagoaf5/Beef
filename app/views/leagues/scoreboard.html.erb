@@ -1,8 +1,9 @@
 <% content_for :leagues_c do %>
     <div class="col-lg-8">
-      <table class="table table-responsive">
+      <table class="table table-responsive table-bordered table-hover">
         <thead class="text-center">
         <tr>
+          <th rowspan="2" class="text-center vert-align">#</th>
           <th rowspan="2" class="text-center vert-align">User</th>
           <th colspan="<%= @match_days.size %>" class="text-center">Match day</th>
           <th rowspan="2" class="text-center vert-align">Total</th>
@@ -15,13 +16,16 @@
 
         </thead>
         <tbody class="">
+        <% n = 1 %>
         <% @users_order.each do |user_id| user = @users.find(user_id) %>
             <tr>
+              <td class="text-center"><%=n%></td>
               <td><%= user.email %></td>
               <% @score[user.id].each do |score| %>
                   <td class="text-center"><%= score %> </td>
               <% end %>
             </tr>
+        <% n += 1 %>
         <% end %>
         </tbody>
       </table>

@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-  get '/leagues/:id/scoreboard', to: 'leagues#scoreboard', as: 'league_scoreboard'
-
   resources :bets
 
   resources :leagues
@@ -66,5 +64,6 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
-  #get '/x', to: 'leagues#scoreboard', as: 'league_scoreboard'
+  get '/leagues/:id/scoreboard', to: 'leagues#scoreboard', as: 'league_scoreboard'
+
 end
