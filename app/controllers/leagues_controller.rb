@@ -91,6 +91,16 @@ class LeaguesController < ApplicationController
 
   end
 
+  def games
+    @league = League.find(params[:id])
+    #@league = Leagues.all.first
+    if(user_signed_in?)
+      @user_bets = @league.bets.where(user_id: current_user.id)
+    else
+      @user_bets = nil
+    end
+  end
+
 
 
   private
