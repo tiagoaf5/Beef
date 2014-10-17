@@ -7,17 +7,24 @@
             <% championship.games.order("time desc").each do |game| %>
                 <tr id=<%= game.id %> >
                     <td><%= game.team1_name %></td>
-                    <% if game.time >= DateTime.parse("2014-08-23 11:45:00 UTC") && user_signed_in? %>
-                        <% if !(bet = @user_bets.where(game_id: game.id).first).nil? %>
-                            <td><input class="first_goals" size="3" min="0" max="999" type="number" name="firstGoals" style="width:50px" value=<%= bet.team1_goals %> ></td>
-                            <td>:</td>
-                            <td><input class="second_goals" size="3" min="0" max="999" type="number" name="secondGoals" style="width:50px" value=<%= bet.team2_goals %>></td>
-                            <td id=<%= bet.id %> ><button class="bet_submit_edit btn btn-link">Edit bet</button></td>
+                    <% if game.time >= DateTime.parse("2014-08-23 11:45:00 UTC") %>
+                        <% if user_signed_in? %>
+                            <% if !(bet = @user_bets.where(game_id: game.id).first).nil? %>
+                                <td><input class="first_goals" size="3" min="0" max="999" type="number" name="firstGoals" style="width:50px" value=<%= bet.team1_goals %> ></td>
+                                <td>:</td>
+                                <td><input class="second_goals" size="3" min="0" max="999" type="number" name="secondGoals" style="width:50px" value=<%= bet.team2_goals %>></td>
+                                <td id=<%= bet.id %> ><button class="bet_submit_edit btn btn-link">Edit bet</button></td>
+                            <% else %>
+                                <td><input class="first_goals" size="3" min="0" max="999" style="width:50px" type="number" name="firstGoals"></td>
+                                <td>:</td>
+                                <td><input class="second_goals" size="3" min="0" max="999" style="width:50px" type="number" name="secondGoals"></td>
+                                <td><button class="bet_submit_new btn btn-link">Submit Bet</button></td>
+                            <% end %>
                         <% else %>
-                            <td><input class="first_goals" size="3" min="0" max="999" style="width:50px" type="number" name="firstGoals"></td>
+                            <td></td>
                             <td>:</td>
-                            <td><input class="second_goals" size="3" min="0" max="999" style="width:50px" type="number" name="secondGoals"></td>
-                            <td><button class="bet_submit_new btn btn-link">Submit Bet</button></td>
+                            <td></td>
+                            <td></td>
                         <% end %>
                     <% else %>
                         <td><%= game.team1_goals %></td> <td>:</td> <td><%= game.team2_goals %></td>
