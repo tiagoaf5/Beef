@@ -1,4 +1,5 @@
 <% content_for :leagues_c do %>
+    <div class="col-lg-8">
     <h1><%= @league.name %></h1>
     <% @league.championships.each do |championship| %>
         <h2 class="championship" id=<%= championship.id %> ><%= championship.name %></h2>
@@ -31,21 +32,19 @@
                         <td><%= bet.score %></td>
                         </tr>
                     <% end %>
-                    </table>
-                    ">
+                    </table>">
                             Bets History
                         </button>
                         </td>
                     <% end %>
                     <td><%= game.team2_name %></td>
                     <td><%= game.time.to_formatted_s(:short) %></td>
-
-                    <% if game.time < DateTime.parse("2014-08-23 11:45:00 UTC") %>
-
-                    <% end %>
-
                 </tr>
             <% end %>
         </table>
     <% end %>
+    </div>
+    <script>
+        $("#games").addClass("active");
+    </script>
 <% end %>

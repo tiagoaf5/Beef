@@ -92,9 +92,14 @@ class LeaguesController < ApplicationController
   end
 
   def games
-    @league = League.find(params[:id])
+    if League.exists?(:id => params[:id])
+      @league = League.find(params[:id])
+    else
+      redirect_to(new_league_path)
+      return
+    end
     #@league = Leagues.all.first
-    if(user_signed_in?)
+    if user_signed_in?
       @user_bets = @league.bets.where(user_id: current_user.id)
     else
       @user_bets = nil
