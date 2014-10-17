@@ -37,6 +37,33 @@
     </div>
   </div>
 </header>
+
+<div class="navbar navbar-default navbar-static-top navbar-inverse" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+      <a class="navbar-brand" href="#">Be&f</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#leagues">Leagues</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <% if not user_signed_in? %>
+            <li><%= link_to "Sign in" %></li>
+            <li><%= link_to "Sign up" %></li>
+            <!--<li><a href="#fakelink" class="btn btn-xs btn-inverse">Sign in</a></li>
+            <li><a href="#fakelink" class="btn btn-xs btn-inverse">Sign up</a></li>-->
+        <% end %>
+        <li><% if user_signed_in? %><%= link_to "Sign out", destroy_user_session_path, :method => :delete %><% end %></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
 <!--
 <div class="navbar navbar-default navbar-static-top" role="navigation">
   <div class="container">
