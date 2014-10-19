@@ -48,7 +48,9 @@
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
           <li class="active"><a href="#">Home</a></li>
-          <li><a href="#leagues">Leagues</a></li>
+          <% if user_signed_in? %>
+            <li><a href="#leagues">Leagues</a></li>
+          <% end %>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <% if not user_signed_in? %>
@@ -101,6 +103,7 @@
 </div>-->
 
 <%= content_for?(:content) ? yield(:content) : yield %><!-- footer-2 -->
+
 
 <footer> <!--class="footer-2">>-->
   <div class="container">
