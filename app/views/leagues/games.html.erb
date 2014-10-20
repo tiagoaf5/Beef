@@ -1,8 +1,7 @@
 <% content_for :leagues_c do %>
     <div class="col-lg-8">
-      <h1><%= @league.name %></h1>
       <% @league.championships.each do |championship| %>
-          <h2 class="championship" id=<%= championship.id %> ><%= championship.name %></h2>
+          <h5 class="championship text-center" id=<%= championship.id %> ><%= championship.name %></h5>
           <table class="table table-responsive table-bordered table-hover">
             <% championship.games.order("time desc").each do |game| %>
                 <tr id=<%= game.id %> >
