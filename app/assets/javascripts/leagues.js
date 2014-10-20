@@ -1,5 +1,5 @@
-$(document).ready(function() {
-  $(".beth").popover();
+var init = function() {
+    $(".beth").popover();
     $(".bet_submit_new").on("click", function() {
         var data = {};
         data['team1_goals'] = $(this).parent().parent().find('.first_goals').val();
@@ -37,4 +37,7 @@ $(document).ready(function() {
             location.reload();
         });
     })
-});
+}
+
+$(document).ready(init);
+$(document).on('page:load', init);
