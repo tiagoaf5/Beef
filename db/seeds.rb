@@ -55,8 +55,7 @@ def random_bets user, league
   league.championships.each do |championship|
     championship.games.each do |game|
       bet = Bet.create! team1_goals: rand(4), team2_goals: rand(4)
-      puts rand(4)
-      bet.update! score: points_for_bet(bet, game, league) if game.team1_goals?
+      bet.update! score: points_for_bet(bet, game, league) unless game.team1_goals.nil?
       game.bets << bet
       user.bets << bet
       league.bets << bet
@@ -69,8 +68,6 @@ save_matchday_to_db(format_json_without_goals(select_matchday(2, fixtures)))
 
 puts 'Data do primeiro jogo: ' + Game.all.order(time: :asc).first.time.to_s
 puts 'Data do primeiro jogo da segunda jornada: ' + Game.where(matchday: 2).order(time: :asc).first.time.to_s
-#puts Carmen::Country.all.map(&:name)
-puts Carmen::Country.all.map(&:name) << 'Scotland' << 'England' << 'Wales' << 'Ireland'
 
 User.create! :email => 'beef1234@gmail.com', :password => 'beef1234', :password_confirmation => 'beef1234'
 
