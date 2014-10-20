@@ -16,10 +16,9 @@
 #
 default: &default
   adapter: postgresql
-  encoding: SQL_ASCII
+  # encoding: SQL_ASCII
   # For details on connection pooling, see rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
-  #host: localhost ISTOPODESERPRECISOAQUANDOPRODUÇÂO
   pool: 5
   #username: beef_db
   #password: beef_db
@@ -85,6 +84,7 @@ test:
 #
 production:
   <<: *default
+  host: localhost
   encoding: UTF-8
   database: beef_production
   username: beef1234
