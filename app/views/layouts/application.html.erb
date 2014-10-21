@@ -25,8 +25,8 @@
             <!--<li class="active"><a href="/">HOME</a></li>
             <li ><a href="/leagues">Leagues</a></li>
             <% if not user_signed_in? %>
-                <li><%= link_to "Sign in" %></li>
-                <li><%= link_to "Sign up" %></li>
+                <li><%= link_to "Sign in", new_session_path(resource_name) %></li>
+                <li><%= link_to "Sign up", new_registration_path(resource_name) %></li>
                 <!--<li><a href="#fakelink" class="btn btn-xs btn-inverse">Sign in</a></li>
                 <li><a href="#fakelink" class="btn btn-xs btn-inverse">Sign up</a></li>-->
             <% end %>
@@ -43,11 +43,12 @@
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
           <span class="sr-only">Toggle navigation</span>
         </button>
-        <a class="navbar-brand" href="#">Be&f</a>
+        <%= link_to "Be&f", root_path, class: "navbar-brand" %>
+        <!--<a class="navbar-brand" href="#">Be&f</a>-->
       </div>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Home</a></li>
+          <li class="active"><%= link_to "Home", root_path %></li>
           <% if user_signed_in? %>
             <li><a href="#leagues">Leagues</a></li>
           <% end %>
