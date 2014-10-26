@@ -20,6 +20,8 @@ class LeaguesController < ApplicationController
   # GET /leagues/new
   def new
     @league = League.new
+    @user_names = User.all.map(&:email)
+    @championships = Championship.all.map(&:name)
   end
 
   # GET /leagues/1/edit

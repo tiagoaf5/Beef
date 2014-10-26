@@ -13,7 +13,9 @@
  *= require_self
  *= require bootstrap
  *= require flat-ui
- *=// require icon-font
+ *= require jquery-ui
+ *= //require jquery-ui/blitzer
+*=// require icon-font
  *=// require sample3
  *= require_tree .
  */

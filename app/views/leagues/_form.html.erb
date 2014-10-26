@@ -1,4 +1,8 @@
 <%= form_for(@league) do |f| %>
+    <script type="text/javascript">
+        var users = <%= @user_names.to_json.html_safe %>;
+        var championships = <%= @championships.to_json.html_safe %>;
+    </script>
   <% if @league.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@league.errors.count, "error") %> prohibited this league from being saved:</h2>
@@ -12,22 +16,40 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+      <label for="name">League Name</label>
+    <input class="name form-control"type="text" name="league[name]">
   </div>
   <div class="field">
-    <%= f.label :score_correct %><br>
-    <%= f.number_field :score_correct %>
+      <label for="score_correct">Points for correct prediction</label> <i title="The points users will gain when they make a correct prediction on a matches result" class="glyphicon glyphicon-question-sign score_correct_helper"></i><br>
+      <input class="score_correct form-control" size="3" min="0" max="999" type="number" name="league[score_correct]">
   </div>
   <div class="field">
-    <%= f.label :score_difference %><br>
-    <%= f.number_field :score_difference %>
+      <label for="score_difference">Score Difference</label> <i title="The points users will gain when they make a correct prediction on a matches goal difference" class="glyphicon glyphicon-question-sign score_correct_helper"></i><br>
+      <input class="score_difference form-control" size="3" min="0" max="999" type="number" name="league[score_difference]">
   </div>
   <div class="field">
-    <%= f.label :score_prediction %><br>
-    <%= f.number_field :score_prediction %>
+    <label for="score_prediction">Score Prediction</label> <i title="The points users will gain when they make a correct prediction on a matches result" class="glyphicon glyphicon-question-sign score_correct_helper"></i><br>
+    <input class="score_prediction form-control" size="3" min="0" max="999" type="number" name="league[score_prediction]">
   </div>
+    <div id="friends-container" class="field friends">
+        <div>
+            <label for="friends">Friends</label>
+        </div>
+        <input id="friends" class="form-control" type="text"/>
+        <span id="friends_added"></span><br>
+        <button type="button" class="add_friend btn">Add</button>
+    </div>
+    <div id="championship-container" class="field championships">
+        <div>
+            <label for="championship">Championships</label>
+        </div>
+        <input id="championship" class="form-control" type="text"/>
+        <span id="championships_added"></span><br>
+        <button type="button" class="add_championship btn">Add</button>
+    </div>
   <div class="actions">
     <%= f.submit %>
   </div>
+
+
 <% end %>
