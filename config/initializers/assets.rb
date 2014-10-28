@@ -11,7 +11,9 @@ Rails.application.config.assets.paths << "#{Rails.root}/vendor/assets/*"
 Rails.application.config.assets.paths << "#{Rails.root}/vendor/assets/fonts"
 Rails.application.config.assets.paths << "#{Rails.root}/vendor/assets/stylesheets"
 Rails.application.config.assets.paths << "#{Rails.root}/vendor/assets/images"
+
 Rails.application.config.assets.precompile << Proc.new { |path|
   if path =~ /\.(eot|svg|ttf|woff)\z/
     true
   end }
+
