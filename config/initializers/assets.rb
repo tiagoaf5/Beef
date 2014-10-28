@@ -17,3 +17,6 @@ Rails.application.config.assets.precompile << Proc.new { |path|
     true
   end }
 
+#Rails.application.config.assets.precompile += %w( ui-sam.jpg )
+Rails.application.config.assets.precompile += %w[*.png *.jpg *.jpeg *.gif]
+

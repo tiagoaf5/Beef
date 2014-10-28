@@ -112,7 +112,7 @@ TOP BAR CONTENT & NOTIFICATIONS
           </li>
           <li>
             <a href="index.html#">
-              <span class="photo"><%= image_tag "ui-zac.png" %></span>
+              <span class="photo"><%= image_tag "ui-zac.png", {alt: "avatar"} %></span>
                                     <span class="subject">
                                     <span class="from">Zac Snider</span>
                                     <span class="time">Just now</span>
@@ -124,7 +124,7 @@ TOP BAR CONTENT & NOTIFICATIONS
           </li>
           <li>
             <a href="index.html#">
-              <span class="photo"><img alt="avatar" src="assets/img/ui-divya.jpg"></span>
+              <span class="photo"><%= image_tag "ui-divya.jpg", {alt: "avatar"} %></span>
                                     <span class="subject">
                                     <span class="from">Divya Manian</span>
                                     <span class="time">40 mins.</span>
@@ -136,7 +136,7 @@ TOP BAR CONTENT & NOTIFICATIONS
           </li>
           <li>
             <a href="index.html#">
-              <span class="photo"><img alt="avatar" src="assets/img/ui-danro.jpg"></span>
+              <span class="photo"><%= image_tag "ui-danro.jpg", {alt: "avatar"} %></span>
                                     <span class="subject">
                                     <span class="from">Dan Rogers</span>
                                     <span class="time">2 hrs.</span>
@@ -148,7 +148,7 @@ TOP BAR CONTENT & NOTIFICATIONS
           </li>
           <li>
             <a href="index.html#">
-              <span class="photo"><img alt="avatar" src="assets/img/ui-sherman.jpg"></span>
+              <span class="photo"><%= image_tag "ui-sherman.jpg", {alt: "avatar"} %></span>
                                     <span class="subject">
                                     <span class="from">Dj Sherman</span>
                                     <span class="time">4 hrs.</span>
@@ -229,7 +229,7 @@ MAIN SIDEBAR MENU
     <!-- sidebar menu start-->
     <ul class="sidebar-menu" id="nav-accordion">
 
-      <p class="centered"><a href="profile.html"><img src="assets/img/ui-sam.jpg" class="img-circle" width="80"></a></p>
+      <p class="centered"><a href="profile.html"><%= image_tag "ui-sam.jpg", {class: "img-circle", width: "80"} %></a></p>
       <h5 class="centered">Sam Soffes</h5>
 
       <li class="mt">
@@ -503,7 +503,7 @@ MAIN CONTENT
       </div>
       <div class="row">
         <div class="col-md-3 centered hidden-sm hidden-xs">
-          <img src="assets/img/ui-danro.jpg" class="img-circle" width="65">
+          <%= image_tag "ui-danro.jpg", {class: "img-circle", width: "65"} %>
         </div>
         <div class="col-md-9">
           <p><name>Dan Rogers</name> sent you a message.</p>
@@ -538,7 +538,7 @@ MAIN CONTENT
       <div class="white-header">
         <h5>TOP USER</h5>
       </div>
-      <p><img src="assets/img/ui-zac.jpg" class="img-circle" width="50"></p>
+      <p><%= image_tag "ui-zac.jpg", {class: "img-circle", width: "50"} %></p>
       <p><b>Zac Snider</b></p>
       <div class="row">
         <div class="col-md-6">
@@ -569,7 +569,7 @@ MAIN CONTENT
   <div class="col-lg-4 col-md-4 col-sm-4 mb">
     <div class="product-panel-2 pn">
       <div class="badge badge-hot">HOT</div>
-      <img src="assets/img/product.jpg" width="200" alt="">
+      <%= image_tag "product.jpg", {width: "200", alt: ""} %>
       <h5 class="mt">Flat Pack Heritage</h5>
       <h6>TOTAL SALES: 1388</h6>
       <button class="btn btn-small btn-theme04">FULL REPORT</button>
@@ -581,7 +581,7 @@ MAIN CONTENT
     <div class="content-panel pn">
       <div id="profile-02">
         <div class="user">
-          <img src="assets/img/friends/fr-06.jpg" class="img-circle" width="80">
+          <%= image_tag "friends/fr-06.jpg", {class: "img-circle", width: "80"} %>
           <h4>DJ SHERMAN</h4>
         </div>
       </div>
@@ -711,7 +711,7 @@ RIGHT SIDEBAR CONTENT
   <!-- First Member -->
   <div class="desc">
     <div class="thumb">
-      <img class="img-circle" src="assets/img/ui-divya.jpg" width="35px" height="35px" align="">
+      <%= image_tag "ui-divya.jpg", {class: "img-circle", width: "35px", height: "35px", align: ""} %>
     </div>
     <div class="details">
       <p><a href="#">DIVYA MANIAN</a><br/>
@@ -722,7 +722,7 @@ RIGHT SIDEBAR CONTENT
   <!-- Second Member -->
   <div class="desc">
     <div class="thumb">
-      <img class="img-circle" src="assets/img/ui-sherman.jpg" width="35px" height="35px" align="">
+      <%= image_tag "ui-sherman.jpg", {class: "img-circle", width: "35px", height: "35px", align: ""} %>
     </div>
     <div class="details">
       <p><a href="#">DJ SHERMAN</a><br/>
@@ -733,7 +733,7 @@ RIGHT SIDEBAR CONTENT
   <!-- Third Member -->
   <div class="desc">
     <div class="thumb">
-      <img class="img-circle" src="assets/img/ui-danro.jpg" width="35px" height="35px" align="">
+      <%= image_tag "ui-danro.jpg", {class: "img-circle", width: "35px", height: "35px", align: ""} %>
     </div>
     <div class="details">
       <p><a href="#">DAN ROGERS</a><br/>
@@ -744,7 +744,7 @@ RIGHT SIDEBAR CONTENT
   <!-- Fourth Member -->
   <div class="desc">
     <div class="thumb">
-      <img class="img-circle" src="assets/img/ui-zac.jpg" width="35px" height="35px" align="">
+      <%= image_tag "ui-zac.jpg", {class: "img-circle", width: "35px", height: "35px", align: ""} %>
     </div>
     <div class="details">
       <p><a href="#">Zac Sniders</a><br/>
@@ -831,7 +831,7 @@ RIGHT SIDEBAR CONTENT
             },
             legend: [
                 {type: "text", label: "Special event", badge: "00"},
-                {type: "block", label: "Regular event", }
+                {type: "block", label: "Regular event" }
             ]
         });
     });
