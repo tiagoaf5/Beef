@@ -1,6 +1,6 @@
-<%= form_for(@league) do |f| %>
+<%= form_for(@league, remote: true) do |f| %>
     <script type="text/javascript">
-        var users = <%= @user_names.to_json.html_safe %>;
+        var users = <%= @users.to_json.html_safe %>;
         var championships = <%= @championships.to_json.html_safe %>;
     </script>
   <% if @league.errors.any? %>

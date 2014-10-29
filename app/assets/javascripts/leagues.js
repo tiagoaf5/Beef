@@ -18,7 +18,6 @@ var init = function() {
         var data2 = {};
         data2['bet'] = data;
         //console.log($(this).parent().parent().attr('id'));
-        console.log(data);
         $.ajax({
             type: "POST",
             url: '/bets.json',
@@ -36,7 +35,6 @@ var init = function() {
         var data2 = {};
         data2['bet'] = data;
         //console.log($(this).parent().parent().attr('id'));
-        console.log(data);
         $.ajax({
             type: "PUT",
             url: "/bets/" + id + ".json",
@@ -82,6 +80,29 @@ var init = function() {
 
     $("#championship").autocomplete({
         source: championships
+    });
+
+    $('form').submit(function() {
+        var valuesToSubmit = {};
+        valuesToSubmit['league'] = {};
+        valuesToSubmit['league']['name'] = $('.name').val();
+        valuesToSubmit['league']['score_correct'] = $('.score_correct').val();
+        valuesToSubmit['league']['score_difference'] = $('.score_difference').val();
+        valuesToSubmit['league']['score_prediction'] = $('.score_prediction').val();
+        valuesToSubmit['league']['users'] = friends2;
+        valuesToSubmit['league']['championships'] = championships2;
+        console.log(valuesToSubmit);
+        $.ajax({
+            type: "POST",
+            url: $(this).attr('action'), //sumbits it to the given url of the form
+            data: valuesToSubmit,
+            dataType: "JSON" // you want a difference between normal and ajax-calls, and json is standard
+        }).done(function(json){
+            console.log("e");
+        }).fail(function(error) {
+            console.log(error);
+        });
+        return false; // prevents normal behaviour
     });
 
     $(".score_correct_helper").tooltip();
