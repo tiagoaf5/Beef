@@ -12,10 +12,7 @@
  *
  *= require_self
  *= require bootstrap
- *= require flat-ui
  *= require jquery-ui
- *= //require jquery-ui/blitzer
-*=// require icon-font
- *=// require sample3
+ *= require_tree ../../../vendor/assets/stylesheets/theme/
  *= require_tree .
  */

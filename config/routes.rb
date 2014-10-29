@@ -8,7 +8,12 @@ Rails.application.routes.draw do
 
   resources :championships
 
-  devise_for :users
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+
+
+ # devise_scope :user do
+ #   get 'sign_out', :to => 'devise/sessions#destroy', :as => :destroy_user_session
+ # end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -67,5 +72,8 @@ Rails.application.routes.draw do
   get '/leagues/:id/scoreboard', to: 'leagues#scoreboard', as: 'league_scoreboard'
 
   get '/leagues/:id/games', to: 'leagues#games', as: 'league_games'
+
+  get '/users/:id', to: 'users#show', as: 'user_profile'
+
 
 end

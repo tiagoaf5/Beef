@@ -15,7 +15,7 @@
 //= require jquery-ui
 //= require turbolinks
 //= require bootstrap
-//= modernizr.custom
-//= startup-kit
-//= sample3
+//= jquery.unveilEffects
+//= respond.min
+//= require_tree ../../../vendor/assets/javascripts/theme/
 //= require_tree .
