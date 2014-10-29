@@ -8,7 +8,7 @@ Rails.application.config.assets.version = '1.0'
 # Rails.application.config.assets.precompile += %w( search.js )
 
 Rails.application.config.assets.paths << "#{Rails.root}/vendor/assets/*"
-Rails.application.config.assets.paths << "#{Rails.root}/vendor/assets/fonts"
+Rails.application.config.assets.paths << "#{Rails.root}/vendor/assets/fonts/theme"
 Rails.application.config.assets.paths << "#{Rails.root}/vendor/assets/stylesheets"
 Rails.application.config.assets.paths << "#{Rails.root}/vendor/assets/images"
 
