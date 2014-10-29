@@ -37,9 +37,7 @@
 <% end %>
 
 <% @leagues.each do |league| %>
-
   <h1>League <%= league.name %></h1>
-
   <% league.championships.each do |championship| %>
     <h2 class="championship" id=<%= championship.id %> >Championship <%= championship.name %></h2>
     <table class="table">
@@ -82,8 +80,5 @@
       </tr>
     <% end %>
     </table>
-
   <% end %>
-
-
 <% end %>

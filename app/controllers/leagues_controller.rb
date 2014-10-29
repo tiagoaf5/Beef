@@ -19,9 +19,11 @@ class LeaguesController < ApplicationController
 
   # GET /leagues/new
   def new
-    @league = League.new
-    @user_names = User.all.map(&:email)
+    @users = User.all.map(&:email)
+    @user_ids = User.all.map(&:id)
     @championships = Championship.all.map(&:name)
+    @championships_ids = Championship.all.map(&:id)
+    @league = League.new
   end
 
   # GET /leagues/1/edit
@@ -31,7 +33,11 @@ class LeaguesController < ApplicationController
   # POST /leagues
   # POST /leagues.json
   def create
-    @league = League.new(league_params)
+    @league = League.new(league_params.merge(:user_id => current_user.id).except(:users, :championships))
+    league_params['users'].each  do |f|
+      puts f
+      @league.users << f
+    end
 
     respond_to do |format|
       if @league.save
@@ -118,7 +124,7 @@ class LeaguesController < ApplicationController
 
 # Never trust parameters from the scary internet, only allow the white list through.
   def league_params
-    params.require(:league).permit(:name, :score_correct, :score_difference, :score_prediction, :user_id)
+    params.require(:league).permit(:name, :score_correct, :score_difference, :score_prediction, :user_id, :users => [], :championships => [])
   end
 
   def list_mine
