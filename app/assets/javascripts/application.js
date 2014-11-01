@@ -10,12 +10,28 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
-//= require jquery_ujs
-//= require jquery-ui
+//=// require jquery
+//=// require jquery_ujs
+//=// require jquery-ui
+//=// require turbolinks
+//=// require bootstrap
+//=// jquery.unveilEffects
+//=// respond.min
+//=// require_tree ../../../vendor/assets/javascripts/theme/
+//=// require_tree .
+//
+// Corrected according to theme
+//
+//= require theme/jquery
+//= require theme/jquery-1.8.3.min
+//= require theme/bootstrap.min
+//= require theme/jquery.dcjqaccordion.2.7
+//= require theme/jquery.scrollTo.min
+//= require theme/jquery.nicescroll
+//= require theme/jquery.sparkline
 //= require turbolinks
-//= require bootstrap
-//= jquery.unveilEffects
-//= respond.min
-//= require_tree ../../../vendor/assets/javascripts/theme/
+//= require theme/common-scripts
+//= require theme/gritter/js/jquery.gritter.js
+//= require theme/gritter-conf
 //= require_tree .
+
