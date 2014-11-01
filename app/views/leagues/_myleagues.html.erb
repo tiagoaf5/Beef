@@ -1,0 +1,17 @@
+<% if user_signed_in? && @user_leagues %>
+    <% @user_leagues.each do |league| %>
+        <li class="sub-menu">
+          <a href="<%= league_path(league.id) %>">
+            <i class="fa fa-comments-o"></i>
+            <span><%= league.name %></span>
+          </a>
+          <ul class="sub">
+            <li><%= link_to "Leader Board", league_scoreboard_path(league.id) %></li>
+            <li><%= link_to "Games", league_games_path(league.id) %></li>
+            <% if league.owner_id == current_user.id %>
+                <li><a href="#">Admin</a></li>
+            <% end %>
+          </ul>
+        </li>
+    <% end %>
+<% end %>

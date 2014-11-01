@@ -114,6 +114,9 @@ class LeaguesController < ApplicationController
     end
   end
 
+  def myleagues
+    @myleagues = current_user.leagues
+  end
 
 
   private
