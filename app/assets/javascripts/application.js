@@ -29,7 +29,7 @@
 //= require theme/jquery.scrollTo.min
 //= require theme/jquery.nicescroll
 //= require theme/jquery.sparkline
-//= require turbolinks
+//=// require turbolinks
 //= require theme/common-scripts
 //= require theme/gritter/js/jquery.gritter.js
 //= require theme/gritter-conf
