@@ -1,59 +1,16 @@
 <% content_for :content do %>
-    <div class="container">
-  <nav class="navbar navbar-default" role="navigation">
-    <div class="container-fluid">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#leaguesbar">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <div class="navbar-brand"><%=@league.name%></div>
-      </div>
 
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="leaguesbar">
-        <ul class="nav navbar-nav navbar-right">
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Leagues <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <% if @myleagues %>
-              <% @myleagues.each do |myleague|%>
-                <li><%= link_to myleague.league.name, league_path(myleague.league)%></li>
-              <%end%>
-              <%end%>
-            </ul>
-          </li>
-          <li><%= link_to "New League", new_league_path%></li>
-        </ul>
-      </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-  </nav>
-</div>
-<div class="container">
-  <% if @league.id != nil %>
-        <div class="col-md-3">
-  <ul class="nav nav-pills nav-stacked ">
-        <li id="board"><%= link_to raw(("<span class='fui-list'></span>")+" Leader Board"), league_scoreboard_path%></li>
-        <li id="games"><%= link_to raw(("<span class='fui-radio-checked'></span>")+" Games"), league_games_path%></li>
-        <li id="bet"><%= link_to raw(("<span class='fui-time'></span>")+" Bet History"), league_path%></li>
-        <li id="admin"><%= link_to raw(("<span class='fui-gear'></span>")+" Admin"), league_path%></li>
-      </ul>
-  </div>
-  <%end%>
-    <div class="col-md-9">
-      <div class="panel panel-default">
-        <div class="panel-body">
+    <h2><%=@league.name%></h2>
+
           <div class="container">
             <%= content_for?(:leagues_c) ? yield(:leagues_c) : yield %>
           </div>
-        </div>
-    </div>
-  </div>
-</div>
+
 <br/>
+
+    <script>
+        $("#league<%=@league.id.to_s%> > a").addClass("active");
+    </script>
 
 <% end %>
 <%= render template: "layouts/application" %>

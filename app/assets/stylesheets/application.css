@@ -12,7 +12,7 @@
  *
  * Corrected according to theme
  *
- *= require theme/bootstrap
+ *= require bootstrap
  *= require theme/font-awesome
  *= require theme/zabuto_calendar
  *=// require ../../../vendor/assets/javascripts/theme/gritter/css/jquery.gritter.css

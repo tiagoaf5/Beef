@@ -22,7 +22,7 @@
 //
 // Corrected according to theme
 //
-//= require theme/jquery
+//= //require theme/jquery
 //= require theme/jquery-1.8.3.min
 //= require theme/bootstrap.min
 //= require theme/jquery.dcjqaccordion.2.7

@@ -8,6 +8,7 @@
   <!--<meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">-->
   <!--<link rel="shortcut icon" href="http://alvarez.is/demo/dashio/favicon.png">-->
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <title>Be&f</title>
 
 
@@ -243,10 +244,9 @@ MAIN SIDEBAR MENU
       </h5>
 
       <li class="mt">
-        <a class="" href="index.html">
-          <i class="fa fa-dashboard"></i>
-          <span>Dashboard</span>
-        </a>
+        <%= link_to raw(("<i class='glyphicon glyphicon-home'></i>")+"<span>Home</span>"), root_path%>
+
+
       </li>
 
       <%= render 'leagues/myleagues' %>
@@ -395,6 +395,5 @@ MAIN CONTENT
 <!--footer end-->
 </section>
 
-<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 </body>
 </html>
