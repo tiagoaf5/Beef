@@ -1,84 +1,61 @@
-<!-- Default content - hidden for prototype -->
 
-<% if false %>
-<h1>Listing leagues</h1>
+<%if user_signed_in? %>
+    <!-- **********************************************************************************************************************************************************
+          MAIN CONTENT
+          *********************************************************************************************************************************************************** -->
+    <!--main content start-->
+    <h3><i class="fa fa-angle-right"></i> Welcome, <%= current_user.email%></h3>
+    <div class="row mt">
+      <div class="col-lg-12">
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Score correct</th>
-      <th>Score difference</th>
-      <th>Score prediction</th>
-      <th>User</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+        <div class="row">
+        <% @user_leagues.each do |league| %>
 
-  <tbody>
-    <% @leagues.each do |league| %>
-      <tr>
-        <td><%= league.name %></td>
-        <td><%= league.score_correct %></td>
-        <td><%= league.score_difference %></td>
-        <td><%= league.score_prediction %></td>
-        <td><%= league.user %></td>
-        <td><%= link_to 'Show', league %></td>
-        <td><%= link_to 'Edit', edit_league_path(league) %></td>
-        <td><%= link_to 'Destroy', league, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+              <!-- WEATHER-3 PANEL -->
+              <a href="<%= league_scoreboard_path(league.id) %>">
+              <div class="col-lg-4 col-md-4 col-sm-4 mb">
+                <div class="weather-3 pn centered" style="background-color: #4cae4c">
+                  <i class="fa fa-chevron-circle-up"></i>
+                  <h1>1st place</h1>
+                  <div class="info">
+                    <div class="row">
+                      <h3 class="centered"><%= league.name %></h3>
+                      <div class="col-sm-6 col-xs-6 pull-left">
+                        <p class="goleft"><i class="fa fa-hospital-o"></i> 10 points</p>
+                      </div>
+                      <div class="col-sm-6 col-xs-6 pull-right">
+                        <p class="goright"><i class="fa fa-globe"></i> <%= league.championships.first.name %></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div><! --/col-md-4 -->
+              </a>
 
-<br>
-
-<%= link_to 'New League', new_league_path %>
-<% end %>
-
-<% @leagues.each do |league| %>
-  <h1>League <%= league.name %></h1>
-  <% league.championships.each do |championship| %>
-    <h2 class="championship" id=<%= championship.id %> >Championship <%= championship.name %></h2>
-    <table class="table">
-    <% championship.games.order("time desc").each do |game| %>
-      <tr id=<%= game.id %>>
-        <td><%= game.team1_name %></td>
-          <% if game.time > DateTime.parse("2014-08-23 11:45:00 UTC") && user_signed_in? %>
-              <% if !(bet = league.bets.where(league_id: league.id, user_id: current_user.id).first).nil? %>
-                  <td><input class="first_goals" type="text"  size="1" name="firstGoals" value=<%= bet.team1_goals %> ></td>
-                  <td>:</td>
-                  <td id=<%= bet.id %> ><input class="second_goals" size="1" type="text" name="secondGoals" value=<%= bet.team2_goals %>>
-                      <button class="bet_submit_edit">Edit bet</button></td>
-              <% else %>
-                  <td><input class="first_goals" type="text"  size="1" name="firstGoals"></td> <td>:</td> <td><input class="second_goals" size="1" type="text" name="secondGoals">
-          <button class="bet_submit_new">Submit Bet</button></td>
-              <% end %>
-          <% else %>
-              <td><%= game.team1_goals %></td> <td>:</td> <td><%= game.team2_goals %></td>
-          <% end %>
-        <td><%= game.team2_name %></td>
-        <td><%= game.time %></td>
-        <td>
-        <% if game.time < DateTime.parse("2014-08-23 11:45:00 UTC") %>
-          <button type="button" class="beth btn btn-link" data-container="body" data-toggle="popover" data-placement="left"
-            data-html="true" data-content= "
-              <table class='table bets_history'>
-              <% game.bets.where(league_id: league.id).each do |bet| %>
-               <tr>
-                 <td><%= bet.user.email %></td>
-                 <td><%= bet.team1_goals %> : <%= bet.team2_goals %></td>
-                 <td><%= bet.score %></td>
-               </tr>
-              <% end %>
-              </table>
-            ">
-              Bets History
-          </button>
+               <!-- IF DOWN -->
+              <!-- WEATHER-3 PANEL -->
+              <a href="<%= league_scoreboard_path(league.id) %>">
+              <div class="col-lg-4 col-md-4 col-sm-4 mb">
+                <div class="weather-3 pn centered">
+                  <i class="fa fa-chevron-circle-down"></i>
+                  <h1>2nd place</h1>
+                  <div class="info">
+                    <div class="row">
+                      <h3 class="centered"><%= league.name %></h3>
+                      <div class="col-sm-6 col-xs-6 pull-left">
+                        <p class="goleft"><i class="fa fa-hospital-o"></i> 10 points</p>
+                      </div>
+                      <div class="col-sm-6 col-xs-6 pull-right">
+                        <p class="goright"><i class="fa fa-globe"></i> <%= league.championships.first.name %></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div><! --/col-md-4 -->
+              </a>
         <% end %>
-        </td>
-      </tr>
-    <% end %>
-    </table>
-  <% end %>
-<% end %>
+
+            </div><!-- /row - FIRST ROW OF PANELS -->
+            </div>
+            </div>
+        <%end%>

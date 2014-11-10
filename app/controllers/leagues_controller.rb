@@ -6,7 +6,7 @@ class LeaguesController < ApplicationController
   # GET /leagues.json
   def index
     #@leagues = League.all
-    (@myleagues && @myleagues.size != 0) ? redirect_to(league_path(@myleagues.first.league)) : redirect_to(new_league_path)
+   # (@myleagues && @myleagues.size != 0) ? redirect_to(league_path(@myleagues.first.league)) : redirect_to(new_league_path)
     #  @leagues = League.all.includes(:bets)
   end
 

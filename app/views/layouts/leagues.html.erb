@@ -1,6 +1,8 @@
 <% content_for :content do %>
 
-    <h2><%=@league.name%></h2>
+    <% if (@league) %>
+
+      <h2><%=@league.name%></h2>
 
           <div class="container">
             <%= content_for?(:leagues_c) ? yield(:leagues_c) : yield %>
@@ -11,6 +13,6 @@
     <script>
         $("#league<%=@league.id.to_s%> > a").addClass("active");
     </script>
-
+    <% end %>
 <% end %>
 <%= render template: "layouts/application" %>
