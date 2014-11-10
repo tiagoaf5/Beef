@@ -1,7 +1,9 @@
 # --------> Usar com rake db:reset <------------
+require "#{Rails.root}/app/helpers/import_api_data_helper.rb"
 
-require 'json'
-fixtures = JSON.parse(File.read("#{Rails.root}/db/fixtures.json"))
+data = FootballData.new
+data.excluded_countries.push("France") # Does not have updated games in the API
+data.load_all_fixtures
 
 def select_matchday matchday, fixtures
   fixtures.select do |fixture|
@@ -14,8 +16,8 @@ def format_json matchday
     {
         team1_name: fixture['homeTeam'],
         team2_name: fixture['awayTeam'],
-        team1_goals: fixture['goalsHomeTeam'].to_i,
-        team2_goals: fixture['goalsAwayTeam'].to_i,
+        team1_goals: fixture['goalsHomeTeam'],
+        team2_goals: fixture['goalsAwayTeam'],
         time: fixture['date'],
         matchday: fixture['matchday']
     }
@@ -55,7 +57,7 @@ def random_bets user, league
   league.championships.each do |championship|
     championship.games.each do |game|
       bet = Bet.create! team1_goals: rand(4), team2_goals: rand(4)
-      bet.update! score: points_for_bet(bet, game, league) unless game.team1_goals.nil?
+      bet.update! score: points_for_bet(bet, game, league) if game.team1_goals?
       game.bets << bet
       user.bets << bet
       league.bets << bet
@@ -63,21 +65,39 @@ def random_bets user, league
   end
 end
 
-save_matchday_to_db(format_json(select_matchday(1, fixtures)))
-save_matchday_to_db(format_json_without_goals(select_matchday(2, fixtures)))
+def save_matches_to_db matches
+  saved_matches = []
 
-puts 'Data do primeiro jogo: ' + Game.all.order(time: :asc).first.time.to_s
-puts 'Data do primeiro jogo da segunda jornada: ' + Game.where(matchday: 2).order(time: :asc).first.time.to_s
+  matches.each do |match|
+    saved_matches.push( Game.create! match )
+  end
+
+  saved_matches
+end
+
+def save_leagues_to_db leagues
+  leagues.each do |league|
+    puts "Saving #{league[:league_name]}"
+    saved_league = Championship.create! :name => league[:league_name], :year => league[:year], :country => league[:country]
+
+    saved_matches = save_matches_to_db(league[:matches])
+    saved_matches.each { |saved_match| saved_league.games << saved_match }
+  end
+end
+
+save_leagues_to_db data.fixtures
+
+puts "First game: #{Game.all.order(time: :asc).first.time.to_s}"
+puts "Last game: #{Game.all.order(time: :asc).last.time.to_s}"
+puts "Older game with result: #{Game.where.not(team1_goals: -1).order(:time).last.time}"
+puts "Newest game to be updated: #{Game.where(team1_goals: -1).order(:time).first.time}"
 
 User.create! :email => 'beef1234@gmail.com', :password => 'beef1234', :password_confirmation => 'beef1234'
 
 league = League.create! name: "Bife com Atum", score_correct: 150, score_difference: 100, score_prediction: 75
 
-premierLeague = Championship.create! :name => 'Premier League', :year => 2014, :country => 'England'
-premierLeague.games << Game.all
-league.championships << premierLeague
-
 leagueOwner = User.create! :email => 'owner@a.com', :password => 'beef1234', :password_confirmation => 'beef1234'
+league.championships << Championship.take
 league.owner = leagueOwner
 league.users << league.owner
 league.users << (User.create! :email => 'a@a.com', :password => 'beef1234', :password_confirmation => 'beef1234')
@@ -87,3 +107,44 @@ league.users << (User.create! :email => 'c@a.com', :password => 'beef1234', :pas
 league.users.each do |user|
   random_bets user, league
 end
+
+
+=begin
+
+# Seeding the old way, without internet access/cache
+
+fixtures = JSON.parse(File.read("#{Rails.root}/db/fixtures.json"))
+
+save_matchday_to_db(format_json(select_matchday(1, fixtures)))
+save_matchday_to_db(format_json_without_goals(select_matchday(2, fixtures)))
+
+premierLeague = Championship.create! :name => 'Premier League', :year => 2014, :country => 'England'
+premierLeague.games << Game.all
+league.championships << premierLeague
+
+def select_matchday matchday, fixtures
+  fixtures.select do |fixture|
+    fixture['matchday'] == matchday
+  end
+end
+
+def format_json matchday
+  matchday.map do |fixture|
+    {
+        team1_name: fixture['homeTeam'],
+        team2_name: fixture['awayTeam'],
+        team1_goals: fixture['goalsHomeTeam'],
+        team2_goals: fixture['goalsAwayTeam'],
+        time: fixture['date'],
+        matchday: fixture['matchday']
+    }
+  end
+end
+
+def format_json_without_goals matchday
+  format_json(matchday).map do |fixture|
+    fixture.except(:team1_goals, :team2_goals)
+  end
+end
+
+=end
