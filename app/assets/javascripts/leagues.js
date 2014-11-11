@@ -1,7 +1,7 @@
-var friends_object1 = "<span class=\"btn btn-primary\">";
+var friends_object1 = "<span class=\"friend-obj btn btn-primary\">";
 var friends_object2 = "     <i onclick=\"removeUser(this)\" class=\"remove-user glyphicon glyphicon-remove\"></i></span>";
 
-var championship_object1 = "<span class=\"btn btn-primary\">";
+var championship_object1 = "<span class=\"championship-obj btn btn-primary\">";
 var championship_object2 = "     <i onclick=\"removeChampionship(this)\" class=\"remove-user glyphicon glyphicon-remove\"></i></span>";
 
 var friends_added = [];
@@ -44,21 +44,22 @@ var init = function() {
             location.reload();
         });
     });
-    /*
+
     $("#friends").autocomplete({
         source: users
-    });*/
+    });
+
     $(".add_friend").click(function(event) {
         event.preventDefault();
         var f = $("#friends");
-        //console.log(friends_added);
         if(users.indexOf(f.val()) == -1 || friends_added.indexOf(f.val()) != -1) {
             $("#friends-container").addClass("has-error");
-            return
+            return;
         }
 
         $("#friends_added").append(friends_object1 + f.val() + friends_object2);
         friends_added.push(f.val());
+        //console.log(friends_added);
         f.val('');
         $("#friends-container").removeClass("has-error");
     });
@@ -68,19 +69,19 @@ var init = function() {
         var f = $("#championship");
         if(championships.indexOf(f.val()) == -1 || championships_added.indexOf(f.val()) != -1) {
             $("#championship-container").addClass("has-error");
-            return
+            return;
         }
 
         $("#championships_added").append(championship_object1 + f.val() + championship_object2);
         championships_added.push(f.val());
+        //console.log(championships_added);
         f.val('');
         $("#championship-container").removeClass("has-error");
     });
 
-/* TODO: a dar erro
     $("#championship").autocomplete({
         source: championships
-    });*/
+    });
 
     $('.button-sub').click(function() {
         var valuesToSubmit = {};
@@ -133,17 +134,13 @@ var init = function() {
 
 function removeUser(obj) {
     var elem = $(obj).parent().text().replace(/ /g,'').replace(/(\r\n|\n|\r)/gm,'');
-    console.log(friends_added);
-    friends_added.splice(friends_added.indexOf(elem));
-    //console.log(friends_added);
+    friends_added.splice(friends_added.indexOf(elem), 1);
     $(obj).parent().remove();
 }
 
 function removeChampionship(obj) {
     var elem = $(obj).parent().text().replace(/ /g,'').replace(/(\r\n|\n|\r)/gm,'');
-    console.log(championships_added);
-    championships_added.splice(championships_added.indexOf(elem));
-    //console.log(championships_added);
+    championships_added.splice(championships_added.indexOf(elem), 1);
     $(obj).parent().remove();
 }
 
