@@ -1,16 +1,18 @@
 class UsersController < ApplicationController
 
   def show
-    @user=User.find(params[:id])
-    @cenas = 'a'
+
     if(user_signed_in?)
+
+      @user=User.find(params[:id])
+      @name=@user.name
+      @email=@user.email
+      @owner=0
+
       if current_user.id == params[:id]
-        @cenas = 'b'
+        @owner=1
 
       end
-
-
     end
-
   end
 end
