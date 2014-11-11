@@ -45,7 +45,7 @@ class LeaguesController < ApplicationController
     @league = League.new(league_params.merge(:user_id => current_user.id).except(:users, :championships))
     league_params['users'].each  do |f|
       puts f
-      @league.users << f
+      @league.users << Users.all.find(f)
     end
 
     respond_to do |format|

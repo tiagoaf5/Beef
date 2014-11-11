@@ -6,10 +6,10 @@
     var championships2 = <%= @championships_json %>;
     var championships = [];
     for(var k in championships2) championships.push(k);
-    console.log(users);
+    //console.log(users);
 </script>
-<%= form_for(@league, remote: true) do |f| %>
-  <% if @league.errors.any? %>
+<form class="form">
+    <% if @league.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@league.errors.count, "error") %> prohibited this league from being saved:</h2>
 
@@ -53,8 +53,6 @@
         <button type="button" class="add_championship btn">Add</button>
     </div>
   <div class="actions">
-    <%= f.submit %>
+     <input class='button-sub' type="submit" value="Submit">
   </div>
-
-
-<% end %>
+</form>

@@ -4,8 +4,8 @@ var friends_object2 = "     <i onclick=\"removeUser(this)\" class=\"remove-user 
 var championship_object1 = "<span class=\"btn btn-primary\">";
 var championship_object2 = "     <i onclick=\"removeChampionship(this)\" class=\"remove-user glyphicon glyphicon-remove\"></i></span>";
 
-var friends2 = [];
-var championships2 = [];
+var friends_added = [];
+var championships_added = [];
 
 var init = function() {
     $(".beth").popover();
@@ -51,14 +51,14 @@ var init = function() {
     $(".add_friend").click(function(event) {
         event.preventDefault();
         var f = $("#friends");
-        console.log(friends2);
-        if(users.indexOf(f.val()) == -1 || friends2.indexOf(f.val()) != -1) {
+        //console.log(friends_added);
+        if(users.indexOf(f.val()) == -1 || friends_added.indexOf(f.val()) != -1) {
             $("#friends-container").addClass("has-error");
             return
         }
 
         $("#friends_added").append(friends_object1 + f.val() + friends_object2);
-        friends2.push(f.val());
+        friends_added.push(f.val());
         f.val('');
         $("#friends-container").removeClass("has-error");
     });
@@ -66,15 +66,14 @@ var init = function() {
     $(".add_championship").click(function(event) {
         event.preventDefault();
         var f = $("#championship");
-        if(championships.indexOf(f.val()) == -1 || championships2.indexOf(f.val()) != -1) {
+        if(championships.indexOf(f.val()) == -1 || championships_added.indexOf(f.val()) != -1) {
             $("#championship-container").addClass("has-error");
             return
         }
 
         $("#championships_added").append(championship_object1 + f.val() + championship_object2);
-        championships2.push(f.val());
+        championships_added.push(f.val());
         f.val('');
-
         $("#championship-container").removeClass("has-error");
     });
 
@@ -83,7 +82,7 @@ var init = function() {
         source: championships
     });*/
 
-    $('form').submit(function() {
+    $('.button-sub').click(function() {
         var valuesToSubmit = {};
         valuesToSubmit['league'] = {};
         valuesToSubmit['league']['name'] = $('.name').val();
@@ -91,13 +90,31 @@ var init = function() {
         valuesToSubmit['league']['score_difference'] = $('.score_difference').val();
         valuesToSubmit['league']['score_prediction'] = $('.score_prediction').val();
         var user_ids = [];
+        //console.log(friends_added);
+        //console.log(friends_added.length);
+        for(var i = 0; i < friends_added.length; i++) {
+            user_ids.push(users2[friends_added[i]]);
+        }
+        //console.log(user_ids);
 
-        valuesToSubmit['league']['users'] = friends2;
-        valuesToSubmit['league']['championships'] = championships2;
+        var championship_ids = [];
+        for(var i = 0; i < championships_added.length; i++) {
+            championship_ids.push(championships2[championships_added[i]]);
+        }
+        //console.log(championship_ids);
+
+        console.log($('meta[name="csrf-token"]').attr('content'));
+
+        valuesToSubmit['league']['users'] = user_ids;
+        valuesToSubmit['league']['championships'] = championship_ids;
         console.log(valuesToSubmit);
         $.ajax({
             type: "POST",
-            url: $(this).attr('action'), //sumbits it to the given url of the form
+            url: '/leagues.json',
+            headers: {
+                'X-Transaction': 'POST',
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            },
             data: valuesToSubmit,
             dataType: "JSON" // you want a difference between normal and ajax-calls, and json is standard
         }).done(function(json){
@@ -116,17 +133,17 @@ var init = function() {
 
 function removeUser(obj) {
     var elem = $(obj).parent().text().replace(/ /g,'').replace(/(\r\n|\n|\r)/gm,'');
-    console.log(friends2);
-    friends2.splice(friends2.indexOf(elem));
-    console.log(friends2);
+    console.log(friends_added);
+    friends_added.splice(friends_added.indexOf(elem));
+    //console.log(friends_added);
     $(obj).parent().remove();
 }
 
 function removeChampionship(obj) {
     var elem = $(obj).parent().text().replace(/ /g,'').replace(/(\r\n|\n|\r)/gm,'');
-    console.log(championships2);
-    championships2.splice(championships2.indexOf(elem));
-    console.log(championships2);
+    console.log(championships_added);
+    championships_added.splice(championships_added.indexOf(elem));
+    //console.log(championships_added);
     $(obj).parent().remove();
 }
 
