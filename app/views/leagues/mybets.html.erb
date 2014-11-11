@@ -10,26 +10,18 @@
             <% matchday_games.each do |game| %>
                 <div id="game<%=game.id %>" class="panel panel-body panel-default col-md-12">
                   <div class="inline-block col-md-3 text-right"><strong><%= game.team1_name %></strong></div>
-                  <div class="inline-block col-md-1 first_goals"><%= game.team1_goals %></div>
-                  <div class="inline-block col-md-1 second_goals"><%= game.team2_goals %></div>
+                  <div class="inline-block col-md-1 first_goals">
+                    <span><%= @user_bets.where(game_id: game.id).first.team1_goals %></span>
+                    <span><%=text_field_tag("firstGoals", value = @user_bets.where(game_id: game.id).first.team1_goals, {class: "form-control"}) %></span>
+                  </div>
+                  <div class="inline-block col-md-1 second_goals">
+                    <span><%= @user_bets.where(game_id: game.id).first.team2_goals %></span>
+                    <span><%= @user_bets.where(game_id: game.id).first.team2_goals %></span>
+                  </div>
 
                   <div class="inline-block col-md-3 text-left"><strong><%= game.team2_name %></strong></div>
                   <div class="inline-block col-md-1 text-left"><%= game.matchday %></div>
                   <div class="inline-block col-md-2"><%= game.time.to_formatted_s(:short) %></div>
-                  <!--
-                  <button type="button" class="beth btn btn-link" data-container="body" data-toggle="popover" data-placement="left"
-                          data-html="true" data-content= "
-                        <table class='table bets_history'>
-                        <% game.bets.where(league_id: @league.id).each do |bet| %>
-                        <tr>
-                        <td><%= bet.user.email %></td>
-                        <td><%= bet.team1_goals %> : <%= bet.team2_goals %></td>
-                        <td><%= bet.score %></td>
-                        </tr>
-                    <% end %>
-                    </table>">
-                    <i class="fa fa-users"></i> -->
-                  </button>
                 </div>
             <% end %>
           </section>
