@@ -1,8 +1,14 @@
+<script type="text/javascript">
+    var users2 = <%= @users_json %>;
+    var users = [];
+    for(var k in users2) users.push(k);
+
+    var championships2 = <%= @championships_json %>;
+    var championships = [];
+    for(var k in championships2) championships.push(k);
+    console.log(users);
+</script>
 <%= form_for(@league, remote: true) do |f| %>
-    <script type="text/javascript">
-        var users = <%= @users.to_json.html_safe %>;
-        var championships = <%= @championships.to_json.html_safe %>;
-    </script>
   <% if @league.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@league.errors.count, "error") %> prohibited this league from being saved:</h2>
@@ -14,7 +20,6 @@
       </ul>
     </div>
   <% end %>
-
   <div class="field">
       <label for="name">League Name</label>
     <input class="name form-control"type="text" name="league[name]">
