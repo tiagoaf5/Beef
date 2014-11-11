@@ -89,6 +89,8 @@ var init = function() {
         valuesToSubmit['league']['score_correct'] = $('.score_correct').val();
         valuesToSubmit['league']['score_difference'] = $('.score_difference').val();
         valuesToSubmit['league']['score_prediction'] = $('.score_prediction').val();
+        var user_ids = [];
+
         valuesToSubmit['league']['users'] = friends2;
         valuesToSubmit['league']['championships'] = championships2;
         console.log(valuesToSubmit);
