@@ -45,26 +45,30 @@ class FootballData
     @fixtures.select! { |fixture| @excluded_league_names.index( fixture[:league_name] ).nil? }
   end
 
+  def exclude_outdated_leagues!
+
+  end
+
   def find_newest_to_update
-    newest_to_update = nil
+    @newest_to_update = nil
     newest_league_name = nil
 
     @fixtures.each do |fixture|
       fixture[:matches].each do |match|
         if match[:team1_goals] == -1
-          if not newest_to_update.nil?
-            newest_to_update = match.dup if newest_to_update[:time] > match[:time]
+          if not @newest_to_update.nil?
+            @newest_to_update = match.dup if @newest_to_update[:time] > match[:time]
             newest_league_name = fixture[:league_name]
           else
-            newest_to_update = match.dup
+            @newest_to_update = match.dup
             newest_league_name = fixture[:league_name]
           end
         end
       end
     end
 
-    newest_to_update[:league_name] = newest_league_name
-    newest_to_update
+    @newest_to_update[:league_name] = newest_league_name
+    @newest_to_update
   end
 
   private

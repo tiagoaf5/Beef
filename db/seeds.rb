@@ -1,5 +1,5 @@
 # --------> Usar com rake db:reset <------------
-require "#{Rails.root}/app/helpers/import_api_data_helper.rb"
+require "#{Rails.root}/import_api_data_helper.rb"
 
 data = FootballData.new
 # Does not have updated games in the API
