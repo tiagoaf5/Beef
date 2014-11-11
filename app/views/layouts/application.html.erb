@@ -219,6 +219,7 @@ TOP BAR CONTENT & NOTIFICATIONS
         <li><%= link_to('Logout', destroy_user_session_path, :method => :delete, class: "logout") %></li>
     <% else %>
         <li><%= link_to('Login', new_user_session_path, class: "logout") %></li>
+        <li><%= link_to('Sign Up', "/users/sign_up", class: "logout") %></li>
     <% end %>
   </ul>
 </div>
