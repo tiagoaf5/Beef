@@ -28,6 +28,8 @@
 //= require theme/jquery.dcjqaccordion.2.7
 //= require theme/jquery.scrollTo.min
 //= require theme/jquery.nicescroll
+//= require jquery_ujs
+//= require jquery-ui
 //= require theme/jquery.sparkline
 //=// require turbolinks
 //= require theme/common-scripts

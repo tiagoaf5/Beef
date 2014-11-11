@@ -19,10 +19,19 @@ class LeaguesController < ApplicationController
 
   # GET /leagues/new
   def new
-    @users = User.all.map(&:email)
-    @user_ids = User.all.map(&:id)
-    @championships = Championship.all.map(&:name)
-    @championships_ids = Championship.all.map(&:id)
+    @users = User.all.inject({}) do |result, element|
+      result[element[:email]] = element[:id]
+      result
+    end#mod.map(&:email)
+    @users_json = @users.to_json.html_safe
+    #@user_ids = User.all.map(&:id)
+    # = .select('id', 'name').all#.map(&:name)
+    @championships = Championship.all.inject({}) do |result, element|
+      result[element[:name]] = element[:id]
+      result
+    end
+    @championships_json = @championships.to_json.html_safe
+    #@championships_ids = Championship.all.map(&:id)
     @league = League.new
   end
 
