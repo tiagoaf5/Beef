@@ -106,17 +106,10 @@ class LeaguesController < ApplicationController
       games = @league.championships.first.games #.order("time asc")
       @match_days = games.group(:matchday).count.map{|k,v| k}.sort
       @games = Hash.new()
-      puts "--------------------------------------------------"
-      puts @match_days
-      puts "--------------------------------------------------"
 
       @match_days.each do |day|
          @games[day] = games.where(matchday: day).order("time asc")
        end
-
-      puts "--------------------------------------------------"
-      puts @games[1].first.inspect
-      puts "--------------------------------------------------"
 
     else
       redirect_to(new_league_path)
@@ -132,6 +125,30 @@ class LeaguesController < ApplicationController
 
   def myleagues
     @myleagues = current_user.leagues
+  end
+
+  def mybets
+    if League.exists?(id: params[:id])
+      @league = League.find(params[:id])
+      @championship = @league.championships.first
+      games = @league.championships.first.games #.order("time asc")
+      @match_days = games.group(:matchday).count.map{|k,v| k}.sort
+      @games = Hash.new()
+
+      @match_days.each do |day|
+        @games[day] = games.where(matchday: day).order("time asc")
+      end
+
+    else
+      redirect_to(new_league_path)
+      return
+    end
+    #@league = Leagues.all.first
+    if user_signed_in? && @league
+      @user_bets = @league.bets.where(user_id: current_user.id)
+    else
+      @user_bets = nil
+    end
   end
 
 

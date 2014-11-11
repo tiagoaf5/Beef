@@ -77,10 +77,10 @@ var init = function() {
         $("#championship-container").removeClass("has-error");
     });
 
-
+/* TODO: a dar erro
     $("#championship").autocomplete({
         source: championships
-    });
+    });*/
 
     $('form').submit(function() {
         var valuesToSubmit = {};
