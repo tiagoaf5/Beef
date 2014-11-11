@@ -44,9 +44,10 @@ var init = function() {
             location.reload();
         });
     });
+    /*
     $("#friends").autocomplete({
         source: users
-    });
+    });*/
     $(".add_friend").click(function(event) {
         event.preventDefault();
         var f = $("#friends");
