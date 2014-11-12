@@ -1,4 +1,7 @@
 <% if user_signed_in? && @user_leagues %>
+    <li>
+      <%= link_to raw(("<i class='glyphicon glyphicon-certificate'></i>")+" New League"), new_league_path%>
+    </li>
     <% @user_leagues.each do |league| %>
         <li class="sub-menu" id="<%= "league" + league.id.to_s %>">
           <a href="javascript:;">
@@ -8,14 +11,11 @@
           <ul class="sub">
             <li ><%= link_to raw(("<i class='glyphicon glyphicon-align-justify'></i>")+" Leader Board"), league_scoreboard_path(league.id)%></li>
             <li ><%= link_to raw(("<i class='glyphicon glyphicon-record'></i>")+" Games"), league_games_path(league.id)%></li>
-            <li ><%= link_to raw(("<i class='glyphicon glyphicon-time'></i>")+" Bet History"), league_path(league.id)%></li>
+            <li ><%= link_to raw(("<i class='glyphicon glyphicon-time'></i>")+" My Bets"), league_mybets_path(league.id)%></li>
             <% if league.owner_id == current_user.id %>
           <li ><%= link_to raw(("<i class='glyphicon glyphicon-cog'></i>")+" Admin"), league_path(league.id)%></li>
             <% end %>
           </ul>
         </li>
     <% end %>
-    <li>
-      <%= link_to raw(("<i class='glyphicon glyphicon-certificate'></i>")+" New League"), new_league_path%>
-    </li>
 <% end %>

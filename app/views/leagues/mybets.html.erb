@@ -1,37 +1,44 @@
 <% content_for :leagues_c do %>
-    <div class="col-lg-8">
+    <div class="col-lg-1">
 
-      <h3 class="championship text-center" id=<%= @championship.id %> ><%= @championship.name %></h3>
+    </div>
+
+    <div id=<%= @championship.id %> class=" championship col-lg-9">
+
+      <!--<h3 class="championship text-center" id=<%= @championship.id %> ><%= @championship.name %></h3>-->
       <% @games.each do |key, matchday_games | %>
           <section id="match_day<%= key %>">
-            <div class="panel-heading">
+            <div id="matchday<%=key%>"class="panel-heading">
               <h4>Match day <%= key %></h4>
             </div>
             <% matchday_games.each do |game| %>
-                <div id="game<%=game.id %>" class="panel panel-body panel-default col-md-12">
+                <form id="game<%=game.id %>" class="panel panel-body panel-default col-md-12 text-center">
                   <div class="inline-block col-md-3 text-right"><strong><%= game.team1_name %></strong></div>
-                  <div class="inline-block col-md-1 first_goals"><%= game.team1_goals %></div>
-                  <div class="inline-block col-md-1 second_goals"><%= game.team2_goals %></div>
+                  <div class="inline-block col-md-2 first_goals">
+                    <span class="not-editable"><%= @user_bets.find_by(game_id: game.id).team1_goals %></span>
+                    <% bet = @user_bets.find_by(game_id: game.id) %>
+                    <% if game.time >= DateTime.parse("2014-08-23 11:45:00 UTC") #TODO: change to current time %>
+                        <span class="editable" hidden><%=text_field_tag( "firstGoals-#{bet.id}-#{game.id}", value = bet.team1_goals, {class: "form-control", type:"number", min: "0", step: "1"}) %></span>
+                    <% else %>
+                        <span class="editable" hidden><%=text_field_tag("firstGoals-#{bet.id}-#{game.id}", value = bet.team1_goals, {class: "form-control", type:"number", min: "0", step: "1", disabled: ""}) %></span>
+                    <% end %>
+                  </div>
+                  <div class="inline-block col-md-2 second_goals text-center" >
+                    <span class="not-editable"><%= @user_bets.find_by(game_id: game.id).team2_goals %></span>
+                    <% if game.time >= DateTime.parse("2014-08-23 11:45:00 UTC") #TODO: change to current time %>
+                        <span class="editable" hidden><%=text_field_tag("secondGoals-#{bet.id}-#{game.id}", value = bet.team2_goals, {class: "form-control", type:"number", min: "0", step: "1"}) %></span>
+                    <% else %>
+                        <span class="editable" hidden><%=text_field_tag("secondGoals-#{bet.id}-#{game.id}", value = bet.team2_goals, {class: "form-control", type:"number", min: "0", step: "1", disabled: ""}) %></span>
+                    <% end %>
+                  </div>
 
                   <div class="inline-block col-md-3 text-left"><strong><%= game.team2_name %></strong></div>
-                  <div class="inline-block col-md-1 text-left"><%= game.matchday %></div>
-                  <div class="inline-block col-md-2"><%= game.time.to_formatted_s(:short) %></div>
-                  <!--
-                  <button type="button" class="beth btn btn-link" data-container="body" data-toggle="popover" data-placement="left"
-                          data-html="true" data-content= "
-                        <table class='table bets_history'>
-                        <% game.bets.where(league_id: @league.id).each do |bet| %>
-                        <tr>
-                        <td><%= bet.user.email %></td>
-                        <td><%= bet.team1_goals %> : <%= bet.team2_goals %></td>
-                        <td><%= bet.score %></td>
-                        </tr>
-                    <% end %>
-                    </table>">
-                    <i class="fa fa-users"></i> -->
-                  </button>
-                </div>
+                  <div class="inline-block col-md-2 text-right"><%= game.time.to_formatted_s(:short) %></div>
+                </form>
             <% end %>
+            <div class="row">
+
+            </div>
           </section>
           <!--
           <table class="table table-responsive table-bordered table-hover">
@@ -84,5 +91,20 @@
       <% end %>
 
 
+    </div>
+    <div class="col-lg-1" id="btn-edit-mybets">
+      <button class="btn btn-theme" onclick="mybetsEdit()">
+        <i class="fa fa-pencil"></i>
+        Edit
+      </button>
+    </div>
+    <div class="col-lg-1" id="btn-save-mybets">
+      <button class="btn btn-theme03" onclick="mybetsSave()">
+        <i class="fa fa-save"></i>
+        Save
+      </button>
+    </div>
+    <div class="col-lg-1" id="img-loading-mybets" hidden>
+      <%= image_tag "loading-animation.gif", { width: "25"} %>
     </div>
 <% end %>

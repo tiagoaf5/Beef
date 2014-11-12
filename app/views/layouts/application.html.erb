@@ -7,6 +7,7 @@
   <!--<meta name="author" content="Dashboard">-->
   <!--<meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">-->
   <!--<link rel="shortcut icon" href="http://alvarez.is/demo/dashio/favicon.png">-->
+  <%= csrf_meta_tag %>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'theme/jquery-1.8.3.min', 'data-turbolinks-track' => true %>
   <title>Be&f</title>
@@ -258,6 +259,7 @@ MAIN SIDEBAR MENU
 
       <%= render 'leagues/myleagues' %>
 
+      <!--
       <li class="sub-menu">
         <a href="javascript:;" >
           <i class="fa fa-desktop"></i>
@@ -360,7 +362,7 @@ MAIN SIDEBAR MENU
           <span>Google Maps </span>
         </a>
       </li>
-
+-->
     </ul>
     <!-- sidebar menu end-->
   </div>

@@ -27,3 +27,11 @@
 .table tbody>tr>td.vert-align, .table thead>tr>th.vert-align{
   vertical-align: middle;
 }*/
+
+.editable > .form-control {
+  padding: 0px;
+  margin-top: -7px;
+  margin-bottom: -10px;
+  text-align: center;
+  width: 80px;
+}

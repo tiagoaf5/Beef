@@ -52,3 +52,7 @@ gem 'whenever', :require => false
 gem 'rufus-scheduler'
 gem 'omniauth-facebook'
 gem 'httparty'
+
+group :development do
+  gem 'rails-dev-boost', :git => 'git://github.com/thedarkone/rails-dev-boost.git'
+end
