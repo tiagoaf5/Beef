@@ -24,27 +24,40 @@ class UsersController < ApplicationController
         leagues_ids[league.league_id]=temp
       end
 
+      buddies_leagues_ids=Hash.new
       @buddies_leagues=Hash.new
 
       leagues_ids.each do |k, v|
-
         v.each do |value|
-          if @buddies_leagues.has_key?(value)
-            temp=[]
 
-            if @buddies_leagues[value].kind_of?(Array)
-              @buddies_leagues[value].each do |bv|
+          temp=[]
+
+          if buddies_leagues_ids.has_key?(value)
+            if buddies_leagues_ids[value].kind_of?(Array)
+              buddies_leagues_ids[value].each do |bv|
                 temp << bv
               end
             else
-              temp << @buddies_leagues[value]
+              temp << buddies_leagues_ids[value]
             end
-            temp << k
-            @buddies_leagues[value]=temp
-          else
-            @buddies_leagues[value]=k
           end
 
+          temp << k
+          buddies_leagues_ids[value]=temp
+        end
+      end
+
+      buddies_leagues_ids.each do |k, v|
+
+        if k!=params[:id].to_i
+          user = User.find(k)
+          temp_leagues=[]
+
+          v.each do |value|
+            temp_leagues << League.find(value).name
+          end
+
+          @buddies_leagues[user]=temp_leagues
         end
       end
 
