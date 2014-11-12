@@ -49,5 +49,6 @@ gem 'carmen-rails', '~> 1.0.0'
 
 gem 'json'
 gem 'whenever', :require => false
+gem 'rufus-scheduler'
 gem 'omniauth-facebook'
 gem 'httparty'

@@ -219,6 +219,7 @@ TOP BAR CONTENT & NOTIFICATIONS
         <li><%= link_to('Logout', destroy_user_session_path, :method => :delete, class: "logout") %></li>
     <% else %>
         <li><%= link_to('Login', new_user_session_path, class: "logout") %></li>
+        <li><%= link_to('Sign Up', "/users/sign_up", class: "logout") %></li>
     <% end %>
   </ul>
 </div>
@@ -234,7 +235,13 @@ MAIN SIDEBAR MENU
     <!-- sidebar menu start-->
     <ul class="sidebar-menu" id="nav-accordion">
 
-      <p class="centered"><a href="profile.html"><%= image_tag "ui-sam.jpg", {class: "img-circle", width: "80"} %></a></p>
+      <p class="centered"><a href="profile.html">
+        <% if user_signed_in? && current_user.image? %>
+            <%= image_tag current_user.image, {class: "img-circle", width: "80"} %>
+        <% else %>
+            <%= image_tag "ui-sam.jpg", {class: "img-circle", width: "80"} %>
+        <% end %>
+      </a></p>
       <h5 class="centered">
         <% if user_signed_in? %>
             <%= current_user.email %>

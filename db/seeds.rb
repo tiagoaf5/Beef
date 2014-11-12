@@ -1,8 +1,11 @@
 # --------> Usar com rake db:reset <------------
-require "#{Rails.root}/app/helpers/import_api_data_helper.rb"
+require "#{Rails.root}/import_api_data_helper.rb"
 
 data = FootballData.new
-data.excluded_countries.push("France") # Does not have updated games in the API
+# Does not have updated games in the API
+data.excluded_countries.push('France')
+data.excluded_league_names.push('Serie B 2014/15')
+data.excluded_league_names.push('Ehrendivision 2014/15')
 data.load_all_fixtures
 
 def select_matchday matchday, fixtures

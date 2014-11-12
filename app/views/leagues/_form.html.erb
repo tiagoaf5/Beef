@@ -6,10 +6,11 @@
     var championships2 = <%= @championships_json %>;
     var championships = [];
     for(var k in championships2) championships.push(k);
-    console.log(users);
+        //TODO erros, capturar enter
 </script>
-<%= form_for(@league, remote: true) do |f| %>
-  <% if @league.errors.any? %>
+
+<form class="form">
+    <% if @league.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@league.errors.count, "error") %> prohibited this league from being saved:</h2>
 
@@ -29,7 +30,7 @@
       <input class="score_correct form-control" size="3" min="0" max="999" type="number" name="league[score_correct]">
   </div>
   <div class="field">
-      <label for="score_difference">Score Difference</label> <i title="The points users will gain when they make a correct prediction on a matches goal difference" class="glyphicon glyphicon-question-sign score_correct_helper"></i><br>
+      <label for="score_difference">Points for correct goal difference</label> <i title="The points users will gain when they make a correct prediction on a matches goal difference" class="glyphicon glyphicon-question-sign score_correct_helper"></i><br>
       <input class="score_difference form-control" size="3" min="0" max="999" type="number" name="league[score_difference]">
   </div>
   <div class="field">
@@ -53,8 +54,6 @@
         <button type="button" class="add_championship btn">Add</button>
     </div>
   <div class="actions">
-    <%= f.submit %>
+     <input class="button-sub btn btn-send" type="submit" value="Submit">
   </div>
-
-
-<% end %>
+</form>
