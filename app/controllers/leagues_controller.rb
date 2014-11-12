@@ -43,16 +43,36 @@ class LeaguesController < ApplicationController
   # POST /leagues.json
   def create
     @league = League.new(league_params.merge(:user_id => current_user.id).except(:users, :championships))
-    league_params['users'].each  do |f|
-      puts f
-      @league.users << User.find(f)
+
+    if league_params['users'].present?
+      user_array = league_params['users'].split(",")
+      user_array.each  do |f|
+        @league.users << User.find(f)
+      end
     end
 
+    if !league_params['championships'].present?
+      respond_to do |format|
+        format.html { render :new }
+        format.json { render json: @league.errors, status: :unprocessable_entity }
+      end
+      return
+    end
+
+    championship_array = [1]#league_params['championships'].split(",")
+    championship_array.each  do |f|
+      puts Championship.find(f)
+      @league.championships << Championship.find(f)
+    end
+
+    puts "??"
     respond_to do |format|
       if @league.save
+        puts "yay"
         format.html { redirect_to @league, notice: 'League was successfully created.' }
         format.json { render :show, status: :created, location: @league }
       else
+        puts @league.errors.full_messages
         format.html { render :new }
         format.json { render json: @league.errors, status: :unprocessable_entity }
       end
@@ -169,7 +189,7 @@ class LeaguesController < ApplicationController
 
 # Never trust parameters from the scary internet, only allow the white list through.
   def league_params
-    params.require(:league).permit(:name, :score_correct, :score_difference, :score_prediction, :user_id, :users => [], :championships => [])
+    params.require(:league).permit(:name, :score_correct, :score_difference, :score_prediction, :user_id, :users, :championships)
   end
 
   def list_mine

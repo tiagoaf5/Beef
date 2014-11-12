@@ -4,11 +4,15 @@ var friends_object2 = "     <i onclick=\"removeUser(this)\" class=\"remove-user 
 var championship_object1 = "<span class=\"championship-obj btn btn-primary\">";
 var championship_object2 = "     <i onclick=\"removeChampionship(this)\" class=\"remove-user glyphicon glyphicon-remove\"></i></span>";
 
+var dismissable_error1 = "<div class=\"alert alert-warning alert-dismissible\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button><strong>Warning!</strong>";
+var dismissable_error2 = "</div>";
+
 var friends_added = [];
 var championships_added = [];
 
 var init = function() {
     $(".beth").popover();
+
     $(".bet_submit_new").on("click", function() {
         var data = {};
         data['team1_goals'] = $(this).parent().parent().find('.first_goals').val();
@@ -27,6 +31,7 @@ var init = function() {
             location.reload();
         });
     });
+
     $(".bet_submit_edit").on("click", function() {
         var data = {};
         var id = $(this).parent().attr('id');
@@ -58,7 +63,8 @@ var init = function() {
         }
 
         $("#friends_added").append(friends_object1 + f.val() + friends_object2);
-        friends_added.push(f.val());
+        friends_added.push(users2[f.val()]);
+        $("#league_users").val(friends_added);
         //console.log(friends_added);
         f.val('');
         $("#friends-container").removeClass("has-error");
@@ -73,7 +79,8 @@ var init = function() {
         }
 
         $("#championships_added").append(championship_object1 + f.val() + championship_object2);
-        championships_added.push(f.val());
+        championships_added.push(championships2[f.val()]);
+        $("#league_championships").val(championships_added);
         //console.log(championships_added);
         f.val('');
         $("#championship-container").removeClass("has-error");
@@ -83,7 +90,7 @@ var init = function() {
         source: championships
     });
 
-    $('.button-sub').click(function() {
+    /*$('form').submit(function() {
         var valuesToSubmit = {};
         valuesToSubmit['league'] = {};
         valuesToSubmit['league']['name'] = $('.name').val();
@@ -104,8 +111,6 @@ var init = function() {
         }
         //console.log(championship_ids);
 
-        console.log($('meta[name="csrf-token"]').attr('content'));
-
         valuesToSubmit['league']['users'] = user_ids;
         valuesToSubmit['league']['championships'] = championship_ids;
         console.log(valuesToSubmit);
@@ -122,9 +127,10 @@ var init = function() {
             console.log("e");
         }).fail(function(error) {
             console.log(error);
+            location.reload();
         });
         return false; // prevents normal behaviour
-    });
+    });*/
 
     $(".score_correct_helper").tooltip();
     $(".score_diff_helper").tooltip();
@@ -134,13 +140,15 @@ var init = function() {
 
 function removeUser(obj) {
     var elem = $(obj).parent().text().replace(/ /g,'').replace(/(\r\n|\n|\r)/gm,'');
-    friends_added.splice(friends_added.indexOf(elem), 1);
+    friends_added.splice(friends_added.indexOf(users2[elem]), 1);
+    $("#league_users").val(friends_added);
     $(obj).parent().remove();
 }
 
 function removeChampionship(obj) {
     var elem = $(obj).parent().text().replace(/ /g,'').replace(/(\r\n|\n|\r)/gm,'');
-    championships_added.splice(championships_added.indexOf(elem), 1);
+    championships_added.splice(championships_added.indexOf(championships2[elem]), 1);
+    $("#league_championships").val(championships_added);
     $(obj).parent().remove();
 }
 
