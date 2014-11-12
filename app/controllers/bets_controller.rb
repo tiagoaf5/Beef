@@ -1,7 +1,7 @@
 class BetsController < ApplicationController
   before_action :set_bet, only: [:show, :edit, :update, :destroy]
 
- # map.resources :collection => { :update_multiple => :put}
+  # map.resources :collection => { :update_multiple => :put}
 
   # GET /bets
   # GET /bets.json
@@ -58,16 +58,20 @@ class BetsController < ApplicationController
   end
 
   def update_multiple
-    puts "--------------------------------------------------------------------------------------------------------"
-    #puts params.inspect
+    # puts params.first[1].first
+    puts "------------------------------------------------------------------------------------------"
 
+    a = JSON.parse(request.body.read())
+    puts a
+    puts "------------------------------------------------------------------------------------------"
 
-    params.first.each do |p|
-      puts p
-      puts "--------\n"
+    puts a['bets']
+
+    a['bets'].each do |bet|
+      x = Bet.find(bet['bet_id'])
     end
+    puts "------------------------------------------------------------------------------------------"
 
-    puts "--------------------------------------------------------------------------------------------------------"
 
   end
 

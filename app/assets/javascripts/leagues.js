@@ -163,31 +163,36 @@ function mybetsSave() {
     var x = $(':input').serializeArray();
     var championshipId = $('.championship').attr("id");
     console.log(championshipId);
-    var array = new Array();
+    var array = {};
 
     array["championship_id"] = championshipId;
-    array["bets"] = new Array();
-    for(var i = 0; i < x.length; i++) {
-        console.log("---> " + JSON.stringify(x[i]));
+    array["bets"] = [];
 
+
+    for(var i = 0; i < x.length; i = i+2) {
         var tmp = x[i]["name"].split("-");
         var betid = tmp[1];
         var gameid = tmp[2];
-        var goals = x[i]["value"];
+        var goals1 = x[i]["value"];
+        var goals2 = x[i+1]["value"];
 
-        console.log([betid, gameid, goals]);
-        if(betid)
-            if(i % 2 !== 0)
-                array["bets"][betid]["team1"] = goals;
+        if(betid !== undefined) {
+            var bet  = {};
+            bet["bet_id"] = betid;
+            bet["game_id"] = gameid;
+            bet["team1"] = goals1;
+            bet["team2"] = goals2;
 
-            else
-                array["bets"][betid]["team2"] = goals;
-        else
+            array["bets"].push(bet);
+        }
+        else {
             console.log("tmp :" + tmp);
+            console.log("No bet yet");
+        }
 
     }
 
-    console.log(JSON.toString(array));
+    console.log("*" + JSON.stringify(array) + "*");
 
 
 
