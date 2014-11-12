@@ -80,5 +80,7 @@ Rails.application.routes.draw do
 
   get '/users/:id', to: 'users#show', as: 'user_profile'
 
+  post '/bets/update_multiple', to: 'bets#update_multiple', as: 'update_multiple_bets'
+
 
 end

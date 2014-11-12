@@ -152,6 +152,7 @@ class LeaguesController < ApplicationController
       redirect_to(new_league_path)
       return
     end
+
     #@league = Leagues.all.first
     if user_signed_in? && @league
       @user_bets = @league.bets.where(user_id: current_user.id)

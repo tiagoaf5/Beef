@@ -1,4 +1,7 @@
 <% if user_signed_in? && @user_leagues %>
+    <li>
+      <%= link_to raw(("<i class='glyphicon glyphicon-certificate'></i>")+" New League"), new_league_path%>
+    </li>
     <% @user_leagues.each do |league| %>
         <li class="sub-menu" id="<%= "league" + league.id.to_s %>">
           <a href="javascript:;">
@@ -15,7 +18,4 @@
           </ul>
         </li>
     <% end %>
-    <li>
-      <%= link_to raw(("<i class='glyphicon glyphicon-certificate'></i>")+" New League"), new_league_path%>
-    </li>
 <% end %>

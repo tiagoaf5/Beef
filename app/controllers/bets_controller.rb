@@ -1,6 +1,8 @@
 class BetsController < ApplicationController
   before_action :set_bet, only: [:show, :edit, :update, :destroy]
 
+ # map.resources :collection => { :update_multiple => :put}
+
   # GET /bets
   # GET /bets.json
   def index
@@ -55,6 +57,20 @@ class BetsController < ApplicationController
     end
   end
 
+  def update_multiple
+    puts "--------------------------------------------------------------------------------------------------------"
+    #puts params.inspect
+
+
+    params.first.each do |p|
+      puts p
+      puts "--------\n"
+    end
+
+    puts "--------------------------------------------------------------------------------------------------------"
+
+  end
+
   # DELETE /bets/1
   # DELETE /bets/1.json
   def destroy
@@ -66,13 +82,13 @@ class BetsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_bet
-      @bet = Bet.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_bet
+    @bet = Bet.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def bet_params
-      params.require(:bet).permit(:team1_goals, :team2_goals, :score, :user_id, :game_id, :league_id)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def bet_params
+    params.require(:bet).permit(:team1_goals, :team2_goals, :score, :user_id, :game_id, :league_id)
+  end
 end

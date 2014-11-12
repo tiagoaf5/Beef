@@ -144,6 +144,70 @@ function removeChampionship(obj) {
     $(obj).parent().remove();
 }
 
+function mybetsEdit() {
+    if($(".not-editable").is(":visible")) {
+        $(".not-editable").hide();
+        $(".editable").show();
+        /*    $("#btn-edit-mybets").hide();
+         $("#btn-save-mybets").show();*/
+    }
+    else {
+        $(".editable").hide();
+        $(".not-editable").show();
+        /*  $("#btn-save-mybets").hide();
+         $("#btn-edit-mybets").show();*/
+    }
+}
+
+function mybetsSave() {
+    var x = $(':input').serializeArray();
+    var championshipId = $('.championship').attr("id");
+    console.log(championshipId);
+    var array = new Array();
+
+    array["championship_id"] = championshipId;
+    array["bets"] = new Array();
+    for(var i = 0; i < x.length; i++) {
+        console.log("---> " + JSON.stringify(x[i]));
+
+        var tmp = x[i]["name"].split("-");
+        var betid = tmp[1];
+        var gameid = tmp[2];
+        var goals = x[i]["value"];
+
+        console.log([betid, gameid, goals]);
+        if(betid)
+            if(i % 2 !== 0)
+                array["bets"][betid]["team1"] = goals;
+
+            else
+                array["bets"][betid]["team2"] = goals;
+        else
+            console.log("tmp :" + tmp);
+
+    }
+
+    console.log(JSON.toString(array));
+
+
+
+    $.ajax({
+        url: "/bets/update_multiple.json",
+        type: "POST",
+        data: JSON.stringify(array),
+        dataType: "application/json",
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+        success: function () {
+            console.log("Benfica")
+        },
+        error: function(a,b,c) {
+            console.log(a);
+            console.log(b);
+            console.log(c);
+        }
+
+    });
+}
 
 $(document).ready(init);
 $(document).on('page:load', init);
