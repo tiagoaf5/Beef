@@ -13,6 +13,7 @@ class UsersController < ApplicationController
 
       @buddies_leagues=get_buddies(leagues)
       @my_leagues=get_my_leagues(leagues)
+      @x=get_score 1
 
       if current_user.id==params[:id].to_i
         @owner=1
@@ -31,11 +32,33 @@ class UsersController < ApplicationController
       temp=[]
       temp << league.league_id
       temp << League.find(league.league_id).name
+      score = get_score league.league_id
+      temp << score[0]
+      temp << score[1]
       temp << league.user_score
       my_leagues << temp
     end
 
     return my_leagues
+  end
+
+  def get_score id_league
+
+    users_at_league=LeagueUser.where(league_id: id_league).order("user_score DESC")
+
+    score=Array.new(2)
+    score[0]=1
+    score[1]= users_at_league.length
+
+    users_at_league.each do |user|
+      if user.user_id == params[:id].to_i
+        return score
+      end
+      score[0]=score[0]+1
+    end
+
+    return score
+
   end
 
   def get_buddies leagues
