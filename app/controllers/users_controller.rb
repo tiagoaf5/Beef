@@ -44,7 +44,7 @@ class UsersController < ApplicationController
 
   def get_score id_league
 
-    users_at_league=LeagueUser.where(league_id: id_league).order("user_score ASC")
+    users_at_league=LeagueUser.where(league_id: id_league).order("user_score DESC")
 
     score=Array.new(2)
     score[0]=1
