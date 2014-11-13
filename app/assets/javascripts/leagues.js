@@ -11,6 +11,8 @@ var friends_added = [];
 var championships_added = [];
 
 var init = function() {
+    $("#league_users").val('');
+    $("#league_championships").val('');
     $(".beth").popover();
 
     $(".bet_submit_new").on("click", function() {

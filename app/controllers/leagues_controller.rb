@@ -13,7 +13,9 @@ class LeaguesController < ApplicationController
   # GET /leagues/1
   # GET /leagues/1.json
   def show
+    puts league_scoreboard_path
     redirect_to(league_scoreboard_path)
+    puts 'ola2'
   end
 
 
@@ -44,6 +46,8 @@ class LeaguesController < ApplicationController
   def create
     @league = League.new(league_params.merge(:user_id => current_user.id).except(:users, :championships))
 
+    @league.owner = current_user
+
     if league_params['users'].present?
       user_array = league_params['users'].split(",")
       user_array.each  do |f|
@@ -59,13 +63,13 @@ class LeaguesController < ApplicationController
       return
     end
 
-    championship_array = [1]#league_params['championships'].split(",")
+    championship_array = league_params['championships'].split(",")
     championship_array.each  do |f|
       puts Championship.find(f)
       @league.championships << Championship.find(f)
     end
 
-    puts "??"
+    puts @league.inspect
     respond_to do |format|
       if @league.save
         puts "yay"
