@@ -145,24 +145,18 @@ function removeChampionship(obj) {
 }
 
 function mybetsEdit() {
-    if($(".not-editable").is(":visible")) {
-        $(".not-editable").hide();
-        $(".editable").show();
-        /*    $("#btn-edit-mybets").hide();
-         $("#btn-save-mybets").show();*/
-    }
-    else {
-        $(".editable").hide();
-        $(".not-editable").show();
-        /*  $("#btn-save-mybets").hide();
-         $("#btn-edit-mybets").show();*/
-    }
+    $(".not-editable").hide();
+    $(".editable").show();
+    $("#btn-edit-mybets").hide();
+    $("#btn-save-mybets").show();
 }
 
 function mybetsSave() {
+    $("#btn-save-mybets").hide();
+    $("#img-loading-mybets").show();
+
     var x = $(':input').serializeArray();
     var championshipId = $('.championship').attr("id");
-    console.log(championshipId);
     var array = {};
 
     array["championship_id"] = championshipId;
@@ -180,8 +174,8 @@ function mybetsSave() {
             var bet  = {};
             bet["bet_id"] = betid;
             bet["game_id"] = gameid;
-            bet["team1"] = goals1;
-            bet["team2"] = goals2;
+            bet["team1_goals"] = goals1;
+            bet["team2_goals"] = goals2;
 
             array["bets"].push(bet);
         }
@@ -200,17 +194,29 @@ function mybetsSave() {
         url: "/bets/update_multiple.json",
         type: "POST",
         data: JSON.stringify(array),
-        dataType: "application/json",
+        dataType: "json",
         beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-        success: function () {
-            console.log("Benfica")
+        success: function (result) {
+            console.log(result);
+
+            for(var i = 0; i < x.length; i++) {
+                $('input[name="' + x[i]["name"] + '"]').parent().prev().html(x[i]["value"]);
+            }
+
+            setTimeout(function() {
+                $("#img-loading-mybets").hide();
+                $("#btn-edit-mybets").show();
+                $(".editable").hide();
+                $(".not-editable").show();
+
+            }, 1000);
+
         },
         error: function(a,b,c) {
             console.log(a);
             console.log(b);
             console.log(c);
         }
-
     });
 }
 
