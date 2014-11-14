@@ -107,7 +107,10 @@ class UsersController < ApplicationController
         temp_leagues=[]
 
         v.each do |value|
-          temp_leagues << League.find(value).name
+          aux=[]
+          aux << value
+          aux << League.find(value).name
+          temp_leagues << aux
         end
 
         buddies_leagues[user]=temp_leagues
