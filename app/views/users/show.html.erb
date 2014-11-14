@@ -37,6 +37,7 @@
             <div class="tab-content">
                 <div id="my_leagues" class="tab-pane active">
                   <div class="row mt">
+                    <% if @my_leagues != nil && @my_leagues.length>0 %>
                     <div class="col-sm-8 col-md-offset-2">
                       <div class="content-panel">
                         <table class="table table-striped table-advance table-hover">
@@ -45,11 +46,11 @@
                             <th class="centered"><i class="fa fa-dribbble"></i> League</th>
                             <th class="centered"><i class="fa fa-trophy"></i> Current place</th>
                             <th class="centered"><i class="fa fa-flag"></i> Current score</th>
+                            <th></th>
                           </tr>
                           </thead>
                           <tbody>
                           <tr>
-                            <% if @my_leagues != nil %>
                             <% @my_leagues.each do |league| %>
                                 <td class="centered"><%= league[1] %></td>
                                 <td class="centered"><%= league[2]%> out of <%= league[3]%></td>
@@ -58,13 +59,19 @@
                                 <% else %>
                                     <td class="centered">0</td>
                                 <% end %>
-                            <% end %>
+                                    <td class="centered"><%= link_to "Details", league_path(league[0]) %></td>
                             <% end %>
                           </tr>
                           </tbody>
                         </table>
                       </div><!-- /content-panel -->
                     </div><!-- /col-md-10 -->
+                      <% else %>
+                        <div class="col-sm-8 col-md-offset-1">
+                          <h5>You don't have any leagues <i class="fa fa-frown-o"></i></h5>
+                          <h5> Create one <%= link_to "here!", new_league_path %>  </h5>
+                        </div>
+                      <% end %>
                     <div class="col-md-1"></div>
                   </div><!-- /row -->
                 </div><! --/tab-pane -->
@@ -84,9 +91,13 @@
                           <div class="custom-box">
                             <div class="servicetitle">
                               <% if buddy.name!=nil %>
-                                  <h4><%= buddy.name %></h4>
+                                  <%= link_to user_profile_path(buddy.id) do %>
+                                    <h4><%= buddy.name %></h4>
+                                  <% end %>
                               <% else %>
-                                  <h4><%= buddy.email %></h4>
+                                  <%= link_to user_profile_path(buddy.id) do %>
+                                    <h4><%= buddy.email %></h4>
+                                  <% end %>
                               <% end %>
                               <hr>
                             </div>
@@ -95,7 +106,9 @@
                             </div>
                             <ul class="pricing">
                               <% leagues.each do |league| %>
-                                <li><%= league %></li>
+                                  <%= link_to league_path(league[0]) do %>
+                                      <li><%= league[1] %></li>
+                                  <% end %>
                               <% end %>
                             </ul>
                           </div><!-- end custombox -->
