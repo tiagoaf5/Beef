@@ -91,11 +91,11 @@
                           <div class="custom-box">
                             <div class="servicetitle">
                               <% if buddy.name!=nil %>
-                                  <%= link_to user_profile_path(buddy.id) do %>
+                                  <%= link_to user_profile_path(buddy.id), class: "text-muted"  do %>
                                     <h4><%= buddy.name %></h4>
                                   <% end %>
                               <% else %>
-                                  <%= link_to user_profile_path(buddy.id) do %>
+                                  <%= link_to user_profile_path(buddy.id), class: "text-muted" do %>
                                     <h4><%= buddy.email %></h4>
                                   <% end %>
                               <% end %>
@@ -104,9 +104,13 @@
                             <div class="icn-main-container">
                               <p><%= image_tag "ui-sam.jpg", {class: "img-circle", width: "90"} %></p>
                             </div>
+                            <% if leagues.length>1 %>
+                            <ul class="pricing", style="height: 5em; overflow-y: scroll; overflow-x: hidden;">
+                            <% else %>
                             <ul class="pricing">
+                            <% end %>
                               <% leagues.each do |league| %>
-                                  <%= link_to league_path(league[0]) do %>
+                                  <%= link_to league_path(league[0]), class: "text-muted" do %>
                                       <li><%= league[1] %></li>
                                   <% end %>
                               <% end %>
