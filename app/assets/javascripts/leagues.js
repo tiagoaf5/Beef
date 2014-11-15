@@ -159,10 +159,12 @@ function mybetsEdit() {
     $(".editable").show();
     $("#btn-edit-mybets").hide();
     $("#btn-save-mybets").show();
+    $("#btn-cancel-mybets").show();
 }
 
 function mybetsSave() {
     $("#btn-save-mybets").hide();
+    $("#btn-cancel-mybets").hide();
     $("#img-loading-mybets").show();
 
     var x = $(':input').serializeArray();
@@ -229,6 +231,21 @@ function mybetsSave() {
         }
     });
 }
+
+function mybetsCancel() {
+    $("#btn-save-mybets").hide();
+    $("#btn-cancel-mybets").hide();
+    $("#btn-edit-mybets").show();
+
+    $(".editable").hide();
+    $('.editable>input').each(function() {
+        $(this).val($(this).parent().prev().html());
+    });
+
+    $(".not-editable").show();
+}
+
+
 
 $(document).ready(init);
 $(document).on('page:load', init);

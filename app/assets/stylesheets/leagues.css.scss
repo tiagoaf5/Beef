@@ -24,6 +24,8 @@
   background-color: #34495e;
 }
 */
+
+/* begin used in leaderboard, scoreboard, mybets, games */
 .table tbody>tr>td.vert-align, .table thead>tr>th.vert-align{
   vertical-align: middle;
 }
@@ -39,3 +41,21 @@
 .vert-align {
   vertical-align: middle;
 }
+/* end used in leaderboard, scoreboard, mybets, games */
+
+
+/* begin my bets loading */
+@-webkit-keyframes rotating {
+  from{
+    -webkit-transform: rotate(0deg);
+  }
+  to{
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+.rotating {
+  -webkit-animation: rotating 2s linear infinite;
+}
+
+/* end my bets loading */
