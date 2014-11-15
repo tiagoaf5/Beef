@@ -48,13 +48,11 @@ gem 'carmen-rails', '~> 1.0.0'
 # gem 'debugger', group: [:development, :test]
 
 gem 'json'
-gem 'whenever', :require => false
 gem 'rufus-scheduler'
 gem 'omniauth-facebook'
 gem 'httparty'
 
 group :development do
   gem 'rails-dev-boost', :git => 'git://github.com/thedarkone/rails-dev-boost.git'
+  #gem 'rb-inotify', '>= 0.8.8'
 end
-
-gem 'quiet_assets', group: :development

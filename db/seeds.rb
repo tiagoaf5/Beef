@@ -1,12 +1,5 @@
 # --------> Usar com rake db:reset <------------
-require "#{Rails.root}/import_api_data_helper.rb"
-
-data = FootballData.new
-# Does not have updated games in the API
-data.excluded_countries.push('France')
-data.excluded_league_names.push('Serie B 2014/15')
-data.excluded_league_names.push('Ehrendivision 2014/15')
-data.load_all_fixtures
+require "#{Rails.root}/football_data.rb"
 
 def select_matchday matchday, fixtures
   fixtures.select do |fixture|
@@ -88,15 +81,17 @@ def save_leagues_to_db leagues
   end
 end
 
-save_leagues_to_db data.fixtures
+puts 'Saving fixtures to database...'
+save_leagues_to_db FootballData.instance.fixtures
 
 puts "First game: #{Game.all.order(time: :asc).first.time.to_s}"
 puts "Last game: #{Game.all.order(time: :asc).last.time.to_s}"
-puts "Older game with result: #{Game.where.not(team1_goals: -1).order(:time).last.time}"
-puts "Newest game to be updated: #{Game.where(team1_goals: -1).order(:time).first.time}"
+puts "Last updated: #{Game.where.not(team1_goals: -1).order(:time).last.time}"
+puts "Next update: #{Game.where(team1_goals: -1).order(:time).first.time}"
 
 User.create! :email => 'beef1234@gmail.com', :password => 'beef1234', :password_confirmation => 'beef1234'
 
+puts 'Creating league and adding users...'
 league = League.create! name: "Bife com Atum", score_correct: 150, score_difference: 100, score_prediction: 75
 
 leagueOwner = User.create! :email => 'owner@a.com', :password => 'beef1234', :password_confirmation => 'beef1234'
@@ -107,6 +102,7 @@ league.users << (User.create! :email => 'a@a.com', :password => 'beef1234', :pas
 league.users << (User.create! :email => 'b@a.com', :password => 'beef1234', :password_confirmation => 'beef1234')
 league.users << (User.create! :email => 'c@a.com', :password => 'beef1234', :password_confirmation => 'beef1234')
 
+puts 'Filling random bets...'
 league.users.each do |user|
   random_bets user, league
 end
