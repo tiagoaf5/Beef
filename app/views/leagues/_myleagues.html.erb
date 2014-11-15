@@ -9,7 +9,7 @@
             <span><%= league.name %></span>
           </a>
           <ul class="sub">
-            <li ><%= link_to raw(("<i class='glyphicon glyphicon-align-justify'></i>")+" Leader Board"), league_scoreboard_path(league.id)%></li>
+            <li ><%= link_to raw(("<i class='glyphicon glyphicon-align-justify'></i>")+" Leader Board"), league_leaderboard_path(league.id)%></li>
             <li ><%= link_to raw(("<i class='glyphicon glyphicon-record'></i>")+" Games"), league_games_path(league.id)%></li>
             <li ><%= link_to raw(("<i class='glyphicon glyphicon-time'></i>")+" My Bets"), league_mybets_path(league.id)%></li>
             <% if league.owner_id == current_user.id %>

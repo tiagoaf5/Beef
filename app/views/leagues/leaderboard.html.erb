@@ -1,31 +1,27 @@
 <% content_for :leagues_c do %>
-    <div class="col-lg-8 panel">
+    <div class="row"></div>
+    <div class="col-md-11 content-panel">
       <table class="table table-responsive table-bordered table-hover">
         <thead class="text-center">
         <tr>
-          <th rowspan="2" class="text-center vert-align">#</th>
-          <th rowspan="2" class="text-center vert-align">User</th>
-          <th rowspan="2" class="text-center"># Bets</th>
-          <th class="text-center"># Correct result</th>
-          <th class="text-center"># Correct difference</th>
-          <th class="text-center"># Correct winner</th>
-          <th class="text-center"># Wrong</th>
-          <th rowspan="2" class="text-center vert-align">Total points</th>
+          <th class="text-center vert-align">#</th>
+          <th class="col-md-2 text-center vert-align">User</th>
+          <th class="col-md-1 text-center vert-align"># Bets</th>
+          <th class="col-md-2 text-center"># Correct result <br> (<%= @p1 %> points)</th>
+          <th class="col-md-2 text-center"># Correct difference <br> (<%= @p2 %> points)</th>
+          <th class="col-md-2 text-center"># Correct winner <br> (<%= @p3 %> points)</th>
+          <th class="col-md-2 text-center"># Wrong <br> (0 points)</th>
+          <th class="col-md-1 text-center vert-align">Total points</th>
         </tr>
-        <tr>
-          <th><%= @p1 %></th>
-          <th><%= @p2 %></th>
-          <th><%= @p3 %></th>
-          <th><%= 0 %></th>
-        </tr>
+
         </thead>
         <tbody class="">
         <% @data.each_with_index do |value, k| %>
-            <tr>
+            <tr class="<%= value[0] == current_user.id ? "text-primary" : "" %>">
               <td><%= k + 1 %></td>
               <td><%= @users.find(value[0]).email %></td>
               <% value[1].each do |v| %>
-                  <td><%= v[1] %> </td>
+                  <td class="text-center"><%= v[1] %> </td>
               <% end %>
             </tr>
         <% end %>
