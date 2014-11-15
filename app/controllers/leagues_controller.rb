@@ -1,6 +1,6 @@
 class LeaguesController < ApplicationController
   before_action :list_mine
-  before_action :set_league, only: [:show, :edit, :update, :destroy, :scoreboard]
+  before_action :set_league, only: [:show, :edit, :update, :destroy, :scoreboard, :leaderboard]
 
   # GET /leagues
   # GET /leagues.json
@@ -105,6 +105,42 @@ class LeaguesController < ApplicationController
       format.html { redirect_to leagues_url, notice: 'League was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def leaderboard
+    @users = @league.users
+    bets = @league.bets
+
+    #League details
+    @p1 = @league.score_correct
+    @p2 = @league.score_difference
+    @p3 = @league.score_prediction
+
+    @data = {}
+    @users.each do |user|
+      puts "-----------------------------------------"
+      my_bets = bets.where(user_id: user.id)
+      n_bets = my_bets.count
+      n_p1 = my_bets.where(score: @p1).count
+      n_p2 = my_bets.where(score: @p2).count
+      n_p3 = my_bets.where(score: @p3).count
+      n_p4 = my_bets.where(score: 0).count
+      total = my_bets.map { |x| x.score.nil? ? 0 : x.score}.sum
+      puts n_bets
+      puts n_p1
+      puts n_p2
+      puts n_p3
+      puts n_p4
+      puts total
+      data1 = {n_bets: n_bets, n_p1: n_p1, n_p2: n_p2, n_p3: n_p3, n_p4: n_p4, total: total}
+      @data[user.id] = data1
+    end
+    puts "--------------------------------------------------------------------"
+    puts @data.as_json
+    puts "--------------------------------------------------------------------"
+
+    @data = @data.sort_by{ |_,v| 0 - v[:total]}
+    puts @data
   end
 
   def scoreboard

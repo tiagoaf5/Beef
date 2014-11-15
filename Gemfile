@@ -56,3 +56,5 @@ gem 'httparty'
 group :development do
   gem 'rails-dev-boost', :git => 'git://github.com/thedarkone/rails-dev-boost.git'
 end
+
+gem 'quiet_assets', group: :development

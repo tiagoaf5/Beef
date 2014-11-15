@@ -1,0 +1,36 @@
+<% content_for :leagues_c do %>
+    <div class="col-lg-8 panel">
+      <table class="table table-responsive table-bordered table-hover">
+        <thead class="text-center">
+        <tr>
+          <th rowspan="2" class="text-center vert-align">#</th>
+          <th rowspan="2" class="text-center vert-align">User</th>
+          <th rowspan="2" class="text-center"># Bets</th>
+          <th class="text-center"># Correct result</th>
+          <th class="text-center"># Correct difference</th>
+          <th class="text-center"># Correct winner</th>
+          <th class="text-center"># Wrong</th>
+          <th rowspan="2" class="text-center vert-align">Total points</th>
+        </tr>
+        <tr>
+          <th><%= @p1 %></th>
+          <th><%= @p2 %></th>
+          <th><%= @p3 %></th>
+          <th><%= 0 %></th>
+        </tr>
+        </thead>
+        <tbody class="">
+        <% @data.each_with_index do |value, k| %>
+            <tr>
+              <td><%= k + 1 %></td>
+              <td><%= @users.find(value[0]).email %></td>
+              <% value[1].each do |v| %>
+                  <td><%= v[1] %> </td>
+              <% end %>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+
+<% end %>
