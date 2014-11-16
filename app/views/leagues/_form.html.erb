@@ -3,14 +3,21 @@
     var users = [];
     for(var k in users2) users.push(k);
 
+    console.log(users);
+    console.log(users2);
+
     var championships2 = <%= @championships_json %>;
     var championships = [];
     for(var k in championships2) championships.push(k);
+
+    console.log(championships);
+    console.log(championships2);
         //TODO erros, capturar enter, só alguns amigos
 </script>
 
-<%= form_for(@league) do |f| %>
-    <% if @league.errors.any? %>
+
+<%= form_for(@league, :remote => true) do |f| %>
+   <!-- <% if @league.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@league.errors.count, "error") %> prohibited this league from being saved:</h2>
       <ul>
@@ -19,30 +26,23 @@
       <% end %>
       </ul>
     </div>
-  <% end %>
+  <% end %> -->
+
   <div class="field">
     <%= f.label :name %><br>
-    <%= f.text_field :name, :class => 'name form-control' %>
-    <!-- <label for="name">League Name</label>
-    <input class="name form-control"type="text" name="league[name]">-->
+    <%= f.text_field :name, :class => 'name form-control', :required => true %>
   </div>
   <div class="field">
     <%= f.label :score_correct %> <i title="The points users will gain when they make a correct prediction on a matches result" class="glyphicon glyphicon-question-sign score_correct_helper"></i><br>
-    <%= f.number_field :score_correct, :class => 'name form-control' %>
-    <!-- <label for="score_correct">Points for correct prediction</label> <i title="The points users will gain when they make a correct prediction on a matches result" class="glyphicon glyphicon-question-sign score_correct_helper"></i><br>
-    <input class="score_correct form-control" size="3" min="0" max="999" type="number" name="league[score_correct]"> -->
+    <%= f.number_field :score_correct, :class => 'name form-control', :oninvalid => 'setCustomValidity(Please enter a number)', :pattern => '\d+', :required => true %>
   </div>
   <div class="field">
       <%= f.label :score_difference %> <i title="The points users will gain when they make a correct prediction on a matches goal difference" class="glyphicon glyphicon-question-sign score_correct_helper"></i><br>
-      <%= f.number_field :score_difference, :class => 'name form-control' %>
-      <!--<label for="score_difference">Points for correct goal difference</label> <i title="The points users will gain when they make a correct prediction on a matches goal difference" class="glyphicon glyphicon-question-sign score_correct_helper"></i><br>
-      <input class="score_difference form-control" size="3" min="0" max="999" type="number" name="league[score_difference]">-->
+      <%= f.number_field :score_difference, :class => 'name form-control', :required => true, :pattern => "\d+" %>
   </div>
   <div class="field">
     <%= f.label :score_prediction %> <i title="The points users will gain when they make a correct prediction on a matches result" class="glyphicon glyphicon-question-sign score_correct_helper"></i><br>
-    <%= f.number_field :score_prediction, :class => 'name form-control' %>
-    <!-- <label for="score_prediction">Score Prediction</label>
-    <input class="score_prediction form-control" size="3" min="0" max="999" type="number" name="league[score_prediction]"> -->
+    <%= f.number_field :score_prediction, :class => 'name form-control', :required => true, :pattern => "\d+" %>
   </div>
     <div id="friends-container" class="field">
         <%= f.hidden_field :users %>

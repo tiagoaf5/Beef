@@ -74,6 +74,8 @@ Rails.application.routes.draw do
 
   get '/leagues/:id/scoreboard', to: 'leagues#scoreboard', as: 'league_scoreboard'
 
+  get '/leagues/get_users/:name', to: 'leagues#get_users', as: 'get_users'
+
   get '/leagues/:id/games', to: 'leagues#games', as: 'league_games'
 
   get '/leagues/:id/mybets', to: 'leagues#mybets', as: 'league_mybets'

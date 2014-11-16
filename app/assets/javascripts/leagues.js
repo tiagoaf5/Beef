@@ -4,7 +4,7 @@ var friends_object2 = "     <i onclick=\"removeUser(this)\" class=\"remove-user 
 var championship_object1 = "<span class=\"championship-obj btn btn-primary\">";
 var championship_object2 = "     <i onclick=\"removeChampionship(this)\" class=\"remove-user glyphicon glyphicon-remove\"></i></span>";
 
-var dismissable_error1 = "<div class=\"alert alert-warning alert-dismissible\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button><strong>Warning!</strong>";
+var dismissable_error1 = "<div class=\"alert alert-danger alert-dismissible\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>";
 var dismissable_error2 = "</div>";
 
 var friends_added = [];
@@ -67,7 +67,7 @@ var init = function() {
         $("#friends_added").append(friends_object1 + f.val() + friends_object2);
         friends_added.push(users2[f.val()]);
         $("#league_users").val(friends_added);
-        //console.log(friends_added);
+        console.log(friends_added);
         f.val('');
         $("#friends-container").removeClass("has-error");
     });
@@ -92,29 +92,26 @@ var init = function() {
         source: championships
     });
 
-    /*$('form').submit(function() {
+    $('form').submit(function() {
         var valuesToSubmit = {};
         valuesToSubmit['league'] = {};
-        valuesToSubmit['league']['name'] = $('.name').val();
-        valuesToSubmit['league']['score_correct'] = $('.score_correct').val();
-        valuesToSubmit['league']['score_difference'] = $('.score_difference').val();
-        valuesToSubmit['league']['score_prediction'] = $('.score_prediction').val();
-        var user_ids = [];
+        valuesToSubmit['league']['name'] = $('#league_name').val();
+        valuesToSubmit['league']['score_correct'] = $('#league_score_correct').val();
+        valuesToSubmit['league']['score_difference'] = $('#league_score_difference').val();
+        valuesToSubmit['league']['score_prediction'] = $('#league_score_prediction').val();
         //console.log(friends_added);
         //console.log(friends_added.length);
-        for(var i = 0; i < friends_added.length; i++) {
-            user_ids.push(users2[friends_added[i]]);
-        }
-        //console.log(user_ids);
+
+        /*console.log(user_ids);
 
         var championship_ids = [];
         for(var i = 0; i < championships_added.length; i++) {
             championship_ids.push(championships2[championships_added[i]]);
         }
-        //console.log(championship_ids);
+        console.log(championship_ids);*/
 
-        valuesToSubmit['league']['users'] = user_ids;
-        valuesToSubmit['league']['championships'] = championship_ids;
+        valuesToSubmit['league']['users'] = friends_added;
+        valuesToSubmit['league']['championships'] = championships_added;
         console.log(valuesToSubmit);
         $.ajax({
             type: "POST",
@@ -126,13 +123,18 @@ var init = function() {
             data: valuesToSubmit,
             dataType: "JSON" // you want a difference between normal and ajax-calls, and json is standard
         }).done(function(json){
-            console.log("e");
+            console.log(json);
+            window.location.href = '/leagues/' + json['id'];
         }).fail(function(error) {
+            var errorArray = error.responseText.replace(/\[|\]|"|/g,'').split(',');
+            console.log(errorArray);
+            for(var i = 0; i < errorArray.length; i++) {
+                $("#errors").append(dismissable_error1 + errorArray[i] + dismissable_error2);
+            }
             console.log(error);
-            location.reload();
         });
         return false; // prevents normal behaviour
-    });*/
+    });
 
     $(".score_correct_helper").tooltip();
     $(".score_diff_helper").tooltip();

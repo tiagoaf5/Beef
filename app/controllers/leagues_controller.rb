@@ -15,7 +15,6 @@ class LeaguesController < ApplicationController
   def show
     puts league_scoreboard_path
     redirect_to(league_scoreboard_path)
-    puts 'ola2'
   end
 
 
@@ -44,9 +43,22 @@ class LeaguesController < ApplicationController
   # POST /leagues
   # POST /leagues.json
   def create
+    if !(user_signed_in?)
+      error_info = {
+          :error => "pii",
+      }
+      respond_to do |format|
+        puts "no user"
+        format.html { render :new }
+        format.json { render :json => error_info.to_json, status: :unprocessable_entity }
+      end
+      return
+    end
+
     @league = League.new(league_params.merge(:user_id => current_user.id).except(:users, :championships))
 
     @league.owner = current_user
+    @league.users << current_user
 
     if league_params['users'].present?
       user_array = league_params['users'].split(",")
@@ -55,18 +67,12 @@ class LeaguesController < ApplicationController
       end
     end
 
-    if !league_params['championships'].present?
-      respond_to do |format|
-        format.html { render :new }
-        format.json { render json: @league.errors, status: :unprocessable_entity }
+    if league_params['championships'].present?
+      championship_array = league_params['championships'].split(",")
+      championship_array.each  do |f|
+        puts Championship.find(f)
+        @league.championships << Championship.find(f)
       end
-      return
-    end
-
-    championship_array = league_params['championships'].split(",")
-    championship_array.each  do |f|
-      puts Championship.find(f)
-      @league.championships << Championship.find(f)
     end
 
     puts @league.inspect
@@ -76,12 +82,25 @@ class LeaguesController < ApplicationController
         format.html { redirect_to @league, notice: 'League was successfully created.' }
         format.json { render :show, status: :created, location: @league }
       else
-        puts @league.errors.full_messages
+        puts :new
         format.html { render :new }
-        format.json { render json: @league.errors, status: :unprocessable_entity }
+        format.json { render json: @league.errors.full_messages, status: :unprocessable_entity }
       end
     end
   end
+
+  def get_users
+      puts params[:name]
+      @users = User.where('name LIKE ?' ,"%"+params[:name]+"%").limit(10)
+      puts @users.as_json
+      respond_to do |format|
+        format.html { render json: {:users => @users}}
+        format.js {}
+        format.json {
+          render json: {:users => @users}
+        }
+      end
+    end
 
   # PATCH/PUT /leagues/1
   # PATCH/PUT /leagues/1.json
@@ -91,6 +110,7 @@ class LeaguesController < ApplicationController
         format.html { redirect_to @league, notice: 'League was successfully updated.' }
         format.json { render :show, status: :ok, location: @league }
       else
+
         format.html { render :edit }
         format.json { render json: @league.errors, status: :unprocessable_entity }
       end
@@ -194,7 +214,7 @@ class LeaguesController < ApplicationController
 
 # Never trust parameters from the scary internet, only allow the white list through.
   def league_params
-    params.require(:league).permit(:name, :score_correct, :score_difference, :score_prediction, :user_id, :users, :championships)
+    params.require(:league).permit(:name, :score_correct, :score_difference, :score_prediction, :user_id, :users => [], :championships => [])
   end
 
   def list_mine
