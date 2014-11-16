@@ -1,9 +1,14 @@
+require 'singleton'
+
 class FootballData
   include HTTParty
+  include Singleton
+
   base_uri 'http://www.football-data.org'
   attr_accessor :excluded_countries
   attr_accessor :excluded_league_names
   attr_reader :fixtures
+  attr_reader :newest_to_update
 
   def initialize
     @cache_filename = "api_data_cache.json"
@@ -17,26 +22,35 @@ class FootballData
     if File.exist? @cache_filename
       puts '...found!'
 
-      @fixtures = JSON.parse(File.read @cache_filename).map do |season|
-        season.deep_symbolize_keys!
-      end
+      read_from_cache
     else
       puts '...Not detected, re-downloading matches'
 
-      ids = league_ids
-
-      @fixtures = ids.map do |id|
-        fixtures_by_league id
-      end if not ids.nil?
-
-      fixtures_to_file @cache_filename
+      download_all_fixtures
     end
+  end
+
+  def download_all_fixtures
+    ids = league_ids
+
+    @fixtures = ids.map do |id|
+      fixtures_by_league id
+    end if not ids.nil?
 
     remove_excluded_countries!
     remove_excluded_league_names!
-    puts "Newest to update: #{find_newest_to_update}"
+    add_outdated_leagues_to_excluded!
+
+    puts "Next to be updated: #{@newest_to_update}"
+
+    fixtures_to_file @cache_filename
   end
 
+  def next_update_time
+    @newest_to_update[:time]
+  end
+
+  private
   def remove_excluded_countries!
     @fixtures.select! { |fixture| @excluded_countries.index( fixture[:country] ).nil? }
   end
@@ -45,8 +59,17 @@ class FootballData
     @fixtures.select! { |fixture| @excluded_league_names.index( fixture[:league_name] ).nil? }
   end
 
-  def exclude_outdated_leagues!
+  def add_outdated_leagues_to_excluded!
+    find_newest_to_update
 
+    if @newest_to_update[:time] < DateTime.now
+      puts "Removing outdated: #{@newest_to_update[:league_name]} because #{@newest_to_update} is a past game and has no result"
+
+      @excluded_league_names << @newest_to_update[:league_name]
+      remove_excluded_league_names!
+
+      add_outdated_leagues_to_excluded!
+    end
   end
 
   def find_newest_to_update
@@ -57,8 +80,10 @@ class FootballData
       fixture[:matches].each do |match|
         if match[:team1_goals] == -1
           if not @newest_to_update.nil?
-            @newest_to_update = match.dup if @newest_to_update[:time] > match[:time]
-            newest_league_name = fixture[:league_name]
+            if @newest_to_update[:time] > match[:time]
+              @newest_to_update = match.dup
+              newest_league_name = fixture[:league_name]
+            end
           else
             @newest_to_update = match.dup
             newest_league_name = fixture[:league_name]
@@ -71,7 +96,16 @@ class FootballData
     @newest_to_update
   end
 
-  private
+  def read_from_cache
+    @fixtures = JSON.parse(File.read @cache_filename).map do |season|
+      season.deep_symbolize_keys!
+    end
+
+    remove_excluded_countries!
+    remove_excluded_league_names!
+    add_outdated_leagues_to_excluded!
+  end
+
   def country_of_league league
     if league.include? "Bundesliga"
       "Germany"

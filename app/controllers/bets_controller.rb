@@ -1,8 +1,6 @@
 class BetsController < ApplicationController
   before_action :set_bet, only: [:show, :edit, :update, :destroy]
 
-  # map.resources :collection => { :update_multiple => :put}
-
   # GET /bets
   # GET /bets.json
   def index
@@ -67,12 +65,32 @@ class BetsController < ApplicationController
 
     puts a['bets']
 
-    a['bets'].each do |bet|
-      x = Bet.find(bet['bet_id'])
+    status = true
+
+    ActiveRecord::Base.transaction do
+      a['bets'].each do |bet|
+        #TODO: Check if it is already from the past
+        b = Bet.find(bet['bet_id']);
+        b.attributes = {
+            team1_goals: bet['team1_goals'],
+            team2_goals: bet['team2_goals']
+        }
+        status = status & b.save #save bet
+      end
     end
+
     puts "------------------------------------------------------------------------------------------"
 
 
+    puts status
+
+    puts "------------------------------------------------------------------------------------------"
+
+    message = {success: status};
+
+     respond_to do |format|
+       format.json { render json: message.as_json, status: :ok }
+     end
   end
 
   # DELETE /bets/1

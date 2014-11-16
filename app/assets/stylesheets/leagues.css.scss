@@ -23,15 +23,39 @@
   color: #1abc9c;
   background-color: #34495e;
 }
+*/
 
+/* begin used in leaderboard, scoreboard, mybets, games */
 .table tbody>tr>td.vert-align, .table thead>tr>th.vert-align{
   vertical-align: middle;
-}*/
+}
 
-.editable > .form-control {
+.editable > .form-control,  button.games-user-icon {
   padding: 0px;
   margin-top: -7px;
   margin-bottom: -10px;
   text-align: center;
-  width: 80px;
+  width: 50px;
 }
+
+.vert-align {
+  vertical-align: middle;
+}
+/* end used in leaderboard, scoreboard, mybets, games */
+
+
+/* begin my bets loading */
+@-webkit-keyframes rotating {
+  from{
+    -webkit-transform: rotate(0deg);
+  }
+  to{
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+.rotating {
+  -webkit-animation: rotating 2s linear infinite;
+}
+
+/* end my bets loading */
