@@ -53,19 +53,20 @@ var init = function() {
     });
 
     $("#friends").autocomplete({
-        source: users
+        source: '/get_users/' + $("#friends").val(),
+        minLength: 2
     });
 
     $(".add_friend").click(function(event) {
         event.preventDefault();
         var f = $("#friends");
-        if(users.indexOf(f.val()) == -1 || friends_added.indexOf(f.val()) != -1) {
+        if(friends_added.indexOf(f.val()) != -1 || !validateEmail(f.val())) {
             $("#friends-container").addClass("has-error");
             return;
         }
 
         $("#friends_added").append(friends_object1 + f.val() + friends_object2);
-        friends_added.push(users2[f.val()]);
+        friends_added.push(f.val());
         $("#league_users").val(friends_added);
         console.log(friends_added);
         f.val('');
@@ -73,6 +74,7 @@ var init = function() {
     });
 
     $(".add_championship").click(function(event) {
+        console.log($("#friends").val());
         event.preventDefault();
         var f = $("#championship");
         if(championships.indexOf(f.val()) == -1 || championships_added.indexOf(f.val()) != -1) {
@@ -144,7 +146,7 @@ var init = function() {
 
 function removeUser(obj) {
     var elem = $(obj).parent().text().replace(/ /g,'').replace(/(\r\n|\n|\r)/gm,'');
-    friends_added.splice(friends_added.indexOf(users2[elem]), 1);
+    friends_added.splice(friends_added.indexOf(elem), 1);
     $("#league_users").val(friends_added);
     $(obj).parent().remove();
 }
@@ -247,7 +249,10 @@ function mybetsCancel() {
     $(".not-editable").show();
 }
 
-
+function validateEmail(email) {
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+}
 
 $(document).ready(init);
 $(document).on('page:load', init);

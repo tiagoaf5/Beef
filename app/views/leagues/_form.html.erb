@@ -1,11 +1,4 @@
 <script type="text/javascript">
-    var users2 = <%= @users_json %>;
-    var users = [];
-    for(var k in users2) users.push(k);
-
-    console.log(users);
-    console.log(users2);
-
     var championships2 = <%= @championships_json %>;
     var championships = [];
     for(var k in championships2) championships.push(k);
@@ -49,7 +42,7 @@
         <div>
             <label for="friends">Friends</label>
         </div>
-        <input id="friends" class="form-control" type="text"/>
+        <input id="friends" class="form-control" type="email"/>
         <span id="friends_added"></span><br>
         <button type="button" class="add_friend btn">Add</button>
     </div>

@@ -44,13 +44,9 @@ class LeaguesController < ApplicationController
   # POST /leagues.json
   def create
     if !(user_signed_in?)
-      error_info = {
-          :error => "pii",
-      }
       respond_to do |format|
-        puts "no user"
         format.html { render :new }
-        format.json { render :json => error_info.to_json, status: :unprocessable_entity }
+        format.json { render :json => "You are not logged in!", status: :unprocessable_entity }
       end
       return
     end
@@ -63,7 +59,11 @@ class LeaguesController < ApplicationController
     if league_params['users'].present?
       user_array = league_params['users'].split(",")
       user_array.each  do |f|
-        @league.users << User.find(f)
+        if User.find_by_email(f).blank?
+          #send email?
+        else
+          @league.users << User.find_by_email(f)
+        end
       end
     end
 
@@ -90,14 +90,14 @@ class LeaguesController < ApplicationController
   end
 
   def get_users
-      puts params[:name]
-      @users = User.where('name LIKE ?' ,"%"+params[:name]+"%").limit(10)
-      puts @users.as_json
+      puts '%' + params[:term] + '%'
+      @users = User.where('email ILIKE ?', '%' + params[:term] + '%').limit(10)
+
       respond_to do |format|
-        format.html { render json: {:users => @users}}
+        format.html { render json: @users.map(&:email)}
         format.js {}
         format.json {
-          render json: {:users => @users}
+          render json: @users.map(&:email)
         }
       end
     end
