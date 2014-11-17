@@ -83,7 +83,7 @@ var init = function() {
         }
 
         $("#championships_added").append(championship_object1 + f.val() + championship_object2);
-        championships_added.push(championships2[f.val()]);
+        championships_added.push(f.val());
         $("#league_championships").val(championships_added);
         //console.log(championships_added);
         f.val('');
@@ -153,7 +153,7 @@ function removeUser(obj) {
 
 function removeChampionship(obj) {
     var elem = $(obj).parent().text().replace(/ /g,'').replace(/(\r\n|\n|\r)/gm,'');
-    championships_added.splice(championships_added.indexOf(championships2[elem]), 1);
+    championships_added.splice(championships_added.indexOf(elem), 1);
     $("#league_championships").val(championships_added);
     $(obj).parent().remove();
 }

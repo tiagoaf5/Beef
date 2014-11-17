@@ -1,11 +1,6 @@
 <script type="text/javascript">
-    var championships2 = <%= @championships_json %>;
-    var championships = [];
-    for(var k in championships2) championships.push(k);
-
-    console.log(championships);
-    console.log(championships2);
-        //TODO erros, capturar enter, só alguns amigos
+    var championships = <%= raw  @championships %>;
+        //TODO capturar enter
 </script>
 
 

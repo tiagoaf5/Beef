@@ -20,19 +20,12 @@ class LeaguesController < ApplicationController
 
   # GET /leagues/new
   def new
-    @users = User.all.inject({}) do |result, element|
-      result[element[:email]] = element[:id]
-      result
-    end#mod.map(&:email)
-    @users_json = @users.to_json.html_safe
-    #@user_ids = User.all.map(&:id)
-    # = .select('id', 'name').all#.map(&:name)
-    @championships = Championship.all.inject({}) do |result, element|
-      result[element[:name]] = element[:id]
-      result
-    end
-    @championships_json = @championships.to_json.html_safe
-    #@championships_ids = Championship.all.map(&:id)
+    #@championships = Championship.all.inject({}) do |result, element|
+    #  result[element[:name]] = element[:id]
+    #  result
+    #end
+    #@championships_json = @championships.to_json.html_safe
+    @championships = Championship.all.map(&:name)
     @league = League.new
   end
 
@@ -57,8 +50,7 @@ class LeaguesController < ApplicationController
     @league.users << current_user
 
     if league_params['users'].present?
-      user_array = league_params['users'].split(",")
-      user_array.each  do |f|
+      league_params['users'].each  do |f|
         if User.find_by_email(f).blank?
           #send email?
         else
@@ -68,21 +60,16 @@ class LeaguesController < ApplicationController
     end
 
     if league_params['championships'].present?
-      championship_array = league_params['championships'].split(",")
-      championship_array.each  do |f|
-        puts Championship.find(f)
-        @league.championships << Championship.find(f)
+      league_params['championships'].each  do |f|
+        @league.championships << Championship.find_by_name(f)
       end
     end
 
-    puts @league.inspect
     respond_to do |format|
       if @league.save
-        puts "yay"
         format.html { redirect_to @league, notice: 'League was successfully created.' }
         format.json { render :show, status: :created, location: @league }
       else
-        puts :new
         format.html { render :new }
         format.json { render json: @league.errors.full_messages, status: :unprocessable_entity }
       end
