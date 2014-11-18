@@ -8,6 +8,7 @@ class LeaguesController < ApplicationController
     #@leagues = League.all
    # (@myleagues && @myleagues.size != 0) ? redirect_to(league_path(@myleagues.first.league)) : redirect_to(new_league_path)
     #  @leagues = League.all.includes(:bets)
+
   end
 
   # GET /leagues/1
@@ -249,6 +250,21 @@ class LeaguesController < ApplicationController
 
     users_order = users_order.sort_by { |v| 0 - v[1] }
     users_order.map { |v| v[0] }
+  end
+
+  def updown league
+    games = @league.championships.take.games
+
+    gamesbeforetoday = games.where("time < (SELECT date_trunc('day', TIMESTAMP NOW()))",params[:time])
+    puts(gamesbeforetoday)
+    # calculate scores for all users -> sum bets para jogos, agrupar users
+    gamesbeforetoday = gamesbeforetoday.bets.sum(:score,:group => 'user_id',:order => 'SUM(score) DESC')
+    puts(gamesbeforetoday)
+    # ordenar top
+    #verificar pos do meu jogador
+    #o mesmo incluindo os jogos de hoje
+
+
   end
 
 end
