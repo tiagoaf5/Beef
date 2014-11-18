@@ -1,14 +1,13 @@
 class LeaguesController < ApplicationController
   before_action :list_mine
   before_action :set_league, only: [:show, :edit, :update, :destroy, :scoreboard, :leaderboard]
-
+  helper_method :updown
   # GET /leagues
   # GET /leagues.json
   def index
     #@leagues = League.all
    # (@myleagues && @myleagues.size != 0) ? redirect_to(league_path(@myleagues.first.league)) : redirect_to(new_league_path)
     #  @leagues = League.all.includes(:bets)
-
   end
 
   # GET /leagues/1
@@ -253,17 +252,29 @@ class LeaguesController < ApplicationController
   end
 
   def updown league
-    games = @league.championships.take.games
+    usersTop = league.bets.joins(:game).where("games.time < date_trunc('day', current_timestamp)").group("user_id").sum(:score)
+    usersTop = usersTop.sort_by { |k, v| v }.reverse
+    oldPos = 0;
+    usersTop.each{|x|
+    if(x.at(0) == current_user.id)
+      oldPos = usersTop.index(x)
+      break
+    end
+    }
 
-    gamesbeforetoday = games.where("time < (SELECT date_trunc('day', TIMESTAMP NOW()))",params[:time])
-    puts(gamesbeforetoday)
-    # calculate scores for all users -> sum bets para jogos, agrupar users
-    gamesbeforetoday = gamesbeforetoday.bets.sum(:score,:group => 'user_id',:order => 'SUM(score) DESC')
-    puts(gamesbeforetoday)
-    # ordenar top
-    #verificar pos do meu jogador
-    #o mesmo incluindo os jogos de hoje
+    nusersTop = league.bets.joins(:game).group("user_id").sum(:score)
+    nusersTop = nusersTop.sort_by { |k, v| v }.reverse
+    nPos = 0
+    nPoints = 0
+    nusersTop.each{|x|
+      if(x.at(0) == current_user.id)
+        nPos = nusersTop.index(x)
+        nPoints = x.at(1)
+        break
+      end
+    }
 
+    return [nPos,oldPos - nPos,nPoints,oldPos]
 
   end
 

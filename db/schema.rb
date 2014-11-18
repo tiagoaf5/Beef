@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 20141111112250) do
     t.integer  "league_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_score", default: 0
+    t.integer  "user_score"
   end
 
   add_index "league_users", ["league_id"], name: "index_league_users_on_league_id", using: :btree
