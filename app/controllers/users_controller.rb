@@ -8,17 +8,33 @@ class UsersController < ApplicationController
       @name=@user.name
       @email=@user.email
       @owner=0
+      @friend=0
 
       leagues=LeagueUser.where(user_id: params[:id])
-
       @buddies_leagues=get_buddies(leagues)
-      @my_leagues=get_my_leagues(leagues)
-      @x=get_score 1
 
       if current_user.id==params[:id].to_i
         @owner=1
+        @my_leagues=get_my_leagues(leagues)
 
+      else if @buddies_leagues.has_key?(User.find(current_user.id))
+
+            @friend=1
+            @buddy_leagues=LeagueUser.where(user_id: current_user.id).ids
+            intersection=Array.new
+
+            leagues.each do |league|
+              if(@buddy_leagues.include?(league.league_id))
+                intersection << league
+              end
+            end
+
+            if intersection.length>0
+              @my_leagues=get_my_leagues(intersection)
+            end
+          end
       end
+
     end
   end
 
