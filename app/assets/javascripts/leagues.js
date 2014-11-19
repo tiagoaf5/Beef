@@ -57,39 +57,6 @@ var init = function() {
         minLength: 2
     });
 
-    $(".add_friend").click(function(event) {
-        event.preventDefault();
-        var f = $("#friends");
-        if(friends_added.indexOf(f.val()) != -1 || !validateEmail(f.val())) {
-            $("#friends-container").addClass("has-error");
-            return;
-        }
-
-        $("#friends_added").append(friends_object1 + f.val() + friends_object2);
-        friends_added.push(f.val());
-        $("#league_users").val(friends_added);
-        console.log(friends_added);
-        f.val('');
-        $("#friends-container").removeClass("has-error");
-    });
-
-    $(".add_championship").click(function(event) {
-        console.log($("#friends").val());
-        event.preventDefault();
-        var f = $("#championship");
-        if(championships.indexOf(f.val()) == -1 || championships_added.indexOf(f.val()) != -1) {
-            $("#championship-container").addClass("has-error");
-            return;
-        }
-
-        $("#championships_added").append(championship_object1 + f.val() + championship_object2);
-        championships_added.push(f.val());
-        $("#league_championships").val(championships_added);
-        //console.log(championships_added);
-        f.val('');
-        $("#championship-container").removeClass("has-error");
-    });
-
     $("#championship").autocomplete({
         source: championships
     });
@@ -151,6 +118,36 @@ function removeUser(obj) {
     $(obj).parent().remove();
 }
 
+function addFriend() {
+    var f = $("#friends");
+    if(friends_added.indexOf(f.val()) != -1 || !validateEmail(f.val())) {
+        $("#friends-container").addClass("has-error");
+        return;
+    }
+
+    $("#friends_added").append(friends_object1 + f.val() + friends_object2);
+    friends_added.push(f.val());
+    $("#league_users").val(friends_added);
+    console.log(friends_added);
+    f.val('');
+    $("#friends-container").removeClass("has-error");
+}
+
+function addChampionship() {
+    var f = $("#championship");
+    if(championships.indexOf(f.val()) == -1 || championships_added.indexOf(f.val()) != -1) {
+        $("#championship-container").addClass("has-error");
+        return;
+    }
+
+    $("#championships_added").append(championship_object1 + f.val() + championship_object2);
+    championships_added.push(f.val());
+    $("#league_championships").val(championships_added);
+    //console.log(championships_added);
+    f.val('');
+    $("#championship-container").removeClass("has-error");
+}
+
 function removeChampionship(obj) {
     var elem = $(obj).parent().text().replace(/ /g,'').replace(/(\r\n|\n|\r)/gm,'');
     championships_added.splice(championships_added.indexOf(elem), 1);
@@ -165,6 +162,22 @@ function mybetsEdit() {
     $("#btn-save-mybets").show();
     $("#btn-cancel-mybets").show();
 }
+
+function returnHandlerFriend(event) {
+    if (event.which == 13 || event.keyCode == 13) {
+        addFriend();
+        return false;
+    }
+    return true;
+};
+
+function returnHandlerChampionship(event) {
+    if (event.which == 13 || event.keyCode == 13) {
+        addChampionship();
+        return false;
+    }
+    return true;
+};
 
 function mybetsSave() {
     $("#btn-save-mybets").hide();
