@@ -12,10 +12,12 @@ class UsersController < ApplicationController
 
       leagues=LeagueUser.where(user_id: params[:id])
       @buddies_leagues=get_buddies(leagues)
+      @my_leagues=get_my_leagues(leagues)
+      @stats=get_stats(leagues)
+
 
       if current_user.id==params[:id].to_i
         @owner=1
-        @my_leagues=get_my_leagues(leagues)
 
       else if @buddies_leagues.has_key?(User.find(current_user.id))
 
@@ -30,7 +32,7 @@ class UsersController < ApplicationController
             end
 
             if intersection.length>0
-              @my_leagues=get_my_leagues(intersection)
+              @my_leagues_intersection=get_my_leagues(intersection)
             end
           end
       end
@@ -39,6 +41,27 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def get_stats leagues
+
+    my_stats=Hash.new
+
+    leagues.each do |league|
+      league_complete=League.find(league.league_id)
+      won=league_complete.score_correct
+      prediction=league_complete.score_prediction
+      difference=league_complete.score_difference
+
+      bets=Bet.where("user_id = ? AND league_id = ?", params[:id], league.league_id)
+      my_stats["size"]=bets.count
+      my_stats["won"]=bets.where("score=? ", won).count
+      my_stats["prediction"]=bets.where("score=? ", prediction).count
+      my_stats["difference"]=bets.where("score=? ", difference).count
+      my_stats["lost"]=bets.where("score=? ", 0).count
+    end
+
+    return my_stats
+  end
 
   def get_my_leagues leagues
 

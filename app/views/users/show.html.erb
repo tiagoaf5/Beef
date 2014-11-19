@@ -1,4 +1,3 @@
-
 <div class="row mt">
 <div class="col-lg-12">
   <div class="row content-panel">
@@ -52,8 +51,12 @@
                     <div class="col-md-7 col-xs-12">
                     <div class="col-sm-3 col-xs-4">
                       <h1><i class="fa fa-trophy"></i></h1>
-                      <h3>10</h3>
-                      <h6>LEAGUES</h6>
+                      <h3><%= @my_leagues.length %></h3>
+                      <h6><% if @my_leagues.length==1%>
+                            LEAGUE
+                          <% else %>
+                            LEAGUES
+                          <% end %> </h6>
                     </div>
                     <div class="col-sm-3 col-xs-4">
                       <h1><i class="fa fa-dribbble"></i></h1>
@@ -62,34 +65,42 @@
                     </div>
                     <div class="col-sm-3 col-xs-4">
                       <h1><i class="fa fa-money"></i></h1>
-                      <h3>1980</h3>
-                      <h6>BETS</h6>
+                      <h3> <%= @stats["size"] %> </h3>
+                      <h6><% if @stats["size"]==1%>
+                            BET
+                        <% else %>
+                            BETS
+                        <% end %> </h6>
                     </div>
                     <div class="col-sm-3 col-xs-4">
                       <h1><i class="fa fa-users"></i></h1>
-                      <h3>40</h3>
-                      <h6>BUDDIES</h6>
+                      <h3> <%= @buddies_leagues.length %> </h3>
+                      <h6><% if @buddies_leagues.length==1%>
+                            BUDDY
+                        <% else %>
+                            BUDDIES
+                        <% end %> </h6>
                     </div>
                 <div class="row centered mt mb hidden-xs">
                   </div>
                     <div class="col-sm-3 col-xs-4">
                       <h1><i class="fa fa-smile-o"></i></h1>
-                      <h3>10</h3>
+                      <h3><%= @stats["won"] %> </h3>
                       <h6>BETS CORRECT</h6>
                     </div>
                     <div class="col-sm-3 col-xs-4">
                       <h1><i class="fa fa-check-circle"></i></h1>
-                      <h3>37</h3>
+                      <h3><%= @stats["prediction"] %></h3>
                       <h6>BETS PREDICTION</h6>
                     </div>
                     <div class="col-sm-3 col-xs-4">
                       <h1><i class="fa fa-check-circle-o"></i></h1>
-                      <h3>1980</h3>
+                      <h3><%= @stats["difference"] %></h3>
                       <h6>BETS DIFFERENCE</h6>
                     </div>
                     <div class="col-sm-3 col-xs-4">
                       <h1><i class="fa fa-frown-o"></i></h1>
-                      <h3>40</h3>
+                      <h3><%= @stats["lost"] %></h3>
                       <h6>BETS LOST</h6>
                     </div>
 
@@ -134,6 +145,7 @@
                           </thead>
                           <tbody>
                           <tr>
+                            <% if @owner==1 %>
                             <% @my_leagues.each do |league| %>
                                 <td class="centered"><%= league[1] %></td>
                                 <td class="centered"><%= league[2]%> out of <%= league[3]%></td>
@@ -143,6 +155,18 @@
                                     <td class="centered">0</td>
                                 <% end %>
                                     <td class="centered"><%= link_to "Details", league_path(league[0]) %></td>
+                            <% end %>
+                            <% else %>
+                                <% @my_leagues_intersection.each do |league| %>
+                                    <td class="centered"><%= league[1] %></td>
+                                    <td class="centered"><%= league[2]%> out of <%= league[3]%></td>
+                                    <% if league[4]!=nil %>
+                                        <td class="centered"><%= league[4] %></td>
+                                    <% else %>
+                                        <td class="centered">0</td>
+                                    <% end %>
+                                    <td class="centered"><%= link_to "Details", league_path(league[0]) %></td>
+                                <% end %>
                             <% end %>
                           </tr>
                           </tbody>
