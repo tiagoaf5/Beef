@@ -36,7 +36,7 @@ class UsersController < ApplicationController
                 intersection << league
               end
             end
-            
+
             if intersection.length>0
               @my_leagues_intersection=get_my_leagues(intersection)
             end
@@ -51,6 +51,8 @@ class UsersController < ApplicationController
   def get_stats leagues
 
     my_stats=Hash.new
+    my_championships_id=Array.new
+    my_stats["games"]=0
 
     leagues.each do |league|
       league_complete=League.find(league.league_id)
@@ -59,11 +61,19 @@ class UsersController < ApplicationController
       difference=league_complete.score_difference
 
       bets=Bet.where("user_id = ? AND league_id = ?", params[:id], league.league_id)
-      my_stats["size"]=bets.count
       my_stats["won"]=bets.where("score=? ", won).count
       my_stats["prediction"]=bets.where("score=? ", prediction).count
       my_stats["difference"]=bets.where("score=? ", difference).count
       my_stats["lost"]=bets.where("score=? ", 0).count
+      my_stats["size"]=my_stats["won"]+my_stats["prediction"]+my_stats["difference"]+my_stats["lost"]
+
+      champ_found=LeagueChampionship.find_by(league_id: league.league_id)
+      my_championships_id << champ_found.championship_id
+    end
+
+    my_championships_id.each do |champ|
+      num_games=Game.where("championship_id= ? AND time < ?", champ, Time.current).count
+      my_stats["games"]=my_stats["games"]+num_games
     end
 
     return my_stats
