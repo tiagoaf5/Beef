@@ -71,6 +71,19 @@ class UsersController < ApplicationController
       my_championships_id << champ_found.championship_id
     end
 
+    if my_stats["size"]!=0
+      my_stats["won_ratio"]=my_stats["won"]/my_stats["size"]*100
+      my_stats["prediction_ratio"]=my_stats["prediction"]/my_stats["size"]*100
+      my_stats["difference_ratio"]=my_stats["difference"]/my_stats["size"]*100
+      my_stats["lost_ratio"]=my_stats["lost"]/my_stats["size"]*100
+    else
+      my_stats["won_ratio"]=0
+      my_stats["prediction_ratio"]=0
+      my_stats["difference_ratio"]=0
+      my_stats["lost_ratio"]=0
+    end
+
+
     my_championships_id.each do |champ|
       num_games=Game.where("championship_id= ? AND time < ?", champ, Time.current).count
       my_stats["games"]=my_stats["games"]+num_games

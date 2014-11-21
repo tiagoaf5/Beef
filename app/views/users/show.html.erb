@@ -86,22 +86,22 @@
                     <div class="col-sm-3 col-xs-4">
                       <h1><i class="fa fa-smile-o"></i></h1>
                       <h3><%= @stats["won"] %> </h3>
-                      <h6>BETS CORRECT</h6>
+                      <h6>CORRECT BETS</h6>
                     </div>
                     <div class="col-sm-3 col-xs-4">
                       <h1><i class="fa fa-check-circle"></i></h1>
                       <h3><%= @stats["prediction"] %></h3>
-                      <h6>BETS PREDICTION</h6>
+                      <h6>CORRECT WINNER</h6>
                     </div>
                     <div class="col-sm-3 col-xs-4">
                       <h1><i class="fa fa-check-circle-o"></i></h1>
                       <h3><%= @stats["difference"] %></h3>
-                      <h6>BETS DIFFERENCE</h6>
+                      <h6>CORRECT DIFFERENCE</h6>
                     </div>
                     <div class="col-sm-3 col-xs-4">
                       <h1><i class="fa fa-frown-o"></i></h1>
                       <h3><%= @stats["lost"] %></h3>
-                      <h6>BETS LOST</h6>
+                      <h6>WRONG BETS</h6>
                     </div>
 
                 </div><! --/row -->
@@ -119,9 +119,9 @@
                     <path fill="#34495e" stroke="#ffffff" d="M170.25002230992683,105.18132422235105A112,112,0,0,0,190.67435402612227,262.2446116801033L159.25675788634814,303.0512858008651A163.5,163.5,0,0,1,129.44088078279498,73.76693312816425Z" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
                     <path fill="none" stroke="#3498db" d="M192.50450525756543,259.8675238672434A109,109,0,0,0,258.96575664063926,282.49999462106564" stroke-width="2" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path>
                     <path fill="#3498db" stroke="#ffffff" d="M190.67435402612227,262.2446116801033A112,112,0,0,0,258.9648141628587,285.4999944730216L258.9502057572598,331.9999921783386A158.5,158.5,0,0,1,162.3070099387534,299.0894727794319Z" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
-                    <text x="259" y="163.5" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: 800; font-stretch: normal; font-size: 15px; line-height: normal; font-family: Arial;" font-size="15px" font-weight="800" transform="matrix(2.4773,0,0,2.4773,-382.6136,-257.7841)" stroke-width="0.4036697247706422">
-                      <tspan dy="6" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Custard</tspan></text>
-                    <text x="259" y="183.5" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Arial;" font-size="14px" transform="matrix(2.2708,0,0,2.2708,-329.1458,-223.0313)" stroke-width="0.4403669724770642">
+                    <text x="259" y="163.5" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: 800; font-stretch: normal; font-size: 10px; line-height: normal; font-family: Arial;" font-size="15px" font-weight="800" transform="matrix(2.4773,0,0,2.4773,-382.6136,-257.7841)" stroke-width="0.4036697247706422">
+                      <tspan dy="6" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Correct bet rate</tspan></text>
+                    <text x="259" y="183.5" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; line-height: normal; font-family: Arial;" font-size="14px" transform="matrix(2.2708,0,0,2.2708,-329.1458,-223.0313)" stroke-width="0.4403669724770642">
                       <tspan dy="5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">25%
                     </tspan></text></svg></div>
                   </div>
@@ -244,12 +244,13 @@
             Morris.Donut({
                 element: 'hero-donut',
                 data: [
-                    {label: 'Jam', value: 25 },
-                    {label: 'Frosted', value: 40 },
-                    {label: 'Custard', value: 25 },
-                    {label: 'Sugar', value: 10 }
+                    {label: 'Correct', value: <%= @stats["won_ratio"] %> },
+                    {label: 'Difference', value: <%= @stats["prediction_ratio"] %> },
+                    {label: 'Winner', value: <%= @stats["difference_ratio"] %> },
+                    {label: 'Wronf', value: <%= @stats["lost_ratio"] %> }
                 ],
-                colors: ['#3498db', '#2980b9', '#34495e'],
+
+                colors: ['#3498db', '#2980b9', '#34495e', '#34ff5e'],
                 formatter: function (y) { return y + "%" }
             });
 
