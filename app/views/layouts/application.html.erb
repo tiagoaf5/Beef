@@ -236,7 +236,7 @@ MAIN SIDEBAR MENU
     <!-- sidebar menu start-->
     <ul class="sidebar-menu" id="nav-accordion">
 
-      <p class="centered"><a href="profile.html">
+      <p class="centered"><a href="<%= user_profile_path(current_user.id)%>">
         <% if user_signed_in? && current_user.image? %>
             <%= image_tag current_user.image, {class: "img-circle", width: "80"} %>
         <% else %>

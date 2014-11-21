@@ -14,7 +14,7 @@ class LeaguesController < ApplicationController
   # GET /leagues/1.json
   def show
     puts league_scoreboard_path
-    redirect_to(league_scoreboard_path)
+    redirect_to(league_leaderboard_path)
   end
 
 
