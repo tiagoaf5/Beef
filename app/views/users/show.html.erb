@@ -1,3 +1,4 @@
+
 <div class="row mt">
 <div class="col-lg-12">
   <div class="row content-panel">
@@ -105,7 +106,7 @@
             </div>
 
           </div><! --/row -->
-
+            
           <div class="col-md-5 hidden-sm hidden-xs">
             <div id="hero-donut" class="graph">
             </div>
@@ -222,7 +223,7 @@
 </div><!-- /col-lg-12 -->
 </div><! --/row -->
 
-<!--common script for all pages-->
+
 <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 <script src="http://cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
 
@@ -233,12 +234,12 @@
             element: 'hero-donut',
             data: [
                 {label: 'Correct', value: <%= @stats["won_ratio"] %> },
-                {label: 'Difference', value: <%= @stats["prediction_ratio"] %> },
-                {label: 'Winner', value: <%= @stats["difference_ratio"] %> },
-                {label: 'Wronf', value: <%= @stats["lost_ratio"] %> }
+                {label: 'Winner', value: <%= @stats["prediction_ratio"] %> },
+                {label: 'Difference', value: <%= @stats["difference_ratio"] %> },
+                {label: 'Wrong', value: <%= @stats["lost_ratio"] %> }
             ],
 
-            colors: ['#3498db', '#2980b9', '#34495e', '#34ff5e'],
+            colors: ['#33FF99', '#33CC99', '#339999', '#336699'],
             formatter: function (y) { return y + "%" }
         });
 

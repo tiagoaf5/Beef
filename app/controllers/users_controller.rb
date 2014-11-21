@@ -53,6 +53,10 @@ class UsersController < ApplicationController
     my_stats=Hash.new
     my_championships_id=Array.new
     my_stats["games"]=0
+    my_stats["won"]=0
+    my_stats["prediction"]=0
+    my_stats["difference"]=0
+    my_stats["lost"]=0
 
     leagues.each do |league|
       league_complete=League.find(league.league_id)
@@ -61,21 +65,22 @@ class UsersController < ApplicationController
       difference=league_complete.score_difference
 
       bets=Bet.where("user_id = ? AND league_id = ?", params[:id], league.league_id)
-      my_stats["won"]=bets.where("score=? ", won).count
-      my_stats["prediction"]=bets.where("score=? ", prediction).count
-      my_stats["difference"]=bets.where("score=? ", difference).count
-      my_stats["lost"]=bets.where("score=? ", 0).count
-      my_stats["size"]=my_stats["won"]+my_stats["prediction"]+my_stats["difference"]+my_stats["lost"]
+      my_stats["won"]=my_stats["won"]+bets.where("score=? ", won).count
+      my_stats["prediction"]=my_stats["prediction"]+bets.where("score=? ", prediction).count
+      my_stats["difference"]=my_stats["difference"]+bets.where("score=? ", difference).count
+      my_stats["lost"]=my_stats["lost"]+bets.where("score=? ", 0).count
 
       champ_found=LeagueChampionship.find_by(league_id: league.league_id)
       my_championships_id << champ_found.championship_id
     end
 
+    my_stats["size"]=my_stats["won"]+my_stats["prediction"]+my_stats["difference"]+my_stats["lost"]
+
     if my_stats["size"]!=0
-      my_stats["won_ratio"]=my_stats["won"]/my_stats["size"]*100
-      my_stats["prediction_ratio"]=my_stats["prediction"]/my_stats["size"]*100
-      my_stats["difference_ratio"]=my_stats["difference"]/my_stats["size"]*100
-      my_stats["lost_ratio"]=my_stats["lost"]/my_stats["size"]*100
+      my_stats["won_ratio"]="%.2f" % (my_stats["won"].to_f/my_stats["size"]*100)
+      my_stats["prediction_ratio"]="%.2f" % (my_stats["prediction"].to_f/my_stats["size"]*100)
+      my_stats["difference_ratio"]="%.2f" % (my_stats["difference"].to_f/my_stats["size"]*100)
+      my_stats["lost_ratio"]="%.2f" % (my_stats["lost"].to_f/my_stats["size"]*100)
     else
       my_stats["won_ratio"]=0
       my_stats["prediction_ratio"]=0
@@ -83,9 +88,9 @@ class UsersController < ApplicationController
       my_stats["lost_ratio"]=0
     end
 
-
     my_championships_id.each do |champ|
-      num_games=Game.where("championship_id= ? AND time < ?", champ, Time.current).count
+      #num_games=Game.where("championship_id= ? AND time < ?", champ, Time.current).count
+      num_games=Game.where("championship_id= ?", champ).count
       my_stats["games"]=my_stats["games"]+num_games
     end
 
