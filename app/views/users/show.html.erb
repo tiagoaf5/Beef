@@ -12,198 +12,183 @@
       <h5><%= @email %></h5>
       <br><br>
       <% if @owner==1 %>
-        <p><button class="btn btn-theme"><i class="fa fa-cogs"></i> Edit profile</button></p>
+          <p><button class="btn btn-theme"><i class="fa fa-cogs"></i> Edit profile</button></p>
       <% end %>
     </div><! --/col-md-4 -->
   </div>
   <div class="row content-panel"></div>
-  </div><! --/col-lg-12 -->
+</div><! --/col-lg-12 -->
 
-  <div class="col-lg-12 mt">
-    <div class="row content-panel">
-        <div class="panel-heading">
-            <ul class="nav nav-tabs nav-justified">
-              <li class="active">
-                <a data-toggle="tab" href="#statistics">Statistics</a>
-              </li>
-              <% if @friend==1 %>
-                  <li>
-                    <a data-toggle="tab" href="#my_leagues">Leagues</a>
-                  </li>
-              <% end %>
-              <% if @owner==1 %>
-                <li>
-                    <a data-toggle="tab" href="#my_leagues">My leagues</a>
-                </li>
-                <li>
-                    <a data-toggle="tab" href="#buddies">Buddies</a>
-                </li>
-              <% end %>
-            </ul>
-        </div><! --/panel-heading -->
+<div class="col-lg-12 mt">
+<div class="row content-panel">
+  <div class="panel-heading">
+    <ul class="nav nav-tabs nav-justified">
+      <li class="active">
+        <a data-toggle="tab" href="#statistics">Statistics</a>
+      </li>
+      <% if @friend==1 %>
+          <li>
+            <a data-toggle="tab" href="#my_leagues">Leagues</a>
+          </li>
+      <% end %>
+      <% if @owner==1 %>
+          <li>
+            <a data-toggle="tab" href="#my_leagues">My leagues</a>
+          </li>
+          <li>
+            <a data-toggle="tab" href="#buddies">Buddies</a>
+          </li>
+      <% end %>
+    </ul>
+  </div><! --/panel-heading -->
 
-        <div class="panel-body">
-            <div class="tab-content">
+  <div class="panel-body">
+    <div class="tab-content">
 
-              <div id="statistics" class="tab-pane active">
+      <div id="statistics" class="tab-pane active">
 
-                  <div class="row centered mt mb">
-                    <div class="col-md-7 col-xs-12">
-                    <div class="col-sm-3 col-xs-4">
-                      <h1><i class="fa fa-trophy"></i></h1>
-                      <h3><%= @my_leagues.length %></h3>
-                      <h6><% if @my_leagues.length==1%>
-                            LEAGUE
-                          <% else %>
-                            LEAGUES
-                          <% end %> </h6>
-                    </div>
-                    <div class="col-sm-3 col-xs-4">
-                      <h1><i class="fa fa-dribbble"></i></h1>
-                      <h3> <%= @stats["games"] %> </h3>
-                      <h6>GAMES</h6>
-                    </div>
-                    <div class="col-sm-3 col-xs-4">
-                      <h1><i class="fa fa-money"></i></h1>
-                      <h3> <%= @stats["size"] %> </h3>
-                      <h6><% if @stats["size"]==1%>
-                            BET
-                        <% else %>
-                            BETS
-                        <% end %> </h6>
-                    </div>
-                    <div class="col-sm-3 col-xs-4">
-                      <h1><i class="fa fa-users"></i></h1>
-                      <h3> <%= @buddies_leagues.length %> </h3>
-                      <h6><% if @buddies_leagues.length==1%>
-                            BUDDY
-                        <% else %>
-                            BUDDIES
-                        <% end %> </h6>
-                    </div>
-                <div class="row centered mt mb hidden-xs">
-                  </div>
-                    <div class="col-sm-3 col-xs-4">
-                      <h1><i class="fa fa-smile-o"></i></h1>
-                      <h3><%= @stats["won"] %> </h3>
-                      <h6>CORRECT BETS</h6>
-                    </div>
-                    <div class="col-sm-3 col-xs-4">
-                      <h1><i class="fa fa-check-circle"></i></h1>
-                      <h3><%= @stats["prediction"] %></h3>
-                      <h6>CORRECT WINNER</h6>
-                    </div>
-                    <div class="col-sm-3 col-xs-4">
-                      <h1><i class="fa fa-check-circle-o"></i></h1>
-                      <h3><%= @stats["difference"] %></h3>
-                      <h6>CORRECT DIFFERENCE</h6>
-                    </div>
-                    <div class="col-sm-3 col-xs-4">
-                      <h1><i class="fa fa-frown-o"></i></h1>
-                      <h3><%= @stats["lost"] %></h3>
-                      <h6>WRONG BETS</h6>
-                    </div>
+        <div class="row centered mt mb">
+          <div class="col-md-7 col-xs-12">
+            <div class="col-sm-3 col-xs-4">
+              <h1><i class="fa fa-trophy"></i></h1>
+              <h3><%= @my_leagues.length %></h3>
+              <h6><% if @my_leagues.length==1%>
+                    LEAGUE
+                <% else %>
+                    LEAGUES
+                <% end %> </h6>
+            </div>
+            <div class="col-sm-3 col-xs-4">
+              <h1><i class="fa fa-dribbble"></i></h1>
+              <h3> <%= @stats["games"] %> </h3>
+              <h6>GAMES</h6>
+            </div>
+            <div class="col-sm-3 col-xs-4">
+              <h1><i class="fa fa-money"></i></h1>
+              <h3> <%= @stats["size"] %> </h3>
+              <h6><% if @stats["size"]==1%>
+                    BET
+                <% else %>
+                    BETS
+                <% end %> </h6>
+            </div>
+            <div class="col-sm-3 col-xs-4">
+              <h1><i class="fa fa-users"></i></h1>
+              <h3> <%= @buddies_leagues.length %> </h3>
+              <h6><% if @buddies_leagues.length==1%>
+                    BUDDY
+                <% else %>
+                    BUDDIES
+                <% end %> </h6>
+            </div>
+            <div class="row centered mt mb hidden-xs">
+            </div>
+            <div class="col-sm-3 col-xs-4">
+              <h1><i class="fa fa-smile-o"></i></h1>
+              <h3><%= @stats["won"] %> </h3>
+              <h6>CORRECT BETS</h6>
+            </div>
+            <div class="col-sm-3 col-xs-4">
+              <h1><i class="fa fa-check-circle"></i></h1>
+              <h3><%= @stats["prediction"] %></h3>
+              <h6>CORRECT WINNER</h6>
+            </div>
+            <div class="col-sm-3 col-xs-4">
+              <h1><i class="fa fa-check-circle-o"></i></h1>
+              <h3><%= @stats["difference"] %></h3>
+              <h6>CORRECT DIFFERENCE</h6>
+            </div>
+            <div class="col-sm-3 col-xs-4">
+              <h1><i class="fa fa-frown-o"></i></h1>
+              <h3><%= @stats["lost"] %></h3>
+              <h6>WRONG BETS</h6>
+            </div>
 
-                </div><! --/row -->
+          </div><! --/row -->
 
-                <div class="col-md-5 hidden-sm hidden-xs">
-                <div id="hero-donut" class="graph">
-                  <svg height="330" version="1.1" width="450" xmlns="http://www.w3.org/2000/svg" style="overflow: scroll; position: relative;">
-                    <desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.1.0</desc>
-                    <defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs>
-                    <path fill="none" stroke="#3498db" d="M259,282.5A109,109,0,0,0,367.9999996638166,173.50856083997223" stroke-width="2" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path>
-                    <path fill="#3498db" stroke="#ffffff" d="M259,285.5A112,112,0,0,0,370.99999965456385,173.508796459421L417.49999951114614,173.51244856087703A158.5,158.5,0,0,1,259,332Z" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
-                    <path fill="none" stroke="#2980b9" d="M367.9999996638166,173.50856083997223A109,109,0,0,0,172.62725385519667,107.01128875210951" stroke-width="2" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path>
-                      <path fill="#2980b9" stroke="#ffffff" d="M370.99999965456385,173.508796459421A112,112,0,0,0,170.25002230992683,105.18132422235105L133.40293335824467,76.81687401109501A158.5,158.5,0,0,1,417.49999951114614,173.51244856087703Z" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
-                    <path fill="none" stroke="#34495e" d="M172.62725385519667,107.01128875210951A109,109,0,0,0,192.50450525756543,259.8675238672434" stroke-width="2" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1;"></path>
-                    <path fill="#34495e" stroke="#ffffff" d="M170.25002230992683,105.18132422235105A112,112,0,0,0,190.67435402612227,262.2446116801033L159.25675788634814,303.0512858008651A163.5,163.5,0,0,1,129.44088078279498,73.76693312816425Z" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
-                    <path fill="none" stroke="#3498db" d="M192.50450525756543,259.8675238672434A109,109,0,0,0,258.96575664063926,282.49999462106564" stroke-width="2" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path>
-                    <path fill="#3498db" stroke="#ffffff" d="M190.67435402612227,262.2446116801033A112,112,0,0,0,258.9648141628587,285.4999944730216L258.9502057572598,331.9999921783386A158.5,158.5,0,0,1,162.3070099387534,299.0894727794319Z" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
-                    <text x="259" y="163.5" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: 800; font-stretch: normal; font-size: 10px; line-height: normal; font-family: Arial;" font-size="15px" font-weight="800" transform="matrix(2.4773,0,0,2.4773,-382.6136,-257.7841)" stroke-width="0.4036697247706422">
-                      <tspan dy="6" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Correct bet rate</tspan></text>
-                    <text x="259" y="183.5" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 12px; line-height: normal; font-family: Arial;" font-size="14px" transform="matrix(2.2708,0,0,2.2708,-329.1458,-223.0313)" stroke-width="0.4403669724770642">
-                      <tspan dy="5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">25%
-                    </tspan></text></svg></div>
-                  </div>
-                </div>
-              </div><! --/tab-pane -->
+          <div class="col-md-5 hidden-sm hidden-xs">
+            <div id="hero-donut" class="graph">
+            </div>
+          </div>
+        </div>
+      </div><! --/tab-pane -->
 
-              <% if @owner==1 || @friend ==1 %>
-              <div id="my_leagues" class="tab-pane">
-                  <div class="row mt">
-                    <% if @my_leagues != nil && @my_leagues.length>0 %>
-                    <div class="col-sm-8 col-md-offset-2">
-                      <div class="content-panel">
-                        <table class="table table-striped table-advance table-hover">
-                          <thead>
-                          <tr>
-                            <th class="centered"><i class="fa fa-dribbble"></i> League</th>
-                            <th class="centered"><i class="fa fa-trophy"></i> Current place</th>
-                            <th class="centered"><i class="fa fa-flag"></i> Current score</th>
-                            <th></th>
-                          </tr>
-                          </thead>
-                          <tbody>
-                          <% if @owner==1 %>
+      <% if @owner==1 || @friend ==1 %>
+          <div id="my_leagues" class="tab-pane">
+            <div class="row mt">
+              <% if @my_leagues != nil && @my_leagues.length>0 %>
+                  <div class="col-sm-8 col-md-offset-2">
+                    <div class="content-panel">
+                      <table class="table table-striped table-advance table-hover">
+                        <thead>
+                        <tr>
+                          <th class="centered"><i class="fa fa-dribbble"></i> League</th>
+                          <th class="centered"><i class="fa fa-trophy"></i> Current place</th>
+                          <th class="centered"><i class="fa fa-flag"></i> Current score</th>
+                          <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% if @owner==1 %>
                             <% @my_leagues.each do |league| %>
-                              <tr>
-                                <td class="centered"><%= league[1] %></td>
-                                <td class="centered"><%= league[2]%> out of <%= league[3]%></td>
-                                <% if league[4]!=nil %>
-                                    <td class="centered"><%= league[4] %></td>
-                                <% else %>
-                                    <td class="centered">0</td>
-                                <% end %>
-                                    <td class="centered"><%= link_to "Details", league_path(league[0]) %></td>
-                              </tr>
-                            <% end %>
-                            <% else %>
-                                <% @my_leagues_intersection.each do |league| %>
                                 <tr>
-                                    <td class="centered"><%= league[1] %></td>
-                                    <td class="centered"><%= league[2]%> out of <%= league[3]%></td>
-                                    <% if league[4]!=nil %>
-                                        <td class="centered"><%= league[4] %></td>
-                                    <% else %>
-                                        <td class="centered">0</td>
-                                    <% end %>
-                                    <td class="centered"><%= link_to "Details", league_path(league[0]) %></td>
+                                  <td class="centered"><%= league[1] %></td>
+                                  <td class="centered"><%= league[2]%> out of <%= league[3]%></td>
+                                  <% if league[4]!=nil %>
+                                      <td class="centered"><%= league[4] %></td>
+                                  <% else %>
+                                      <td class="centered">0</td>
+                                  <% end %>
+                                  <td class="centered"><%= link_to "Details", league_path(league[0]) %></td>
                                 </tr>
-                                <% end %>
                             <% end %>
+                        <% else %>
+                            <% @my_leagues_intersection.each do |league| %>
+                                <tr>
+                                  <td class="centered"><%= league[1] %></td>
+                                  <td class="centered"><%= league[2]%> out of <%= league[3]%></td>
+                                  <% if league[4]!=nil %>
+                                      <td class="centered"><%= league[4] %></td>
+                                  <% else %>
+                                      <td class="centered">0</td>
+                                  <% end %>
+                                  <td class="centered"><%= link_to "Details", league_path(league[0]) %></td>
+                                </tr>
+                            <% end %>
+                        <% end %>
 
-                          </tbody>
-                        </table>
-                      </div><!-- /content-panel -->
-                    </div><!-- /col-md-10 -->
-                      <% else if @owner==1%>
-                        <div class="col-sm-8 col-md-offset-1">
-                          <h5>You don't have any leagues <i class="fa fa-frown-o"></i></h5>
-                          <h5> Create one <%= link_to "here!", new_league_path %>  </h5>
-                        </div>
-                      <% end %>
-                      <% end %>
-                    <div class="col-md-1"></div>
-                  </div><!-- /row -->
-                </div><! --/tab-pane -->
-                <% end %>
+                        </tbody>
+                      </table>
+                    </div><!-- /content-panel -->
+                  </div><!-- /col-md-10 -->
+              <% else if @owner==1%>
+                      <div class="col-sm-8 col-md-offset-1">
+                        <h5>You don't have any leagues <i class="fa fa-frown-o"></i></h5>
+                        <h5> Create one <%= link_to "here!", new_league_path %>  </h5>
+                      </div>
+                  <% end %>
+              <% end %>
+              <div class="col-md-1"></div>
+            </div><!-- /row -->
+          </div><! --/tab-pane -->
+      <% end %>
 
-                <% if @owner==1 %>
-                <div id="buddies" class="tab-pane">
-                    <div class="row">
-                      <div class="col-lg-12">
-                        <% if @buddies_leagues!=nil %>
-                        <% @buddies_leagues.each do |buddy, leagues| %>
+      <% if @owner==1 %>
+          <div id="buddies" class="tab-pane">
+            <div class="row">
+              <div class="col-lg-12">
+                <% if @buddies_leagues!=nil %>
+                    <% @buddies_leagues.each do |buddy, leagues| %>
                         <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
                           <div class="custom-box">
                             <div class="servicetitle">
                               <% if buddy.name!=nil %>
                                   <%= link_to user_profile_path(buddy.id), class: "text-muted"  do %>
-                                    <h4><%= buddy.name %></h4>
+                                      <h4><%= buddy.name %></h4>
                                   <% end %>
                               <% else %>
                                   <%= link_to user_profile_path(buddy.id), class: "text-muted" do %>
-                                    <h4><%= buddy.email %></h4>
+                                      <h4><%= buddy.email %></h4>
                                   <% end %>
                               <% end %>
                               <hr>
@@ -212,52 +197,53 @@
                               <p><%= image_tag "ui-sam.jpg", {class: "img-circle", width: "90"} %></p>
                             </div>
                             <% if leagues.length>1 %>
-                            <ul class="pricing", style="height: 5em; overflow-y: scroll; overflow-x: hidden;">
+                                <ul class="pricing", style="height: 5em; overflow-y: scroll; overflow-x: hidden;">
                             <% else %>
-                            <ul class="pricing">
+                                <ul class="pricing">
                             <% end %>
-                              <% leagues.each do |league| %>
-                                  <%= link_to league_path(league[0]), class: "text-muted" do %>
-                                      <li><%= league[1] %></li>
-                                  <% end %>
-                              <% end %>
+                            <% leagues.each do |league| %>
+                                <%= link_to league_path(league[0]), class: "text-muted" do %>
+                                    <li><%= league[1] %></li>
+                                <% end %>
+                            <% end %>
                             </ul>
                           </div><!-- end custombox -->
                         </div><!-- end col-4 -->
-                        <%end %>
-                        <%end %>
-                        </div>
-                    </div><! --/row -->
-                </div><! --/tab-pane -->
-                <% end %>
-            </div><!-- /tab-content -->
+                    <%end %>
+                <%end %>
+              </div>
+            </div><! --/row -->
+          </div><! --/tab-pane -->
+      <% end %>
+    </div><!-- /tab-content -->
 
-        </div><! --/panel-body -->
+  </div><! --/panel-body -->
 
-  </div><!-- /col-lg-12 -->
+</div><!-- /col-lg-12 -->
 </div><! --/row -->
+
+<!--common script for all pages-->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="http://cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
 
 <script>
 
-
     $(function () {
-            Morris.Donut({
-                element: 'hero-donut',
-                data: [
-                    {label: 'Correct', value: <%= @stats["won_ratio"] %> },
-                    {label: 'Difference', value: <%= @stats["prediction_ratio"] %> },
-                    {label: 'Winner', value: <%= @stats["difference_ratio"] %> },
-                    {label: 'Wronf', value: <%= @stats["lost_ratio"] %> }
-                ],
+        Morris.Donut({
+            element: 'hero-donut',
+            data: [
+                {label: 'Correct', value: <%= @stats["won_ratio"] %> },
+                {label: 'Difference', value: <%= @stats["prediction_ratio"] %> },
+                {label: 'Winner', value: <%= @stats["difference_ratio"] %> },
+                {label: 'Wronf', value: <%= @stats["lost_ratio"] %> }
+            ],
 
-                colors: ['#3498db', '#2980b9', '#34495e', '#34ff5e'],
-                formatter: function (y) { return y + "%" }
-            });
-
-            $('.code-example').each(function (index, el) {
-                eval($(el).text());
-            });
+            colors: ['#3498db', '#2980b9', '#34495e', '#34ff5e'],
+            formatter: function (y) { return y + "%" }
         });
 
+        $('.code-example').each(function (index, el) {
+            eval($(el).text());
+        });
     });
 </script>
