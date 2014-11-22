@@ -10,7 +10,7 @@ class League < ActiveRecord::Base
   belongs_to :owner, class_name: "User", foreign_key: "owner_id"
 
 
-  validates :name, :owner_id, :user_id, presence: true
+  validates :name, :owner_id, presence: true #TODO: removed :user_id
   validates :score_correct, :score_difference, :score_prediction,  numericality: { :greater_than_or_equal_to => 0}
   validate :has_championship
 

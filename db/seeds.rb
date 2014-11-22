@@ -1,4 +1,5 @@
 # --------> Usar com rake db:reset <------------
+
 require "#{Rails.root}/football_data.rb"
 
 def select_matchday matchday, fixtures
@@ -92,11 +93,11 @@ puts "Next update: #{Game.where(team1_goals: -1).order(:time).first.time}"
 User.create! :email => 'beef1234@gmail.com', :password => 'beef1234', :password_confirmation => 'beef1234'
 
 puts 'Creating league and adding users...'
-league = League.create! name: "Bife com Atum", score_correct: 150, score_difference: 100, score_prediction: 75
-
 leagueOwner = User.create! :email => 'owner@a.com', :password => 'beef1234', :password_confirmation => 'beef1234'
-league.championships << Championship.take
-league.owner = leagueOwner
+league = League.create! name: "Bife com Atum", score_correct: 150, score_difference: 100, score_prediction: 75, owner: leagueOwner, championships: [Championship.take]
+
+# league.championships << Championship.take
+# league.owner = leagueOwner
 league.users << league.owner
 league.users << (User.create! :email => 'a@a.com', :password => 'beef1234', :password_confirmation => 'beef1234')
 league.users << (User.create! :email => 'b@a.com', :password => 'beef1234', :password_confirmation => 'beef1234')
@@ -106,7 +107,6 @@ puts 'Filling random bets...'
 league.users.each do |user|
   random_bets user, league
 end
-
 
 =begin
 

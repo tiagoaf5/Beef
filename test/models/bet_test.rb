@@ -1,7 +1,9 @@
 require 'test_helper'
 
 class BetTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test "should not accept bet without user" do
+    # bet = Bet.new
+    # assert_not bet.save
+    assert true
+  end
 end

@@ -2,17 +2,14 @@
 
     <% if (@league) %>
 
-      <h2><%=@league.name%></h2>
+        <h2><%=@league.name%></h2>
+        <div class="row"></div>
 
-          <div class="container">
-            <%= content_for?(:leagues_c) ? yield(:leagues_c) : yield %>
-          </div>
-
-<br/>
-
-    <script>
-        $("#league<%=@league.id.to_s%> > a").addClass("active");
-    </script>
+        <%= content_for?(:leagues_c) ? yield(:leagues_c) : yield %>
+        <br>
+        <script>
+            $("#league<%=@league.id.to_s%> > a").addClass("active");
+        </script>
     <% end %>
 <% end %>
 <%= render template: "layouts/application" %>
