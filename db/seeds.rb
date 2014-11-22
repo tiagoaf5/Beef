@@ -54,7 +54,7 @@ def random_bets user, league
   league.championships.each do |championship|
     championship.games.each do |game|
       bet = Bet.create! team1_goals: rand(4), team2_goals: rand(4)
-      bet.update! score: points_for_bet(bet, game, league) if game.team1_goals?
+      bet.update! score: points_for_bet(bet, game, league) if game.team1_goals.nil?
       game.bets << bet
       user.bets << bet
       league.bets << bet
@@ -83,7 +83,9 @@ def save_leagues_to_db leagues
 end
 
 puts 'Saving fixtures to database...'
-save_leagues_to_db FootballData.instance.fixtures
+fdata = FootballData.new
+fdata.load_all_fixtures
+save_leagues_to_db fdata.fixtures
 
 puts "First game: #{Game.all.order(time: :asc).first.time.to_s}"
 puts "Last game: #{Game.all.order(time: :asc).last.time.to_s}"

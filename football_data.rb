@@ -2,7 +2,6 @@ require 'singleton'
 
 class FootballData
   include HTTParty
-  include Singleton
 
   base_uri 'http://www.football-data.org'
   attr_accessor :excluded_countries
@@ -39,7 +38,8 @@ class FootballData
 
     remove_excluded_countries!
     remove_excluded_league_names!
-    add_outdated_leagues_to_excluded!
+   #add_outdated_leagues_to_excluded!
+    find_newest_to_update
 
     puts "Next to be updated: #{@newest_to_update}"
 
@@ -47,6 +47,7 @@ class FootballData
   end
 
   def next_update_time
+    find_newest_to_update
     @newest_to_update[:time]
   end
 
@@ -103,7 +104,7 @@ class FootballData
 
     remove_excluded_countries!
     remove_excluded_league_names!
-    add_outdated_leagues_to_excluded!
+    #add_outdated_leagues_to_excluded!
   end
 
   def country_of_league league
