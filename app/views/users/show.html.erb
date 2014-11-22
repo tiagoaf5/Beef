@@ -49,6 +49,7 @@
       <div id="statistics" class="tab-pane active">
 
         <div class="row centered mt mb">
+          <% if @stats["size"]>0 %>
           <div class="col-md-7 col-xs-12">
             <div class="col-sm-3 col-xs-4">
               <h1><i class="fa fa-trophy"></i></h1>
@@ -62,7 +63,11 @@
             <div class="col-sm-3 col-xs-4">
               <h1><i class="fa fa-dribbble"></i></h1>
               <h3> <%= @stats["games"] %> </h3>
-              <h6>GAMES</h6>
+              <h6><% if @stats["games"]==1%>
+                    GAME
+                <% else %>
+                    GAMES
+                <% end %> </h6>
             </div>
             <div class="col-sm-3 col-xs-4">
               <h1><i class="fa fa-money"></i></h1>
@@ -104,13 +109,75 @@
               <h3><%= @stats["lost"] %></h3>
               <h6>WRONG BETS</h6>
             </div>
-
           </div><! --/row -->
-
-          <div class="col-md-5 hidden-sm hidden-xs">
+          <div class="row centered mt mb visible-sm">
+          </div>
+          <div class="col-md-5 hidden-xs">
             <div id="hero-donut" class="graph">
             </div>
           </div>
+          <% else %>
+              <div class="col-xs-12">
+                <div class="col-sm-3 col-xs-4">
+                  <h1><i class="fa fa-trophy"></i></h1>
+                  <h3><%= @my_leagues.length %></h3>
+                  <h6><% if @my_leagues.length==1%>
+                        LEAGUE
+                    <% else %>
+                        LEAGUES
+                    <% end %> </h6>
+                </div>
+                <div class="col-sm-3 col-xs-4">
+                  <h1><i class="fa fa-dribbble"></i></h1>
+                  <h3> <%= @stats["games"] %> </h3>
+                  <h6><% if @stats["games"]==1%>
+                        GAME
+                    <% else %>
+                        GAMES
+                    <% end %> </h6>
+                </div>
+                <div class="col-sm-3 col-xs-4">
+                  <h1><i class="fa fa-money"></i></h1>
+                  <h3> <%= @stats["size"] %> </h3>
+                  <h6><% if @stats["size"]==1%>
+                        BET
+                    <% else %>
+                        BETS
+                    <% end %> </h6>
+                </div>
+                <div class="col-sm-3 col-xs-4">
+                  <h1><i class="fa fa-users"></i></h1>
+                  <h3> <%= @buddies_leagues.length %> </h3>
+                  <h6><% if @buddies_leagues.length==1%>
+                        BUDDY
+                    <% else %>
+                        BUDDIES
+                    <% end %> </h6>
+                </div>
+                <div class="row centered mt mb hidden-xs">
+                </div>
+                <div class="col-sm-3 col-xs-4">
+                  <h1><i class="fa fa-smile-o"></i></h1>
+                  <h3><%= @stats["won"] %> </h3>
+                  <h6>CORRECT BETS</h6>
+                </div>
+                <div class="col-sm-3 col-xs-4">
+                  <h1><i class="fa fa-check-circle"></i></h1>
+                  <h3><%= @stats["prediction"] %></h3>
+                  <h6>CORRECT WINNER</h6>
+                </div>
+                <div class="col-sm-3 col-xs-4">
+                  <h1><i class="fa fa-check-circle-o"></i></h1>
+                  <h3><%= @stats["difference"] %></h3>
+                  <h6>CORRECT DIFFERENCE</h6>
+                </div>
+                <div class="col-sm-3 col-xs-4">
+                  <h1><i class="fa fa-frown-o"></i></h1>
+                  <h3><%= @stats["lost"] %></h3>
+                  <h6>WRONG BETS</h6>
+                </div>
+              </div><! --/row -->
+          <% end %>
         </div>
       </div><! --/tab-pane -->
 
