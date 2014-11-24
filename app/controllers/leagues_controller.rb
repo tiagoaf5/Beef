@@ -51,10 +51,10 @@ class LeaguesController < ApplicationController
 
     if league_params['users'].present?
       league_params['users'].each  do |f|
-        if User.find_by_email(f).blank?
-          #send email?
+        if (@UserTmp = User.find_by_email(f)).blank?
+          InviteMailer.invite_email(@league.owner, f).deliver
         else
-          @league.users << User.find_by_email(f)
+          @league.users << @UserTmp
         end
       end
     end
