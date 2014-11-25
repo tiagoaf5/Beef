@@ -18,6 +18,7 @@ class UsersController < ApplicationController
 
       if current_user.id==params[:id].to_i
         @owner=1
+        @pass=@user.encrypted_password
 
       else if @buddies_leagues.has_key?(User.find(current_user.id))
 

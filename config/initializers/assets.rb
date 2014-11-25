@@ -21,3 +21,6 @@ Rails.application.config.assets.precompile << Proc.new { |path|
 Rails.application.config.assets.precompile += %w[*.png *.jpg *.jpeg *.gif]
 Rails.application.config.assets.precompile += %w( theme/jquery-1.8.3.min.js )
 Rails.application.config.assets.precompile += %w( theme/jquery-1.8.3.min.js )
+
+Rails.application.config.assets.precompile += %w( theme/bootstrap-fileupload/bootstrap-fileupload.js )
+Rails.application.config.assets.precompile += %w( theme/bootstrap-fileupload/bootstrap-fileupload.css )

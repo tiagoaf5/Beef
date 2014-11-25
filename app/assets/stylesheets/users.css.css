@@ -1,0 +1,7 @@
+#edit_my_profile .form-group label{
+    text-align: right;
+}
+
+#button_edit_pass {
+    margin-left: 10px;
+}
