@@ -2,11 +2,15 @@
 <html>
 <head>
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <link href="<%= root_path %>assets/bootstrap.css?body=1" media="all" rel="stylesheet" />
+    <link href="<%= root_path %>assets/application.css?body=1" media="all" rel="stylesheet" />
+    <link href="<%= root_path %>assets/bets.css?body=1" media="all" rel="stylesheet" />
 </head>
 <body>
-<h1>Welcome to Bettr <%= @invited_user_email %></h1>
+<h1>You have been invited to join <a href="<%= root_path %> " class="logo"><b>BE<span>&F</span></b></a> by <%= @invited_user_email %>!</h1>
+<p> <a href="<%= root_path %> " class="logo"><b>BE<span>&F</span></b></a> is a website where friends create leagues where they compete for virtual points.</p>
 <p>
-    You have been invite to a league by <%= @user.name %>
+    You have been invite to league <%= @league_name %> by <%=  @user.name.blank? ? @user.email : @user.name %>
 </p>
 <p>
     To join the site, just follow this link: <%= @url %>.

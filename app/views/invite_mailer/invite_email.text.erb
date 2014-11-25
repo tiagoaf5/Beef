@@ -1,8 +1,6 @@
 Welcome to Bettr <%= @invited_user_email %>
 ===============================================
 
-You have been invite to a league by <%= @user.name %>
+You have been invite to league <%= @league_name %> by <%=  @user.name.blank? ? @user.email : @user.name %>
 
 To join the site, just follow this link: <%= @url %>.
-
-Thanks for joining and have a great day!

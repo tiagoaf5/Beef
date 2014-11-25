@@ -10,7 +10,7 @@ ActionMailer::Base.smtp_settings = {
     :enable_starttls_auto => true,
     :authentication => :login,
     :user_name => "disruptr123@gmail.com",
-    :password =>                                                                                                                                                                                                            "",
+    :password => ""
 }
 
 # Initialize the Rails application.
