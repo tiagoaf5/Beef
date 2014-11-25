@@ -2,18 +2,18 @@
 <html>
 <head>
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
-    <link href="<%= root_path %>assets/bootstrap.css?body=1" media="all" rel="stylesheet" />
-    <link href="<%= root_path %>assets/application.css?body=1" media="all" rel="stylesheet" />
-    <link href="<%= root_path %>assets/bets.css?body=1" media="all" rel="stylesheet" />
+    <link href="<%= root_path %>assets/bootstrap.css" media="all" rel="stylesheet" />
+    <link href="<%= root_path %>assets/application.css" media="all" rel="stylesheet" />
+    <link href="<%= root_path %>assets/bets.css" media="all" rel="stylesheet" />
+    <link href="<%= root_path %>assets/theme/style.css" media="all" rel="stylesheet" />
+    <link href="<%= root_path %>assets/theme/style-responsive.css" media="all" rel="stylesheet" />
 </head>
 <body>
-<h1>You have been invited to join <a href="<%= root_path %> " class="logo"><b>BE<span>&F</span></b></a> by <%= @invited_user_email %>!</h1>
-<p> <a href="<%= root_path %> " class="logo"><b>BE<span>&F</span></b></a> is a website where friends create leagues where they compete for virtual points.</p>
-<p>
-    You have been invite to league <%= @league_name %> by <%=  @user.name.blank? ? @user.email : @user.name %>
-</p>
-<p>
-    To join the site, just follow this link: <%= @url %>.
-</p>
+<h1 style="text-align: center;">You have been invited to join <a href="<%= root_path %> " style="float: none; font-size: 100%;" class="logo"><b>BE<span>&F</span></b></a> by <%= @user.name.blank? ? @user.email : @user.name %>!</h1>
+<div>
+    <p> <a href="<%= root_path %> " class="logo"><b>BE<span>&F</span></b></a> is a website where friends create leagues where they compete for virtual points.</p>
+    <p>You have been invite to league <%= @league_name %> by <%=  @user.name.blank? ? @user.email : @user.name %></p>
+    <p>To join the site, just follow this <a href="<%= @url %>">link</a></p>
+</div>
 </body>
 </html>

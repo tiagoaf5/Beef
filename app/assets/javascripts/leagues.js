@@ -104,10 +104,7 @@ var init = function() {
         });
         return false; // prevents normal behaviour
     });
-
-    $(".score_correct_helper").tooltip();
-    $(".score_diff_helper").tooltip();
-    $(".score_prediction_helper").tooltip();
+    $('[data-toggle="tooltip"]').tooltip()
 
 };
 

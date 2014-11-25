@@ -1,5 +1,5 @@
 class InviteMailer < ActionMailer::Base
-  default from: "from@example.com"
+  default from: "ei11065@fe.up.pt"
 
   def invite_email(user, invited_user_email, league_name)
     @user = user

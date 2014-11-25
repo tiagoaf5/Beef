@@ -1,6 +1,5 @@
 <script type="text/javascript">
     var championships = <%= raw  @championships %>;
-        //TODO capturar enter
 </script>
 
 
@@ -21,15 +20,15 @@
     <%= f.text_field :name, :class => 'name form-control', :required => true %>
   </div>
   <div class="field">
-    <%= f.label :score_correct %> <i title="The points users will gain when they make a correct prediction on a matches result" class="glyphicon glyphicon-question-sign score_correct_helper"></i><br>
+    <%= f.label :score_correct %> <i title="The points users will gain when they make a correct prediction on a matches result" data-toggle="tooltip" data-placement="right" class="glyphicon glyphicon-question-sign score_correct_helper"></i><br>
     <%= f.number_field :score_correct, :class => 'name form-control', :oninvalid => 'setCustomValidity(Please enter a number)', :pattern => '\d+', :required => true %>
   </div>
   <div class="field">
-      <%= f.label :score_difference %> <i title="The points users will gain when they make a correct prediction on a matches goal difference" class="glyphicon glyphicon-question-sign score_correct_helper"></i><br>
+      <%= f.label :score_difference %> <i title="The points users will gain when they make a correct prediction on a matches goal difference" data-toggle="tooltip" data-placement="right" class="glyphicon glyphicon-question-sign score_correct_helper"></i><br>
       <%= f.number_field :score_difference, :class => 'name form-control', :required => true, :pattern => "\d+" %>
   </div>
   <div class="field">
-    <%= f.label :score_prediction %> <i title="The points users will gain when they make a correct prediction on a matches result" class="glyphicon glyphicon-question-sign score_correct_helper"></i><br>
+    <%= f.label :score_prediction %> <i title="The points users will gain when they make a correct prediction on the winner of a match" data-toggle="tooltip" data-placement="right" class="glyphicon glyphicon-question-sign score_correct_helper"></i><br>
     <%= f.number_field :score_prediction, :class => 'name form-control', :required => true, :pattern => "\d+" %>
   </div>
     <div id="friends-container" class="field">
