@@ -3,17 +3,18 @@
 <head>
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
     <link href="<%= root_path %>assets/bootstrap.css" media="all" rel="stylesheet" />
-    <link href="<%= root_path %>assets/application.css" media="all" rel="stylesheet" />
-    <link href="<%= root_path %>assets/bets.css" media="all" rel="stylesheet" />
     <link href="<%= root_path %>assets/theme/style.css" media="all" rel="stylesheet" />
     <link href="<%= root_path %>assets/theme/style-responsive.css" media="all" rel="stylesheet" />
+    <link href="<%= root_path %>assets/invite_email.css" media="all" rel="stylesheet" />
 </head>
 <body>
-<h1 style="text-align: center;">You have been invited to join <a href="<%= root_path %> " style="float: none; font-size: 100%;" class="logo"><b>BE<span>&F</span></b></a> by <%= @user.name.blank? ? @user.email : @user.name %>!</h1>
-<div>
-    <p> <a href="<%= root_path %> " class="logo"><b>BE<span>&F</span></b></a> is a website where friends create leagues where they compete for virtual points.</p>
-    <p>You have been invite to league <%= @league_name %> by <%=  @user.name.blank? ? @user.email : @user.name %></p>
-    <p>To join the site, just follow this <a href="<%= @url %>">link</a></p>
+<div class="header-email">
+    <h1 class ="header-text">You have been invited to join <a href="<%= root_path %> " style="float: none; font-size: 100%;" class="logo"><b>BE<span>&F</span></b></a> by <%= @user.name.blank? ? @user.email : @user.name %>!</h1>
+</div>
+<div class="text-2">
+    <h2 class="text-1"><a href="<%= root_path %> " style="float: none; font-size: 100%;" class="logo"><b><j style="color:#22242A;">BE</i><span>&F</span></b></a> is a website where friends create leagues where they compete for virtual points.</h2>
+    <h2 class="text-1">You have been invited to league <%= @league_name %> by <%=  @user.name.blank? ? @user.email : @user.name %></h2>
+    <h2 class="text-1">To join the site, just follow this <a href="<%= @url %>">link</a></h2>
 </div>
 </body>
 </html>
