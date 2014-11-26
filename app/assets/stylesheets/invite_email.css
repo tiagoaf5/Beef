@@ -19,5 +19,11 @@
 
 }
 
-.text-2 {
+.logo {
+    float: none !important;
+    font-size: 100% !important;
+}
+
+.logo-1 {
+    color:#22242A;
 }
