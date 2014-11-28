@@ -85,5 +85,6 @@ Rails.application.routes.draw do
 
   post '/bets/update_multiple', to: 'bets#update_multiple', as: 'update_multiple_bets'
 
+  get '/notifications/:type/:id', to: 'notifications#show', as: 'notification'
 
 end

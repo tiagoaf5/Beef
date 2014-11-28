@@ -1,5 +1,4 @@
 class League < ActiveRecord::Base
-  belongs_to :user
   has_many :league_bets
   has_many :league_users
   has_many :league_championships

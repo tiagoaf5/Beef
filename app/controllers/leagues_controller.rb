@@ -252,6 +252,9 @@ class LeaguesController < ApplicationController
   end
 
   def updown league
+
+    InvitesNotification.notify(league,current_user) ##TODO DELETE THIS
+
     usersTop = league.bets.joins(:game).where("games.time < date_trunc('day', current_timestamp)").group("user_id").sum(:score)
     usersTop = usersTop.sort_by { |k, v| v }.reverse
     oldPos = 0;

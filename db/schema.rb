@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141111112250) do
+ActiveRecord::Schema.define(version: 20141127180112) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bet_score_notifications", force: true do |t|
+    t.datetime "added_at"
+    t.boolean  "read"
+    t.integer  "user_id"
+    t.integer  "bet_id"
+  end
+
+  add_index "bet_score_notifications", ["user_id"], name: "index_bet_score_notifications_on_user_id", using: :btree
 
   create_table "bets", force: true do |t|
     t.integer  "team1_goals"
@@ -52,6 +61,16 @@ ActiveRecord::Schema.define(version: 20141111112250) do
 
   add_index "games", ["championship_id"], name: "index_games_on_championship_id", using: :btree
 
+  create_table "invites_notifications", force: true do |t|
+    t.datetime "added_at"
+    t.boolean  "read"
+    t.integer  "user_id"
+    t.integer  "league_id"
+  end
+
+  add_index "invites_notifications", ["league_id"], name: "index_invites_notifications_on_league_id", using: :btree
+  add_index "invites_notifications", ["user_id"], name: "index_invites_notifications_on_user_id", using: :btree
+
   create_table "league_championships", force: true do |t|
     t.integer  "league_id"
     t.integer  "championship_id"
@@ -78,13 +97,20 @@ ActiveRecord::Schema.define(version: 20141111112250) do
     t.integer  "score_correct"
     t.integer  "score_difference"
     t.integer  "score_prediction"
-    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "owner_id"
   end
 
-  add_index "leagues", ["user_id"], name: "index_leagues_on_user_id", using: :btree
+  create_table "pending_games_notifications", force: true do |t|
+    t.datetime "added_at"
+    t.boolean  "read"
+    t.integer  "user_id"
+    t.integer  "league_id"
+    t.integer  "game_id"
+  end
+
+  add_index "pending_games_notifications", ["user_id"], name: "index_pending_games_notifications_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
