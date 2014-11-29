@@ -1,21 +1,15 @@
 class PendingGamesNotification < ActiveRecord::Base
-  before_create :act
-
-  def act
-    added_at = DateTime.now
-    read = false
-  end
+  belongs_to :user
+  belongs_to :league
+  belongs_to :game
 
   def self.start(user)
+    PendingGamesNotification.joins(:game).where("user_id = ? and read = false and time < ?",user,DateTime.now).update_all(read: true)
     return PendingGamesNotification.where(user_id: user, read: false).order("added_at desc")
   end
 
   def self.notify(game,league,user) ##TODO Just input game and then find all...
-    notification = PendingGamesNotification.new
-    notification.game = game
-    notification.league = league
-    notification.user = user
-    notification.save
+    PendingGamesNotification.create(user: user, game: game, league: league, added_at: DateTime.now, read: false)
   end
 
 end

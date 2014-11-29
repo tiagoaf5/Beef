@@ -6,68 +6,27 @@
     <li class="dropdown">
       <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
         <i class="fa fa-clock-o"></i>
-        <span class="badge bg-theme">4</span>
+        <% if @games_notifications.count>0 %>
+            <span class="badge bg-theme"><%=@games_notifications.count%></span>
+        <% end %>
       </a>
-      <ul class="dropdown-menu extended tasks-bar">
-        <div class="notify-arrow notify-arrow-green"></div>
+
+      <ul class="dropdown-menu extended notification">
+        <div class="notify-arrow notify-arrow-yellow"></div>
         <li>
-          <p class="green">You have 4 pending tasks</p>
+          <p class="yellow">You have <%=pluralize(@games_notifications.count, "pending game")%> for the next days.</p>
         </li>
-        <li>
-          <a href="index.html#">
-            <div class="task-info">
-              <div class="desc">Dashio Admin Panel</div>
-              <div class="percent">40%</div>
-            </div>
-            <div class="progress progress-striped">
-              <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                <span class="sr-only">40% Complete (success)</span>
-              </div>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="index.html#">
-            <div class="task-info">
-              <div class="desc">Database Update</div>
-              <div class="percent">60%</div>
-            </div>
-            <div class="progress progress-striped">
-              <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                <span class="sr-only">60% Complete (warning)</span>
-              </div>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="index.html#">
-            <div class="task-info">
-              <div class="desc">Product Development</div>
-              <div class="percent">80%</div>
-            </div>
-            <div class="progress progress-striped">
-              <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                <span class="sr-only">80% Complete</span>
-              </div>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="index.html#">
-            <div class="task-info">
-              <div class="desc">Payments Sent</div>
-              <div class="percent">70%</div>
-            </div>
-            <div class="progress progress-striped">
-              <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%">
-                <span class="sr-only">70% Complete (Important)</span>
-              </div>
-            </div>
-          </a>
-        </li>
-        <li class="external">
-          <a href="#">See All Tasks</a>
-        </li>
+
+        <% @games_notifications.each do |notification| %>
+            <li>
+              <a href="<%= notification_path("games",notification.id)%>">
+              <span class="small italic">in <%=time_ago_in_words notification.game.time%></span>
+                <br/> Game:<br/><%= notification.game.team1_name%> <br/> vs <br/> <%=notification.game.team2_name %>
+                <br/>
+                League: <%= notification.league.name%>
+              </a>
+            </li>
+        <% end %>
       </ul>
     </li>
     <!-- settings end -->
@@ -75,12 +34,14 @@
     <li id="header_inbox_bar" class="dropdown">
       <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
         <i class="fa fa-group"></i>
+        <% if @invites_notifications.count>0 %>
         <span class="badge bg-theme"><%=@invites_notifications.count%></span>
+            <% end %>
       </a>
       <ul class="dropdown-menu extended inbox">
         <div class="notify-arrow notify-arrow-green"></div>
         <li>
-          <p class="green">You have <%=pluralize(@invites_notifications.count, "invite")%></p>
+          <p class="green">You have <%=pluralize(@invites_notifications.count, "new invite")%></p>
         </li>
       <% @invites_notifications.each do |notification| %>
       <li>
@@ -103,44 +64,35 @@
     <li id="header_notification_bar" class="dropdown">
       <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
         <i class="fa fa-sort"></i>
-        <span class="badge bg-warning">7</span>
+        <% if @score_notifications.count>0 %>
+            <span class="badge bg-theme"><%=@score_notifications.count%></span>
+        <% end %>
       </a>
       <ul class="dropdown-menu extended notification">
         <div class="notify-arrow notify-arrow-yellow"></div>
         <li>
-          <p class="yellow">You have 7 new notifications</p>
+          <p class="yellow"><%=pluralize(@score_notifications.count, "new result")%></p>
         </li>
-        <li>
-          <a href="index.html#">
-            <span class="label label-danger"><i class="fa fa-bolt"></i></span>
-            Server Overloaded.
-            <span class="small italic">4 mins.</span>
+
+
+
+        <% @score_notifications.each do |notification| %>
+      <li>
+          <a href="<%= notification_path("score",notification.id)%>">
+            <%if notification.bet.score < 0 %>
+            <span class="label label-danger">
+            <i class="fa fa-minus"></i></span> <%= notification.bet.score %> points
+          <%else%>
+            <span class="label label-success">
+            <i class="fa fa-plus"></i></span>  <%= notification.bet.score %> points
+          <%end%>
+            <span class="small italic"><%=time_ago_in_words notification.added_at %> ago</span>
+            <br/> Game:<br/><%= notification.bet.game.team1_name%> <br/> vs <br/> <%=notification.bet.game.team2_name %>
+            <br/>
+            League: <%= notification.bet.league.name%>
           </a>
         </li>
-        <li>
-          <a href="index.html#">
-            <span class="label label-warning"><i class="fa fa-bell"></i></span>
-            Memory #2 Not Responding.
-            <span class="small italic">30 mins.</span>
-          </a>
-        </li>
-        <li>
-          <a href="index.html#">
-            <span class="label label-danger"><i class="fa fa-bolt"></i></span>
-            Disk Space Reached 85%.
-            <span class="small italic">2 hrs.</span>
-          </a>
-        </li>
-        <li>
-          <a href="index.html#">
-            <span class="label label-success"><i class="fa fa-plus"></i></span>
-            New User Registered.
-            <span class="small italic">3 hrs.</span>
-          </a>
-        </li>
-        <li>
-          <a href="index.html#">See all notifications</a>
-        </li>
+        <% end %>
       </ul>
     </li>
     <!-- notification dropdown end -->

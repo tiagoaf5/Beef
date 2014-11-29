@@ -8,6 +8,9 @@ class LeaguesController < ApplicationController
     #@leagues = League.all
    # (@myleagues && @myleagues.size != 0) ? redirect_to(league_path(@myleagues.first.league)) : redirect_to(new_league_path)
     #  @leagues = League.all.includes(:bets)
+    InvitesNotification.notify(current_user.leagues.first,current_user) ##TODO DELETE THIS
+    BetScoreNotification.notify(current_user.leagues.first.bets.find(2),current_user)
+    PendingGamesNotification.notify(current_user.leagues.first.championships.first.games.last,current_user.leagues.first,current_user)
   end
 
   # GET /leagues/1
@@ -252,9 +255,6 @@ class LeaguesController < ApplicationController
   end
 
   def updown league
-
-    InvitesNotification.notify(league,current_user) ##TODO DELETE THIS
-
     usersTop = league.bets.joins(:game).where("games.time < date_trunc('day', current_timestamp)").group("user_id").sum(:score)
     usersTop = usersTop.sort_by { |k, v| v }.reverse
     oldPos = 0;

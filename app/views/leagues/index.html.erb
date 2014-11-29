@@ -17,7 +17,7 @@
               <div class="col-lg-4 col-md-4 col-sm-4 mb">
                 <div class="weather-3 pn centered" style="background-color: #4cae4c">
                   <i class="fa fa-chevron-circle-up"></i>
-                  <h1><%= result[0]+1%> place</h1>
+                  <h1><%= ActiveSupport::Inflector.ordinalize(result[0]+1)%> place</h1>
                   <div class="info">
                     <div class="row">
                       <h3 class="centered"><%= league.name %></h3>
@@ -25,7 +25,7 @@
                         <p class="goleft"><i class="fa fa-hospital-o"></i> <%=result[2]%> point(s)</p>
                       </div>
                       <div class="col-sm-6 col-xs-6 pull-right">
-                        <p class="goright"><i class="glyphicon glyphicon-time"></i> Yesterday:<br/> <%= result[3]+1%> place</p>
+                        <p class="goright"><i class="glyphicon glyphicon-time"></i> Yesterday:<br/> <%= ActiveSupport::Inflector.ordinalize(result[3]+1)%> place</p>
                       </div>
                     </div>
                   </div>
@@ -39,7 +39,7 @@
               <div class="col-lg-4 col-md-4 col-sm-4 mb">
                 <div class="weather-3 pn centered">
                   <i class="fa fa-chevron-circle-down"></i>
-                  <h1><%= result[0]+1%> place</h1>
+                  <h1><%= ActiveSupport::Inflector.ordinalize(result[0]+1)%> place</h1>
                   <div class="info">
                     <div class="row">
                       <h3 class="centered"><%= league.name %></h3>
@@ -47,7 +47,7 @@
                         <p class="goleft"><i class="fa fa-hospital-o"></i> <%=result[2]%> point(s)</p>
                       </div>
                       <div class="col-sm-6 col-xs-6 pull-right">
-                        <p class="goright"><i class="glyphicon glyphicon-time"></i> Yesterday:<br/> <%= result[3]+1%> place</p>
+                        <p class="goright"><i class="glyphicon glyphicon-time"></i> Yesterday:<br/> <%= ActiveSupport::Inflector.ordinalize(result[3]+1)%> place</p>
                       </div>
                     </div>
                   </div>
