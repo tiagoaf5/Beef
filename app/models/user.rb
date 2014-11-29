@@ -28,4 +28,9 @@ class User < ActiveRecord::Base
     end
   end
 
+  def update_score league_id, bet_score
+    league_user = self.league_users.where(league_id: league_id).first
+    league_user.user_score += bet_score
+    league_user.save
+  end
 end

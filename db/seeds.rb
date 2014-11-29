@@ -54,10 +54,12 @@ def random_bets user, league
   league.championships.each do |championship|
     championship.games.each do |game|
       bet = Bet.create! team1_goals: rand(4), team2_goals: rand(4)
-      bet.update! score: points_for_bet(bet, game, league) if game.team1_goals.nil?
+     # bet.update! score: points_for_bet(bet, game, league) if game.team1_goals.nil?
       game.bets << bet
       user.bets << bet
       league.bets << bet
+
+      game.save # force score updates
     end
   end
 end
