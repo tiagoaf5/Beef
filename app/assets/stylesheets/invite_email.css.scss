@@ -1,29 +1,31 @@
-* {
+.email {
+  * {
     padding: 0;
     margin: 0;
-}
+  }
 
-.header-email {
+  .header-email {
     background-color: #22242A;
     vertical-align:middle;
     padding: 0 0 20px 0;
     margin: 0;
-}
+  }
 
-.header-text {
+  .header-text {
     padding: 30px 0px 0px 0px;
     margin: 0;
     color: white;
     text-align: center;
     vertical-align:middle;
 
-}
+  }
 
-.logo {
+  .logo {
     float: none !important;
     font-size: 100% !important;
-}
+  }
 
-.logo-1 {
+  .logo-1 {
     color:#22242A;
+  }
 }

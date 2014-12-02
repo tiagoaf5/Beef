@@ -53,6 +53,7 @@ class LeaguesController < ApplicationController
       league_params['users'].each  do |f|
         if (@UserTmp = User.find_by_email(f)).blank?
           InviteMailer.invite_email(@league.owner, f, @league).deliver
+          PendingUser.new(email: f, league_id: @league.id, read: false)
         else
           @league.users << @UserTmp
         end
@@ -79,8 +80,19 @@ class LeaguesController < ApplicationController
     end
   end
 
+  def settings
+    if League.exists?(id: params[:id]) && (user_signed_in?)
+      @league = League.find(params[:id])
+    else
+      redirect_to @league
+    end
+
+    if current_user.id != @league.owner_id
+      redirect_to @league
+    end
+  end
+
   def get_users
-      puts '%' + params[:term] + '%'
       @users = User.where('email ILIKE ?', '%' + params[:term] + '%').limit(10)
 
       respond_to do |format|

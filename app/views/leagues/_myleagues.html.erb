@@ -13,7 +13,7 @@
             <li ><%= link_to raw(("<i class='glyphicon glyphicon-record'></i>")+" Games"), league_games_path(league.id)%></li>
             <li ><%= link_to raw(("<i class='glyphicon glyphicon-time'></i>")+" My Bets"), league_mybets_path(league.id)%></li>
             <% if league.owner_id == current_user.id %>
-          <li ><%= link_to raw(("<i class='glyphicon glyphicon-cog'></i>")+" Admin"), league_path(league.id)%></li>
+                <li ><%= link_to raw(("<i class='glyphicon glyphicon-cog'></i>")+" Admin"), league_settings_path(league.id)%></li>
             <% end %>
           </ul>
         </li>
