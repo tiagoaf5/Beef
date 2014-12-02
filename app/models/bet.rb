@@ -12,6 +12,7 @@ class Bet < ActiveRecord::Base
     self.save
 
     self.user.update_score self.league.id, self.score
+    BetScoreNotification.notify(self,self.user)
   end
 
   def calculate_points game_team1_goals, game_team2_goals

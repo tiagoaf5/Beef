@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141129122401) do
+ActiveRecord::Schema.define(version: 20141202163606) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20141129122401) do
     t.integer  "bet_id"
   end
 
+  add_index "bet_score_notifications", ["bet_id", "user_id"], name: "index_bet_notif_unique", unique: true, using: :btree
   add_index "bet_score_notifications", ["user_id"], name: "index_bet_score_notifications_on_user_id", using: :btree
 
   create_table "bets", force: true do |t|
@@ -68,6 +69,7 @@ ActiveRecord::Schema.define(version: 20141129122401) do
     t.integer  "league_id"
   end
 
+  add_index "invites_notifications", ["league_id", "user_id"], name: "index_invites_notif_unique", unique: true, using: :btree
   add_index "invites_notifications", ["league_id"], name: "index_invites_notifications_on_league_id", using: :btree
   add_index "invites_notifications", ["user_id"], name: "index_invites_notifications_on_user_id", using: :btree
 
@@ -110,6 +112,7 @@ ActiveRecord::Schema.define(version: 20141129122401) do
     t.integer  "game_id"
   end
 
+  add_index "pending_games_notifications", ["game_id", "league_id", "user_id"], name: "index_games_not_unique", unique: true, using: :btree
   add_index "pending_games_notifications", ["user_id"], name: "index_pending_games_notifications_on_user_id", using: :btree
 
   create_table "users", force: true do |t|

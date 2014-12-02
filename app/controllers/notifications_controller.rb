@@ -15,9 +15,9 @@ class NotificationsController < ApplicationController
       @notification.save
       case params[:type]
         when "score"
-          redirect_to(league_path(@notification.bet.league)) ##TODO add path to specific game
+          redirect_to(league_games_path(@notification.bet.league)+"#game"+@notification.game.id.to_s)
         when "games"
-          redirect_to(league_path(@notification.league)) ##TODO add path to specific game
+          redirect_to(league_mybets_path(@notification.league)+"#game"+@notification.game.id.to_s)
         when "invites"
           redirect_to(league_path(@notification.league))
       end

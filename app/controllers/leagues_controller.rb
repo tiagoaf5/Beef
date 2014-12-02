@@ -8,9 +8,7 @@ class LeaguesController < ApplicationController
     #@leagues = League.all
    # (@myleagues && @myleagues.size != 0) ? redirect_to(league_path(@myleagues.first.league)) : redirect_to(new_league_path)
     #  @leagues = League.all.includes(:bets)
-    InvitesNotification.notify(current_user.leagues.first,current_user) ##TODO DELETE THIS
-    BetScoreNotification.notify(current_user.leagues.first.bets.find(2),current_user)
-    PendingGamesNotification.notify(current_user.leagues.first.championships.first.games.last,current_user.leagues.first,current_user)
+   # InvitesNotification.notify(current_user.leagues.first,current_user)
   end
 
   # GET /leagues/1
@@ -47,9 +45,8 @@ class LeaguesController < ApplicationController
       return
     end
 
-    @league = League.new(league_params.merge(:user_id => current_user.id).except(:users, :championships))
+    @league = League.new(league_params.merge(:owner_id => current_user.id).except(:users, :championships))
 
-    @league.owner = current_user
     @league.users << current_user
 
     if league_params['users'].present?
@@ -70,6 +67,9 @@ class LeaguesController < ApplicationController
 
     respond_to do |format|
       if @league.save
+        @league.users.each do |user|
+          InvitesNotification.notify(@league,user)
+        end
         format.html { redirect_to @league, notice: 'League was successfully created.' }
         format.json { render :show, status: :created, location: @league }
       else

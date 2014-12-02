@@ -21,3 +21,10 @@ def schedule_update scheduler, fdata
 end
 
 schedule_update scheduler, fdata
+
+scheduler.every '1h' do
+  games = Game.where('time < ? and time > ?',DateTime.now + 1,DateTime.now) ##em menos de 1 dia
+  games.each do |game|
+    PendingGamesNotification.notify(game)
+  end
+end
