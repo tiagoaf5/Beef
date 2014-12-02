@@ -47,9 +47,8 @@ class LeaguesController < ApplicationController
       return
     end
 
-    @league = League.new(league_params.merge(:user_id => current_user.id).except(:users, :championships))
+    @league = League.new(league_params.merge(:owner_id => current_user.id).except(:users, :championships))
 
-    @league.owner = current_user
     @league.users << current_user
 
     if league_params['users'].present?
@@ -79,8 +78,19 @@ class LeaguesController < ApplicationController
     end
   end
 
+  def settings
+    if League.exists?(id: params[:id]) && (user_signed_in?)
+      @league = League.find(params[:id])
+    else
+      redirect_to @league
+    end
+
+    if current_user.id != @league.owner_id
+      redirect_to @league
+    end
+  end
+
   def get_users
-      puts '%' + params[:term] + '%'
       @users = User.where('email ILIKE ?', '%' + params[:term] + '%').limit(10)
 
       respond_to do |format|

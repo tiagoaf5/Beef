@@ -81,6 +81,8 @@ Rails.application.routes.draw do
 
   get '/leagues/:id/mybets', to: 'leagues#mybets', as: 'league_mybets'
 
+  get '/leagues/:id/settings', to: 'leagues#settings', as: 'league_settings'
+
   get '/users/:id', to: 'users#show', as: 'user_profile'
 
   post '/bets/update_multiple', to: 'bets#update_multiple', as: 'update_multiple_bets'

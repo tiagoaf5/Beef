@@ -7,7 +7,7 @@
     <link href="<%= root_path %>assets/theme/style-responsive.css" media="all" rel="stylesheet" />
     <link href="<%= root_path %>assets/invite_email.css" media="all" rel="stylesheet" />
 </head>
-<body>
+<body class="email">
 <div class="header-email">
     <h1 class ="header-text">You have been invited to join <a href="<%= root_path %> " class="logo"><b>BE<span>&F</span></b></a> by <%= @user.name.blank? ? @user.email : @user.name %>!</h1>
 </div>
