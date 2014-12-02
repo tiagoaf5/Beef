@@ -55,6 +55,7 @@ class LeaguesController < ApplicationController
       league_params['users'].each  do |f|
         if (@UserTmp = User.find_by_email(f)).blank?
           InviteMailer.invite_email(@league.owner, f, @league).deliver
+          PendingUser.new(email: f, league_id: @league.id, read: false)
         else
           @league.users << @UserTmp
         end

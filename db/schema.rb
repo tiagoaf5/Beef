@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141129122401) do
+ActiveRecord::Schema.define(version: 20141202104107) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(version: 20141129122401) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "owner_id"
+    t.integer  "pending_user_id"
   end
 
   create_table "pending_games_notifications", force: true do |t|
@@ -111,6 +112,13 @@ ActiveRecord::Schema.define(version: 20141129122401) do
   end
 
   add_index "pending_games_notifications", ["user_id"], name: "index_pending_games_notifications_on_user_id", using: :btree
+
+  create_table "pending_users", force: true do |t|
+    t.datetime "added_at"
+    t.boolean  "read"
+    t.text     "email"
+    t.integer  "leagues_id"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

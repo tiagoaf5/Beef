@@ -73,6 +73,7 @@ Rails.application.routes.draw do
   #   end
 
   get '/leagues/:id/scoreboard', to: 'leagues#scoreboard', as: 'league_scoreboard'
+
   get '/leagues/:id/leaderboard', to: 'leagues#leaderboard', as: 'league_leaderboard'
 
   get '/get_users', to: 'leagues#get_users', as: 'get_users'
@@ -84,6 +85,8 @@ Rails.application.routes.draw do
   get '/leagues/:id/settings', to: 'leagues#settings', as: 'league_settings'
 
   get '/users/:id', to: 'users#show', as: 'user_profile'
+
+  #devise_for :users, :controllers => { :registrations => "users/registrations_controller" }
 
   post '/bets/update_multiple', to: 'bets#update_multiple', as: 'update_multiple_bets'
 
