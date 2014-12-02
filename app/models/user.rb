@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   devise :omniauthable, :omniauth_providers => [:facebook]
-  before_save :check_pending
+  after_save :check_pending
   has_many :bets
   has_many :league_users
   has_many :leagues, through: :league_users
@@ -31,9 +31,13 @@ class User < ActiveRecord::Base
 
   def check_pending
     if !(@UserTmp = PendingUser.all.find_by_email(self.email)).blank?
-      @UserTmp.league << self
+      puts 'ola'
+      League.find(@UserTmp.leagues_id).users << self
+      @UserTmp.destroy
     end
   end
+
+
 
   def update_score league_id, bet_score
     league_user = self.league_users.where(league_id: league_id).first

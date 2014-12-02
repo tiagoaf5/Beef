@@ -49,11 +49,14 @@ class LeaguesController < ApplicationController
 
     @league.users << current_user
 
+    non_registered_users = Array.new
+
     if league_params['users'].present?
       league_params['users'].each  do |f|
         if (@UserTmp = User.find_by_email(f)).blank?
-          InviteMailer.invite_email(@league.owner, f, @league).deliver
-          PendingUser.new(email: f, league_id: @league.id, read: false)
+          non_registered_users.push(f)
+          #InviteMailer.invite_email(@league.owner, f, @league).deliver
+          #PendingUser.create(email: f, leagues_id: @league.id, read: false)
         else
           @league.users << @UserTmp
         end
@@ -71,7 +74,11 @@ class LeaguesController < ApplicationController
         @league.users.each do |user|
           InvitesNotification.notify(@league,user)
         end
-        format.html { redirect_to @league, notice: 'League was successfully created.' }
+        non_registered_users.each do |email|
+          InviteMailer.invite_email(@league.owner, email, @league).deliver
+          PendingUser.create(email: email, leagues_id: @league.id, read: false)
+        end
+          format.html { redirect_to @league, notice: 'League was successfully created.' }
         format.json { render :show, status: :created, location: @league }
       else
         format.html { render :new }

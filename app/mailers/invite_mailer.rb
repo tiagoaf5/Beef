@@ -1,5 +1,5 @@
 class InviteMailer < ActionMailer::Base
-  default from: "ei11065@fe.up.pt"
+  include Resque::Mailer
 
   def invite_email(user, invited_user_email, league_name)
     @user = user

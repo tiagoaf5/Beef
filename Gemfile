@@ -35,6 +35,9 @@ gem 'devise'
 #Country selector
 gem 'carmen-rails', '~> 1.0.0'
 
+gem 'resque' # or a compatible alternative / fork
+gem 'resque_mailer'
+
 # Use ActiveModel has_secure_password
 #gem 'bcrypt', '~> 3.1.7'
 
