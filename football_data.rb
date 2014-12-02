@@ -1,5 +1,3 @@
-require 'singleton'
-
 class FootballData
   include HTTParty
 
@@ -10,7 +8,7 @@ class FootballData
   attr_reader :newest_to_update
 
   def initialize
-    @cache_filename = "api_data_cache.json"
+    @cache_filename = 'api_data_cache.json'
     @excluded_countries = []
     @excluded_league_names = []
   end
@@ -18,12 +16,12 @@ class FootballData
   def load_all_fixtures
     puts "Searching for #{@cache_filename}..."
 
-    if File.exist? @cache_filename
+    if File.exist? @cache_filename and File.mtime('api_data_cache.json') + 1.day >= Time.now
       puts '...found!'
 
       read_from_cache
     else
-      puts '...Not detected, re-downloading matches'
+      puts '...Not detected or outdated, re-downloading matches'
 
       download_all_fixtures
     end
@@ -78,16 +76,16 @@ class FootballData
     newest_league_name = nil
 
     @fixtures.each do |fixture|
-      fixture[:matches].each do |match|
+      fixture[:matches].select { |match| match[:time] >= DateTime.now }.each do |match|
         if match[:team1_goals] == -1
-          if not @newest_to_update.nil?
+          if @newest_to_update.nil?
+            @newest_to_update = match.dup
+            newest_league_name = fixture[:league_name]
+          else
             if @newest_to_update[:time] > match[:time]
               @newest_to_update = match.dup
               newest_league_name = fixture[:league_name]
             end
-          else
-            @newest_to_update = match.dup
-            newest_league_name = fixture[:league_name]
           end
         end
       end
@@ -108,18 +106,18 @@ class FootballData
   end
 
   def country_of_league league
-    if league.include? "Bundesliga"
-      "Germany"
-    elsif league.include? "Serie"
-      "Italy"
-    elsif league.include? "Division"
-      "Spain"
-    elsif league.include? "Ligue"
-      "France"
-    elsif league.include? "Premier"
-      "United Kingdom"
+    if league.include? 'Bundesliga'
+      'Germany'
+    elsif league.include? 'Serie'
+      'Italy'
+    elsif league.include? 'Division'
+      'Spain'
+    elsif league.include? 'Ligue'
+      'France'
+    elsif league.include? 'Premier'
+      'United Kingdom'
     else
-      "Netherlands"
+      'Netherlands'
     end
   end
 
@@ -166,7 +164,7 @@ class FootballData
 
     puts "Saving file #{filename}..."
 
-    File.open(filename, "w") do |f|
+    File.open(filename, 'w') do |f|
       f.write(JSON.pretty_generate @fixtures)
     end
   end

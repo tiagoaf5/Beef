@@ -60,6 +60,9 @@ ActiveRecord::Schema.define(version: 20141202104107) do
   end
 
   add_index "games", ["championship_id"], name: "index_games_on_championship_id", using: :btree
+  add_index "games", ["team1_name", "team2_name", "time"], name: "index_games_on_team1_name_and_team2_name_and_time", using: :btree
+
+  add_index "games", ["team1_name", "team2_name", "time"], name: "index_games_on_team1_name_and_team2_name_and_time", using: :btree
 
   create_table "invites_notifications", force: true do |t|
     t.datetime "added_at"
@@ -112,6 +115,13 @@ ActiveRecord::Schema.define(version: 20141202104107) do
   end
 
   add_index "pending_games_notifications", ["user_id"], name: "index_pending_games_notifications_on_user_id", using: :btree
+
+  create_table "pending_users", force: true do |t|
+    t.datetime "added_at"
+    t.boolean  "read"
+    t.text     "email"
+    t.integer  "leagues_id"
+  end
 
   create_table "pending_users", force: true do |t|
     t.datetime "added_at"
