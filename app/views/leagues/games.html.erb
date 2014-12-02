@@ -14,8 +14,8 @@
             <% matchday_games.each do |game| %>
                 <div id="game<%=game.id %>" class="panel panel-body panel-default col-md-12">
                   <div class="inline-block col-md-3 text-right"><strong><%= game.team1_name %></strong></div>
-                  <div class="inline-block col-md-1 first_goals"><%= game.team1_goals %></div>
-                  <div class="inline-block col-md-1 second_goals"><%= game.team2_goals %></div>
+                  <div class="inline-block col-md-1 first_goals"><%= game.team1_goals < 0 ? '-' : game.team1_goals %></div>
+                  <div class="inline-block col-md-1 second_goals"><%= game.team2_goals < 0 ? '-' : game.team2_goals %></div>
 
                   <div class="inline-block col-md-3 text-left"><strong><%= game.team2_name %></strong></div>
                   <!--<div class="inline-block col-md-1 text-left"><%= game.matchday %></div>-->
