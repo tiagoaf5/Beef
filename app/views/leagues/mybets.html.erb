@@ -30,7 +30,7 @@
         </div>
       </div>
     </div>
-    <div class="col-lg-1"></div>
+    <div id="<%= @league.id %>" class="col-lg-1 league"></div> <!-- Very important don't delete this div-->
     <div id="<%= @championship.id %>" class="championship col-lg-10 col-xs-12">
 
 
@@ -43,28 +43,53 @@
             <% matchday_games.each do |game| %>
                 <form id="game<%=game.id %>" class="panel panel-body panel-default col-md-12 text-center">
                   <div class="inline-block col-md-3 text-right"><strong><%= game.team1_name %></strong></div>
-                  <div class="inline-block col-md-1 first_goals">
-                    <span class="not-editable"><%= @user_bets.find_by(game_id: game.id).team1_goals %></span>
-                    <% bet = @user_bets.find_by(game_id: game.id) %>
-                    <% if game.time >= DateTime.parse("2014-08-23 11:45:00 UTC") #TODO: change to current time %>
-                        <span class="editable" hidden><%=text_field_tag( "firstGoals-#{bet.id}-#{game.id}", value = bet.team1_goals, {class: "form-control", type:"number", min: "0", step: "1"}) %></span>
-                    <% else %>
-                        <span class="editable" hidden><%=text_field_tag("firstGoals-#{bet.id}-#{game.id}", value = bet.team1_goals, {class: "form-control", type:"number", min: "0", step: "1", disabled: ""}) %></span>
-                    <% end %>
-                  </div>
-                  <div class="inline-block col-md-1 second_goals text-center" >
-                    <span class="not-editable"><%= @user_bets.find_by(game_id: game.id).team2_goals %></span>
-                    <% if game.time >= DateTime.parse("2014-08-23 11:45:00 UTC") #TODO: change to current time %>
-                        <span class="editable" hidden><%=text_field_tag("secondGoals-#{bet.id}-#{game.id}", value = bet.team2_goals, {class: "form-control", type:"number", min: "0", step: "1"}) %></span>
-                    <% else %>
-                        <span class="editable" hidden><%=text_field_tag("secondGoals-#{bet.id}-#{game.id}", value = bet.team2_goals, {class: "form-control", type:"number", min: "0", step: "1", disabled: ""}) %></span>
-                    <% end %>
-                  </div>
+
+                  <% bet = @user_bets.find_by(game_id: game.id) %>
+
+                  <% if bet %>
+                      <div class="inline-block col-md-1 first_goals">
+                        <span class="not-editable"><%= bet.team1_goals %></span>
+                        <% if game.time >= Time.now #DateTime.parse("2014-08-23 11:45:00 UTC") #TODO: change to current time %>
+                            <span class="editable" hidden><%=text_field_tag( "firstGoals-#{bet.id}-#{game.id}", value = bet.team1_goals, {class: "form-control", type:"number", min: "0", step: "1"}) %></span>
+                        <% else %>
+                            <span class="editable" hidden><%=text_field_tag("firstGoals-#{bet.id}-#{game.id}", value = bet.team1_goals, {class: "form-control", type:"number", min: "0", step: "1", disabled: ""}) %></span>
+                        <% end %>
+                      </div>
+                      <div class="inline-block col-md-1 second_goals text-center" >
+                        <span class="not-editable"><%= bet.team2_goals %></span>
+                        <% if game.time >= Time.now #DateTime.parse("2014-08-23 11:45:00 UTC") #TODO: change to current time %>
+                            <span class="editable" hidden><%=text_field_tag("secondGoals-#{bet.id}-#{game.id}", value = bet.team2_goals, {class: "form-control", type:"number", min: "0", step: "1"}) %></span>
+                        <% else %>
+                            <span class="editable" hidden><%=text_field_tag("secondGoals-#{bet.id}-#{game.id}", value = bet.team2_goals, {class: "form-control", type:"number", min: "0", step: "1", disabled: ""}) %></span>
+                        <% end %>
+                      </div>
+                  <% else %>
+                      <div class="inline-block col-md-1 first_goals">
+                        <span class="not-editable">-</span>
+                        <% if game.time >= Time.now #DateTime.parse("2014-08-23 11:45:00 UTC") #TODO: change to current time %>
+                            <span class="editable" hidden><%=text_field_tag( "firstGoals-undefined-#{game.id}", value = "", {class: "form-control", type:"number", min: "0", step: "1"}) %></span>
+                        <% else %>
+                            <span class="editable" hidden><%=text_field_tag("firstGoals-undefined-#{game.id}",  value = "", {class: "form-control", type:"number", min: "0", step: "1", disabled: ""}) %></span>
+                        <% end %>
+                      </div>
+                      <div class="inline-block col-md-1 second_goals text-center" >
+                        <span class="not-editable">-</span>
+                        <% if game.time >= Time.now #DateTime.parse("2014-08-23 11:45:00 UTC") #TODO: change to current time %>
+                            <span class="editable" hidden><%=text_field_tag("secondGoals-undefined-#{game.id}", value = "", {class: "form-control", type:"number", min: "0", step: "1"}) %></span>
+                        <% else %>
+                            <span class="editable" hidden><%=text_field_tag("secondGoals-undefined-#{game.id}", value = "", {class: "form-control", type:"number", min: "0", step: "1", disabled: ""}) %></span>
+                        <% end %>
+                      </div>
+
+
+                  <% end %>
 
                   <div class="inline-block inline-block col-md-3 text-left"><strong><%= game.team2_name %></strong></div>
                   <div class="inline-block col-md-2 text-right"><%= game.time.to_formatted_s(:short) %></div>
                   <% type = "" %>
-                  <% if bet.score == @league.score_correct %>
+                  <% if not bet %>
+                      <% type = "" %>
+                  <% elsif bet.score == @league.score_correct %>
                       <% type = "text-success" %>
                   <% elsif bet.score == @league.score_difference %>
                       <% type = "text-primary" %>
@@ -73,7 +98,7 @@
                   <% elsif bet.score == 0 %>
                       <% type = "text-danger" %>
                   <% end %>
-                  <div class="inline-block col-md-1 text-center <%= type %>"> <i class="fa fa-trophy"></i> <%= bet.score %></div>
+                  <div class="inline-block col-md-1 text-center <%= type %>"> <i class="fa fa-trophy"></i> <%= bet.nil? ? 0 : bet.score %></div>
                   <div class="inline-block col-md-1 text-center">
                     <button type="button" class="beth btn btn-link games-user-icon" data-container="body" data-toggle="popover" data-placement="left"
                             data-html="true" data-content='

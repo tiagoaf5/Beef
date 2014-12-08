@@ -63,19 +63,40 @@ class BetsController < ApplicationController
     puts a
     puts "------------------------------------------------------------------------------------------"
 
+    league = League.find(a['league_id'])
     puts a['bets']
 
     status = true
 
     ActiveRecord::Base.transaction do
       a['bets'].each do |bet|
-        #TODO: Check if it is already from the past
-        b = Bet.find(bet['bet_id']);
-        b.attributes = {
-            team1_goals: bet['team1_goals'],
-            team2_goals: bet['team2_goals']
-        }
-        status = status & b.save #save bet
+
+        if bet['bet_id'] == 'undefined' #if bet not created yet create it now
+          if bet['team1_goals'] != '' and bet['team2_goals'] != ''
+
+            b = Bet.new(
+                team1_goals: bet['team1_goals'],
+                team2_goals: bet['team2_goals'],
+                user_id: current_user.id,
+                game_id: bet['game_id'],
+                league_id: league.id
+            )
+            status = status & b.save #save bet
+          end
+        else
+          #TODO: Check if it is already from the past
+          b = Bet.find(bet['bet_id']);
+
+          #just update if there is a difference
+          if b.team1_goals != bet['team1_goals'] or b.team2_goals != bet['team2_goals']
+            b.attributes = {
+                team1_goals: bet['team1_goals'],
+                team2_goals: bet['team2_goals']
+            }
+            status = status & b.save #save bet
+          end
+        end
+
       end
     end
 
@@ -88,9 +109,9 @@ class BetsController < ApplicationController
 
     message = {success: status};
 
-     respond_to do |format|
-       format.json { render json: message.as_json, status: :ok }
-     end
+    respond_to do |format|
+      format.json { render json: message.as_json, status: :ok }
+    end
   end
 
   # DELETE /bets/1

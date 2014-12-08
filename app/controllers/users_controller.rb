@@ -1,5 +1,9 @@
 class UsersController < ApplicationController
 
+  def update
+    puts params[:id]
+  end
+
   def show
 
     if(user_signed_in?)

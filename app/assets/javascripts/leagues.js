@@ -183,9 +183,11 @@ function mybetsSave() {
 
     var x = $(':input').serializeArray();
     var championshipId = $('.championship').attr("id");
+    var leagueId = $('.league').attr("id");
     var array = {};
 
     array["championship_id"] = championshipId;
+    array["league_id"] = leagueId;
     array["bets"] = [];
 
 
