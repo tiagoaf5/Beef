@@ -1617,7 +1617,7 @@ PANELS CONFIGURATIONS
 }
 
 /* Grid Showcase*/
-
+.show-grid{
 	margin-bottom: 15px;
 }
 
@@ -2038,7 +2038,7 @@ ul li {
 	color: #48cfad;
 }
 
-profile-text p {
+.profile-text p {
 	margin-left: 10px;
 }
 

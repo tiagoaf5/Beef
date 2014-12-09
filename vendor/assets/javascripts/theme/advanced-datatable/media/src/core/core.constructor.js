@@ -1,3 +1,4 @@
+(function() {
 var i=0, iLen, j, jLen, k, kLen;
 var sId = this.getAttribute( 'id' );
 var bInitHandedOff = false;
@@ -426,3 +427,4 @@ if ( bInitHandedOff === false )
 {
 	_fnInitialise( oSettings );
 }
+}).call(this);
