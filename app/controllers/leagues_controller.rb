@@ -122,34 +122,31 @@ class LeaguesController < ApplicationController
       return
     end
     non_registered_users = Array.new
+    users = Array.new
 
     @league = League.find(params[:id])
+    puts @league.users
     if league_params['users'].present?
       league_params['users'].each  do |f|
-        if (@UserTmp = User.find_by_email(f)).blank?
-          non_registered_users.push(f)
-          #InviteMailer.invite_email(@league.owner, f, @league).deliver
-          #PendingUser.create(email: f, leagues_id: @league.id, read: false)
+        if (@user_tmp = User.find_by_email(f)).blank?
+          InviteMailer.invite_email(@league.owner, email, @league).deliver
+          PendingUser.create(email: email, leagues_id: @league.id, read: false)
         else
-          @league.users << @UserTmp
+          users << @user_tmp
         end
       end
     end
+    name = @league.name
     if league_params['name'].present?
-      @league.name = league_params['name']
+      name = league_params['name']
     end
 
-
     respond_to do |format|
-      if @league.save
+      if @league.update(:name => name, :users => users)
         @league.users.each do |user|
           InvitesNotification.notify(@league,user)
         end
-        non_registered_users.each do |email|
-          InviteMailer.invite_email(@league.owner, email, @league).deliver
-          PendingUser.create(email: email, leagues_id: @league.id, read: false)
-        end
-        format.html { redirect_to @league, notice: 'League was successfully created.' }
+        format.html { redirect_to @league, notice: 'League was successfully updated.' }
         format.json { render :show, status: :created, location: @league }
       else
         format.html { render :new }

@@ -17,14 +17,14 @@
     <% @league.users.each do |user| %>
         <span class="friend-obj btn btn-primary"><%= user.email %><i onclick="removeUser(this)" class="remove-user glyphicon glyphicon-remove"></i></span>
     <% end %>
-    </span><br>
+    </span>
         <span id="friends_added"></span><br>
-        <button type="button" onclick="addFriend(this)" class="add_friend btn">Add</button>
+        <button type="button" style="margin-bottom: 10px" onclick="addFriend(this)" class="add_friend btn">Add</button>
     </div>
 
-    <button type="button" onclick="submitEdit(this)" class="add_friend btn">Submit changes</button>
+    <button type="button" onclick="submitEdit(this)"  class="btn">Submit changes</button>
 
-    <button type="button" onclick="deleteLeague(this)" class="add_friend btn btn-danger">Delete this league</button>
+    <button type="button" onclick="deleteLeague(this)" class="btn btn-danger">Delete this league</button>
 </div>
 
 
