@@ -14,7 +14,8 @@
       <ul class="dropdown-menu extended notification">
         <div class="notify-arrow notify-arrow-yellow"></div>
         <li>
-          <p class="yellow">You have <%=pluralize(@games_notifications.count, "pending game")%> for the next days.</p>
+          <p class="yellow">You have <%=pluralize(@games_notifications.count, "pending game")%> for the next days.
+            <a style="padding:5px  5px !important; border-bottom: 0px !important;" href="<%= notification_path("games","all")%>">Mark all as read</a></p>
         </li>
         <div style="max-height: 80vh; overflow-y: scroll; overflow-x: hidden;">
         <% @games_notifications.each do |notification| %>
@@ -42,7 +43,8 @@
       <ul class="dropdown-menu extended inbox">
         <div class="notify-arrow notify-arrow-green"></div>
         <li>
-          <p class="green">You are in <%=pluralize(@invites_notifications.count, "new league")%></p>
+          <p class="green">You are in <%=pluralize(@invites_notifications.count, "new league")%>
+            <a style="padding:5px  5px !important; border-bottom: 0px !important;" href="<%= notification_path("invites","all")%>">Mark all as read</a></p>
         </li>
         <div style="max-height: 80vh; overflow-y: scroll; overflow-x: hidden;">
         <% @invites_notifications.each do |notification| %>
@@ -74,7 +76,8 @@
       <ul class="dropdown-menu extended notification">
         <div class="notify-arrow notify-arrow-yellow"></div>
         <li>
-          <p class="yellow"><%=pluralize(@score_notifications.count, "new result")%></p>
+          <p class="yellow"><%=pluralize(@score_notifications.count, "new result")%>
+            <a style="padding:5px  5px !important; border-bottom: 0px !important;" href="<%= notification_path("score","all")%>">Mark all as read</a></p>
         </li>
 
 
