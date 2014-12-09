@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(version: 20141202163606) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "owner_id"
+    t.integer  "pending_user_id"
   end
 
   create_table "pending_games_notifications", force: true do |t|

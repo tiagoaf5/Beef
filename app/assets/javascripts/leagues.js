@@ -7,7 +7,6 @@ var championship_object2 = "     <i onclick=\"removeChampionship(this)\" class=\
 var dismissable_error1 = "<div class=\"alert alert-danger alert-dismissible\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>";
 var dismissable_error2 = "</div>";
 
-var friends_added = [];
 var championships_added = [];
 
 var init = function() {
@@ -107,6 +106,75 @@ var init = function() {
     $('[data-toggle="tooltip"]').tooltip()
 
 };
+
+function deleteLeague() {
+    var league_id = $('.name-edit').attr('id');
+
+    $.ajax({
+        type: "DELETE",
+        url: '/leagues/' + league_id + '.json',
+        headers: {
+            'X-Transaction': 'DELETE',
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        dataType: "JSON" // you want a difference between normal and ajax-calls, and json is standard
+    }).done(function(json){
+        console.log(json);
+        window.location.href = '/leagues/';
+    }).fail(function(error) {
+        var errorArray = error.responseText.replace(/\[|\]|"|/g,'').split(',');
+        console.log(errorArray);
+        for(var i = 0; i < errorArray.length; i++) {
+            $("#errors").append(dismissable_error1 + errorArray[i] + dismissable_error2);
+        }
+        console.log(error);
+    });
+    return false; // prevents normal behaviour
+}
+
+function submitEdit(obj) {
+    var valuesToSubmit = {};
+
+    var league_id = $('.name-edit').attr('id');
+    console.log(league_id);
+    valuesToSubmit['league'] = {};
+    valuesToSubmit['league']['name'] = $('#league_name').val();
+
+    //console.log(friends_added);
+    //console.log(friends_added.length);
+
+    /*console.log(user_ids);
+
+     var championship_ids = [];
+     for(var i = 0; i < championships_added.length; i++) {
+     championship_ids.push(championships2[championships_added[i]]);
+     }
+     console.log(championship_ids);*/
+
+    valuesToSubmit['league']['users'] = friends_added;
+    console.log(valuesToSubmit);
+    $.ajax({
+        type: "PUT",
+        url: '/leagues/' + league_id + '.json',
+        headers: {
+            'X-Transaction': 'PUT',
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: valuesToSubmit,
+        dataType: "JSON" // you want a difference between normal and ajax-calls, and json is standard
+    }).done(function(json){
+        console.log(json);
+        window.location.href = '/leagues/' + json['id'];
+    }).fail(function(error) {
+        var errorArray = error.responseText.replace(/\[|\]|"|/g,'').split(',');
+        console.log(errorArray);
+        for(var i = 0; i < errorArray.length; i++) {
+            $("#errors").append(dismissable_error1 + errorArray[i] + dismissable_error2);
+        }
+        console.log(error);
+    });
+    return false; // prevents normal behaviour
+}
 
 function removeUser(obj) {
     var elem = $(obj).parent().text().replace(/ /g,'').replace(/(\r\n|\n|\r)/gm,'');
