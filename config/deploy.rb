@@ -1,62 +1,62 @@
 # config valid only for current version of Capistrano
 lock '3.3.3'
 
-# Define the name of the application
+# name of the application
 set :application, 'beef'
 
-# Define where can Capistrano access the source repository
-# set :repo_url, 'https://github.com/[user name]/[application name].git'
 set :scm, :git
-set :repo_url, 'https://github.com/tiagoaf5/LDSO-2014-T1.3.git'
+set :repo_url, 'git@github.com:tiagoaf5/LDSO-2014-T1.3.git'
+set :ssh_options, { forward_agent: 'true', keys: "~/.ssh/id_rsa.pub" }
+set :branch, 'master'
+set :default_run_options, {pty: 'true'}
+set :rvm_ruby_string, 'ruby-2.1.3'
 
-# Define where to put your application code
+# Where to put application code
 set :deploy_to, "/home/rails"
 
 set :pty, true
 
 set :format, :pretty
 
-# Set the post-deployment instructions here.
+# Post-deployment instructions.
 # Once the deployment is complete, Capistrano
 # will begin performing them as described.
-# To learn more about creating tasks,
-# check out:
-# http://capistranorb.com/
 
 namespace :deploy do
 
   desc 'Install missing gems'
   task :install_gems do
-    run("RAILS_ENV=production bundle install")
+    on roles(:all) do
+      execute "(cd /home/rails/current; RAILS_ENV=production bundle install)"
+    end
   end
 
   desc 'Migrate database'
   task :migrate_db do
-    run("bundle exec rake db:migrate RAILS_ENV=production")
+    on roles(:all) do
+      execute "(cd /home/rails/current; RAILS_ENV=production rake db:migrate)"
+    end
   end
 
   desc 'Precompile assets'
   task :precompile_assets do
-    run("undle exec rake assets:precompile RAILS_ENV=production")
-  end
-
-  desc 'Clear cache'
-  task :clear_cache do
-    within release_path do
-      execute :rake, 'cache:clear'
+    on roles(:all) do
+      execute "(cd /home/rails/current; RAILS_ENV=production rake assets:precompile)"
     end
   end
 
   desc 'Restart unicorn'
   task :restart_unicorn do
-    run("service unicorn restart")
+    on roles(:all) do
+      execute "service unicorn restart"
+    end
   end
 
   after :publishing, :install_gems
   after :install_gems, :migrate_db
   after :migrate_db, :precompile_assets
-  after :precompile_assets, :clear_cache
-  after :clear_cache, :restart_unicorn
+  after :precompile_assets, :restart_unicorn
 
+  #On first deploy manually run on the server rake db:populate
 
 end
