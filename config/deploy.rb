@@ -18,7 +18,7 @@ set :pty, true
 
 set :format, :pretty
 
-# Post-deployment instructions.
+# Post-deployment instructions:
 # Once the deployment is complete, Capistrano
 # will begin performing them as described.
 
