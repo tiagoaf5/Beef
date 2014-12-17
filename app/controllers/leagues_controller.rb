@@ -95,6 +95,11 @@ class LeaguesController < ApplicationController
     if current_user.id != @league.owner_id
       redirect_to @league
     end
+
+    @users = @league.users - [@league.owner]
+    puts @users.inspect
+
+    puts @league.owner.inspect
   end
 
   def get_users
@@ -125,7 +130,7 @@ class LeaguesController < ApplicationController
     users = Array.new
 
     @league = League.find(params[:id])
-    puts @league.users
+
     if league_params['users'].present?
       league_params['users'].each  do |f|
         if (@user_tmp = User.find_by_email(f)).blank?
@@ -139,6 +144,10 @@ class LeaguesController < ApplicationController
     name = @league.name
     if league_params['name'].present?
       name = league_params['name']
+    end
+
+    if @league.users.index(@league.owner)
+      @league.users << @league.owner;
     end
 
     respond_to do |format|
