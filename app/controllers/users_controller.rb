@@ -4,6 +4,17 @@ class UsersController < ApplicationController
     puts "--------------------------------------------------------------------"
     puts params[:id]
     puts "--------------------------------------------------------------------"
+    user_to_edit = User.find(params[:id])
+
+    if(params[:name] != "" && params[:name] != "Enter name" && params[:name] !=  user_to_edit.name)
+      user_to_edit.name = params[:name]
+    end
+
+    if(params[:email] != "" && params[:email] != user_to_edit.email)
+      user_to_edit.email = params[:email]
+    end
+
+    user_to_edit.save
     redirect_to user_profile_path(params[:id])
   end
 
