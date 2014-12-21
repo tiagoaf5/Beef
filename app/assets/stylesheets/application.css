@@ -14,7 +14,7 @@
  *
  *= require bootstrap
  *= require theme/font-awesome
- *= require theme/zabuto_calendar
+ *= //TODOrequire theme/zabuto_calendar
  *= require jquery-ui
  *=// require ../../../vendor/assets/javascripts/theme/gritter/css/jquery.gritter.css
  *= require theme/style

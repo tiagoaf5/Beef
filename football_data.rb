@@ -4,6 +4,7 @@ class FootballData
   base_uri 'http://www.football-data.org'
   attr_accessor :excluded_countries
   attr_accessor :excluded_league_names
+  attr_accessor :cache_filename
   attr_reader :fixtures
   attr_reader :newest_to_update
 
@@ -13,10 +14,14 @@ class FootballData
     @excluded_league_names = []
   end
 
+  def set_url url
+    self.base_uri url
+  end
+
   def load_all_fixtures
     puts "Searching for #{@cache_filename}..."
 
-    if File.exist? @cache_filename and File.mtime('api_data_cache.json') + 1.day >= Time.now
+    if File.exist? @cache_filename and (File.mtime('api_data_cache.json') + 1.day >= Time.now or @cache_filename != 'api_data_cache.json')
       puts '...found!'
 
       read_from_cache
@@ -47,6 +52,16 @@ class FootballData
   def next_update_time
     find_newest_to_update
     @newest_to_update[:time]
+  end
+
+  def read_from_cache
+    @fixtures = JSON.parse(File.read @cache_filename).map do |season|
+      season.deep_symbolize_keys!
+    end
+
+    remove_excluded_countries!
+    remove_excluded_league_names!
+    #add_outdated_leagues_to_excluded!
   end
 
   private
@@ -93,16 +108,6 @@ class FootballData
 
     @newest_to_update[:league_name] = newest_league_name
     @newest_to_update
-  end
-
-  def read_from_cache
-    @fixtures = JSON.parse(File.read @cache_filename).map do |season|
-      season.deep_symbolize_keys!
-    end
-
-    remove_excluded_countries!
-    remove_excluded_league_names!
-    #add_outdated_leagues_to_excluded!
   end
 
   def country_of_league league

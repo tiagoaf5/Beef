@@ -21,17 +21,15 @@ class LeaguesController < ApplicationController
 
   # GET /leagues/new
   def new
-    #@championships = Championship.all.inject({}) do |result, element|
-    #  result[element[:name]] = element[:id]
-    #  result
-    #end
-    #@championships_json = @championships.to_json.html_safe
     @championships = Championship.all.map(&:name)
     @league = League.new
   end
 
+
+
   # GET /leagues/1/edit
   def edit
+
   end
 
   # POST /leagues
@@ -97,31 +95,71 @@ class LeaguesController < ApplicationController
     if current_user.id != @league.owner_id
       redirect_to @league
     end
+
+    @users = @league.users - [@league.owner]
+    puts @users.inspect
+
+    puts @league.owner.inspect
   end
 
   def get_users
-      @users = User.where('email ILIKE ?', '%' + params[:term] + '%').limit(10)
+    @users = User.where('email ILIKE ?', '%' + params[:term] + '%').limit(10)
 
-      respond_to do |format|
-        format.html { render json: @users.map(&:email)}
-        format.js {}
-        format.json {
-          render json: @users.map(&:email)
-        }
-      end
+    respond_to do |format|
+      format.html { render json: @users.map(&:email)}
+      format.js {}
+      format.json {
+        render json: @users.map(&:email)
+      }
     end
+  end
+
+
 
   # PATCH/PUT /leagues/1
   # PATCH/PUT /leagues/1.json
   def update
-    respond_to do |format|
-      if @league.update(league_params)
-        format.html { redirect_to @league, notice: 'League was successfully updated.' }
-        format.json { render :show, status: :ok, location: @league }
-      else
+    if !(user_signed_in?)
+      respond_to do |format|
+        format.html { render :new }
+        format.json { render :json => "You are not logged in!", status: :unprocessable_entity }
+      end
+      return
+    end
+    non_registered_users = Array.new
+    users = Array.new
 
-        format.html { render :edit }
-        format.json { render json: @league.errors, status: :unprocessable_entity }
+    @league = League.find(params[:id])
+
+    if league_params['users'].present?
+      league_params['users'].each  do |f|
+        if (@user_tmp = User.find_by_email(f)).blank?
+          InviteMailer.invite_email(@league.owner, email, @league).deliver
+          PendingUser.create(email: email, leagues_id: @league.id, read: false)
+        else
+          users << @user_tmp
+        end
+      end
+    end
+    name = @league.name
+    if league_params['name'].present?
+      name = league_params['name']
+    end
+
+    if @league.users.index(@league.owner)
+      @league.users << @league.owner;
+    end
+
+    respond_to do |format|
+      if @league.update(:name => name, :users => users)
+        @league.users.each do |user|
+          InvitesNotification.notify(@league,user)
+        end
+        format.html { redirect_to @league, notice: 'League was successfully updated.' }
+        format.json { render :show, status: :created, location: @league }
+      else
+        format.html { render :new }
+        format.json { render json: @league.errors.full_messages, status: :unprocessable_entity }
       end
     end
   end

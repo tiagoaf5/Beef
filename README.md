@@ -1,7 +1,14 @@
 LDSO - be&f
 ====
 
-Instructions to run the application:
+Instructions to deploy the application for production:
+* Run
+```
+cap production deploy
+```
+
+
+Instructions to run the application in a development environment:
 * Create user beef_db with password beef_db in local PostgreSQL instalation
 ```
 sudo -u postgres createuser beef_db -s

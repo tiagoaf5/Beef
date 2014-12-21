@@ -1,8 +1,19 @@
 class NotificationsController < ApplicationController
 
   def show
-    @notification = nil
-    case params[:type]
+    if(params[:id]== "all")
+      case params[:type]
+        when "score"
+          BetScoreNotification.update_all("read = true")
+        when "games"
+          PendingGamesNotification.update_all("read = true")
+        when "invites"
+          InvitesNotification.update_all("read = true")
+      end
+      redirect_to :back
+    else
+      @notification = nil
+      case params[:type]
       when "score"
         @notification = BetScoreNotification.find(params[:id])
       when "games"
@@ -24,6 +35,7 @@ class NotificationsController < ApplicationController
     else
       redirect_to(root_path)
     end
+      end
   end
 
 
