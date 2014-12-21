@@ -5,14 +5,23 @@ class UsersController < ApplicationController
     puts params[:id]
     puts "--------------------------------------------------------------------"
     user_to_edit = User.find(params[:id])
+    # @error_editing = nil
 
     if(params[:name] != "" && params[:name] != "Enter name" && params[:name] !=  user_to_edit.name)
       user_to_edit.name = params[:name]
     end
 
+=begin
     if(params[:email] != "" && params[:email] != user_to_edit.email)
-      user_to_edit.email = params[:email]
+      email_exist = User.where(email: params[:email])
+
+      if(email_exist != nil)
+        @error_editing = "Error saving: email already registered. Please try again."
+      else
+        user_to_edit.email = params[:email]
+      end
     end
+=end
 
     user_to_edit.save
     redirect_to user_profile_path(params[:id])
