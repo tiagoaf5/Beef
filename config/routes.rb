@@ -92,4 +92,6 @@ Rails.application.routes.draw do
 
   get '/notifications/:type/:id', to: 'notifications#show', as: 'notification'
 
+  put '/users/:id', to: 'users#update', as: 'edit_user_profile'
+
 end

@@ -1,7 +1,10 @@
 class UsersController < ApplicationController
 
   def update
+    puts "--------------------------------------------------------------------"
     puts params[:id]
+    puts "--------------------------------------------------------------------"
+    redirect_to user_profile_path(params[:id])
   end
 
   def show
@@ -26,26 +29,26 @@ class UsersController < ApplicationController
 
       else if @buddies_leagues.has_key?(User.find(current_user.id))
 
-            @friend=1
-            temp=LeagueUser.where(user_id: current_user.id)
-            @buddy_leagues=Array.new
-            intersection=Array.new
-            @my_leagues_intersection=Array.new
+             @friend=1
+             temp=LeagueUser.where(user_id: current_user.id)
+             @buddy_leagues=Array.new
+             intersection=Array.new
+             @my_leagues_intersection=Array.new
 
-            temp.each do |v|
-              @buddy_leagues << v.league_id
-            end
+             temp.each do |v|
+               @buddy_leagues << v.league_id
+             end
 
-            leagues.each do |league|
-              if(@buddy_leagues.include?(league.league_id))
-                intersection << league
-              end
-            end
+             leagues.each do |league|
+               if(@buddy_leagues.include?(league.league_id))
+                 intersection << league
+               end
+             end
 
-            if intersection.length>0
-              @my_leagues_intersection=get_my_leagues(intersection)
-            end
-          end
+             if intersection.length>0
+               @my_leagues_intersection=get_my_leagues(intersection)
+             end
+           end
       end
 
     end
