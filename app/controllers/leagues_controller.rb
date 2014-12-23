@@ -146,8 +146,9 @@ class LeaguesController < ApplicationController
       name = league_params['name']
     end
 
-    if @league.users.index(@league.owner)
-      @league.users << @league.owner;
+    #puts @league.users.index(@league.owner)
+    if @league.users.index(@league.owner).nil?
+      @league.users << @league.owner
     end
 
     respond_to do |format|
