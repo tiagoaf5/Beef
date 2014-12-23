@@ -20,6 +20,7 @@ require 'factory_girl_rails'
 require 'rails_helper'
 
 Capybara.javascript_driver = :webkit
+# Capybara.default_driver = :selenium
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
@@ -96,4 +97,10 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+
+  def log_test(message)
+    Rails.logger.info(message)
+    puts message
+  end
+
 end

@@ -66,6 +66,7 @@ group :test do
   gem 'database_cleaner'
   gem 'capybara'
   gem 'faker'
+  gem 'selenium-webdriver'
 end
 
 group :development, :test do

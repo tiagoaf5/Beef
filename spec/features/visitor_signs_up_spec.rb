@@ -13,6 +13,8 @@ feature 'Visitor signs up' do
 
     click_button "Sign up"
     expect(User.count).to eq(1)
+    expect(User.first.email).to eq("john@bot.com")
+    expect(User.first.name).to eq("John")
 
   end
 end

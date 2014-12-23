@@ -41,7 +41,9 @@ class User < ActiveRecord::Base
 
   def update_score league_id, bet_score
     league_user = self.league_users.where(league_id: league_id).first
-    league_user.user_score += bet_score
-    league_user.save
+    if not league_user.nil?
+      league_user.user_score += bet_score
+      league_user.save
+    end
   end
 end
