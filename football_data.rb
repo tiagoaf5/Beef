@@ -87,7 +87,7 @@ class FootballData
   end
 
   def find_newest_to_update
-    @newest_to_update = nil
+    @newest_to_update = {}
     newest_league_name = nil
 
     @fixtures.each do |fixture|
