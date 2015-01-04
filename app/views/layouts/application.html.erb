@@ -66,7 +66,7 @@ MAIN SIDEBAR MENU
       </a></p>
       <h5 class="centered">
         <% if user_signed_in? %>
-            <%= current_user.email %>
+            <%= current_user.name.nil? ? current_user.email : current_user.name %>
         <% else %>
             Sam Soffes
         <% end %>

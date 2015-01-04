@@ -19,7 +19,8 @@
         <% @data.each_with_index do |value, k| %>
             <tr class="<%= value[0] == current_user.id ? "text-primary" : "" %>">
               <td><%= k + 1 %></td>
-              <td><%= @users.find(value[0]).email %></td>
+              <% u = @users.find(value[0]) %>
+              <td><%= u.name.nil? ? u.email : u.name%></td>
               <% value[1].each do |v| %>
                   <td class="text-center"><%= v[1] %> </td>
               <% end %>
