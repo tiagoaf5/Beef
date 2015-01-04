@@ -1,35 +1,50 @@
-<!--<section class="header-11-sub" style="background-color: #1ABC9C"> &lt;!&ndash;bg-midnight-turquoise&ndash;&gt;-->
-  <!--<div class="container">-->
-    <!--<div class="row">-->
-      <!--<div class="col-sm-offset-1 col-sm-3">-->
-        <!--<% if not user_signed_in? %>-->
-            <!--<%= render 'devise/sessions/new' %>-->
-        <!--<% end %>-->
-      <!--</div>-->
-      <!--<div class="col-sm-offset-1 col-sm-7 hidden-xs">-->
-        <!--<div class="flex-video widescreen" style="margin: 0;text-align:left;">-->
-          <!--<iframe width="560" height="400" src="//www.youtube.com/embed/_l0x3bwn07g" frameborder="0" allowfullscreen></iframe></div>-->
-      <!--</div>-->
-    <!--</div>-->
-  <!--</div>-->
-<!--</section>-->
 
-<!--&lt;!&ndash; <section class="header-11-sub bg-midnight-blue">-->
-   <!--<div class="background">-->
-     <!--&nbsp;-->
-   <!--</div>-->
- <!--</section>&ndash;&gt;-->
-<!--<footer> &lt;!&ndash;class="footer-2">>&ndash;&gt;-->
-  <!--<div class="container">-->
-    <!--<div class="social-btns pull-right">-->
-      <!--<a href="#"><span class="fui-vimeo"></span></a>-->
-      <!--<a href="#"><span class="fui-facebook"></span></a>-->
-      <!--<a href="#"><span class="fui-twitter"></span></a>-->
-    <!--</div>-->
-    <!--<div class="additional-links">-->
-      <!--Be sure to take a look to our <a href="https://www.icloud.com/keynote/AwBWCAESEMQ9S-7dl5ZJEAxSDpkXXtwaKltPVYTlJgczoZi6EtNf52wtZ6xS-qkY8-S8XuqxbNPpmk9XAgFkdDqLJQMCUCAQEEIKZ4BAl1MrwmhTKm8MQo8mN0UaROpAxmK0K2zeUdrjw2#beef.key">Terms of Use</a> and <a href="#">Privacy Policy</a>-->
-    <!--</div>-->
-  <!--</div>-->
-<!--</footer>-->
-<!--<style>-->
-<!--</style>-->
+<div class="container">
+    <div class="row">
+    <div class="col-sm-offset-1 col-sm-10">
+      <h1> Welcome to <b>BE<span style="color: rgb(78,205,196)">&F</span></b>.<br/>
+        Your <b>Bet <span style="color: rgb(78,205,196)">And</span> Friends</b> Platform. </h1>
+
+      <h3>BE&F allows you challenge your friends for nothing other than respect and glory.</h3><br/>
+
+      <h4> <span class="fa fa-users" style="color: rgb(78,205,196); font-size: 150%; padding-right: 10px"></span> <span>BE&F lets you create leagues with your friends.</span></h4>
+      <h4><span class="fa fa-dashboard" style="color: rgb(78,205,196); font-size: 150%; padding-right: 10px"></span>  <span>With BE&F you can check your results, get notifications about the next games
+        and statistics about your performance.</span></h4>
+      <h4><span class="fa fa-star" style="color: rgb(78,205,196); font-size: 150%; padding-right: 10px"></span> BE&F includes the most relevant football championships.</h4>
+    </div>
+      <div class="col-sm-6 col-sm-offset-1" style="padding-top: 40px;">
+      <a href="/users/sign_up" ><button type="button" class="btn btn-theme col-sm-12" style="height: 50px; color:white;">
+        <span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>
+        Sign Up Now
+      </button></a>
+        <span class ="col-sm-12" style="text-align: center">Already a member? <%= link_to('Log in', new_user_session_path, class: "logout") %></span>
+
+        <br/><br/><br/>
+        <br/><br/><br/>
+
+        <br/><br/><br/>
+        <br/><br/><br/>
+      </div>
+
+
+      <!--<div class="col-sm-offset-1 col-sm-3">
+      </div>-->
+     <!-- <div class="col-sm-offset-1 col-sm-7 hidden-xs">
+        <div class="flex-video widescreen" style="margin: 0;text-align:left;">
+          <iframe width="560" height="400" src="//www.youtube.com/embed/_l0x3bwn07g" frameborder="0" allowfullscreen></iframe></div>
+      </div>-->
+    </div>
+  </div>
+
+<script>
+    $(document).ready(function(){
+        $('#main-content').css({
+            'margin-left': '0px'
+        });
+        $('#sidebar').css({
+            'margin-left': '-210px'
+        });
+        $('#sidebar > ul').hide();
+        $("#container").addClass("sidebar-closed");
+    });
+</script>

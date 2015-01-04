@@ -17,15 +17,17 @@
 
 <body>
 
-<section id="container" >
+<section id="container" <% if !user_signed_in? %> class="sidebar-closed" <%end%>>
 <!-- **********************************************************************************************************************************************************
 TOP BAR CONTENT & NOTIFICATIONS
 *********************************************************************************************************************************************************** -->
 <!--header start-->
 <header class="header black-bg">
+  <% if user_signed_in? %>
 <div class="sidebar-toggle-box">
   <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
 </div>
+      <% end %>
 <!--logo start-->
 <a href="<%= root_path %> " class="logo"><b>BE<span>&F</span></b></a>
 <!--logo end-->
@@ -37,7 +39,7 @@ TOP BAR CONTENT & NOTIFICATIONS
     <% if user_signed_in? %>
         <li><%= link_to('Logout', destroy_user_session_path, :method => :delete, class: "logout") %></li>
     <% else %>
-        <li><%= link_to('Login', new_user_session_path, class: "logout") %></li>
+        <li><%= link_to('Log in', new_user_session_path, class: "logout") %></li>
         <li><%= link_to('Sign Up', "/users/sign_up", class: "logout") %></li>
     <% end %>
   </ul>
@@ -49,6 +51,7 @@ TOP BAR CONTENT & NOTIFICATIONS
 MAIN SIDEBAR MENU
 *********************************************************************************************************************************************************** -->
 <!--sidebar start-->
+  <% if user_signed_in? %>
 <aside>
   <div id="sidebar"  class="nav-collapse ">
     <!-- sidebar menu start-->
@@ -185,13 +188,14 @@ MAIN SIDEBAR MENU
     <!-- sidebar menu end-->
   </div>
 </aside>
+<% end %>
 <!--sidebar end-->
 
 <!-- **********************************************************************************************************************************************************
 MAIN CONTENT
 *********************************************************************************************************************************************************** -->
 <!--main content start-->
-<section id="main-content">
+<section id="main-content"<% if !user_signed_in? %> style="margin-left: 0px" <%end%>>
   <section class="wrapper">
 
 

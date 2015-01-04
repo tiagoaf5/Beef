@@ -13,7 +13,7 @@
               <% result = updown league %>
               <% if result[1] >= 0 %>
               <!-- WEATHER-3 PANEL -->
-              <a href="<%= league_scoreboard_path(league.id) %>">
+              <a href="<%= league_path(league.id) %>">
               <div class="col-lg-4 col-md-4 col-sm-4 mb">
                 <div class="weather-3 pn centered" style="background-color: #4cae4c">
                   <i class="fa fa-chevron-circle-up"></i>
@@ -35,7 +35,7 @@
                 <% else %>
                <!-- IF DOWN -->
               <!-- WEATHER-3 PANEL -->
-              <a href="<%= league_scoreboard_path(league.id) %>">
+              <a href="<%= league_path(league.id) %>">
               <div class="col-lg-4 col-md-4 col-sm-4 mb">
                 <div class="weather-3 pn centered">
                   <i class="fa fa-chevron-circle-down"></i>
