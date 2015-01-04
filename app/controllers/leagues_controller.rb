@@ -34,6 +34,7 @@ class LeaguesController < ApplicationController
   # POST /leagues
   # POST /leagues.json
   def create
+    #Checks if user is signed in
     if !(user_signed_in?)
       respond_to do |format|
         format.html { render :new }
@@ -49,6 +50,7 @@ class LeaguesController < ApplicationController
     non_registered_users = Array.new
 
     if league_params['users'].present?
+      #Send email if unregistered or notification if unregistered
       league_params['users'].each  do |f|
         if (@UserTmp = User.find_by_email(f)).blank?
           non_registered_users.push(f)
@@ -146,6 +148,7 @@ class LeaguesController < ApplicationController
     end
 
     #puts @league.users.index(@league.owner)
+    #Owner must always be in the league after the edit
     if @league.users.index(@league.owner).nil?
       @league.users << @league.owner
     end
