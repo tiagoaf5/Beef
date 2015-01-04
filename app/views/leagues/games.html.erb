@@ -25,7 +25,7 @@
                         <table class='table bets_history'>
                         <% game.bets.where(league_id: @league.id).each do |bet| %>
                         <tr>
-                        <td><%= bet.user.email %></td>
+                        <td><%= bet.user.name? ? bet.user.name : bet.user.email %></td>
                         <td><%= bet.team1_goals %> : <%= bet.team2_goals %></td>
                         <td><%= bet.score %></td>
                         </tr>

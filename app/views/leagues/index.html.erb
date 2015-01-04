@@ -4,7 +4,7 @@
           MAIN CONTENT
           *********************************************************************************************************************************************************** -->
     <!--main content start-->
-    <h3><i class="fa fa-angle-right"></i> Welcome, <%= current_user.email%></h3>
+    <h3><i class="fa fa-angle-right"></i> Welcome, <%= current_user.name? ? current_user.name : current_user.email %>!</h3>
     <div class="row mt">
       <div class="col-lg-12">
 
