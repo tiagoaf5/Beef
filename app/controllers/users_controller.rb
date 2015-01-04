@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     user_to_edit = User.find(params[:id])
     # @error_editing = nil
 
-    if(params[:name] != "" && params[:name] != "Enter name" && params[:name] !=  user_to_edit.name)
+    if(params[:name] != "" && params[:name] != "Enter name" && params[:name] !=  user_to_edit.name) #check if name was updated
       user_to_edit.name = params[:name]
     end
 
@@ -47,7 +47,7 @@ class UsersController < ApplicationController
         @owner=1
         @pass=@user.encrypted_password
 
-      else if @buddies_leagues.has_key?(User.find(current_user.id))
+      else if @buddies_leagues.has_key?(User.find(current_user.id)) #check if user seeing profile is a friend of current user or not
 
              @friend=1
              temp=LeagueUser.where(user_id: current_user.id)
@@ -59,6 +59,7 @@ class UsersController < ApplicationController
                @buddy_leagues << v.league_id
              end
 
+             #calculate commom leagues between visitor and the owner of the profile visited
              leagues.each do |league|
                if(@buddy_leagues.include?(league.league_id))
                  intersection << league
@@ -76,6 +77,9 @@ class UsersController < ApplicationController
 
   private
 
+  # get_stats calculates user statistics based on his current leagues: total number of bets and its distribution between
+  # won, lost, with goals difference corrected and with prediction of result correct; total number of games; total number of friends
+  #returns array with user stats
   def get_stats leagues
 
     my_stats=Hash.new
@@ -116,7 +120,7 @@ class UsersController < ApplicationController
       my_stats["lost_ratio"]=0
     end
 
-    my_championships_id.each do |champ|
+      my_championships_id.each do |champ|
       #num_games=Game.where("championship_id= ? AND time < ?", champ, Time.current).count
       num_games=Game.where("championship_id= ?", champ).count
       my_stats["games"]=my_stats["games"]+num_games
@@ -125,6 +129,9 @@ class UsersController < ApplicationController
     return my_stats
   end
 
+  # get_my_leagues receives an array with ids of user leagues
+  # and returns another array containing relevant information
+  # (league name, current user score and number of friends in that league)about each one of those leagues
   def get_my_leagues leagues
 
     my_leagues=Array.new
@@ -143,6 +150,8 @@ class UsersController < ApplicationController
     return my_leagues
   end
 
+  #get_score receives a league id and calculates the number of friends in that league and the current place of the owner of the profile
+  #returns array with two elements: [number_of_friends, current_place]
   def get_score id_league
 
     users_at_league=LeagueUser.where(league_id: id_league).order("user_score DESC")
@@ -162,6 +171,8 @@ class UsersController < ApplicationController
 
   end
 
+  #get_buddies calculates common leagues between each friend and the owner of the profile
+  #returns array containing for each friend the leagues shared
   def get_buddies leagues
 
     leagues_ids=Hash.new
