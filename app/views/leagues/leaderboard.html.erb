@@ -5,7 +5,7 @@
         <thead class="text-center">
         <tr>
           <th class="text-center vert-align">#</th>
-          <th class="col-md-2 text-center vert-align">User</th>
+          <th class="col-md-3 text-center vert-align">User</th>
           <th class="col-md-1 text-center vert-align"># Bets</th>
           <th class="col-md-2 text-center"># Correct result <br> (<%= @p1 %> points)</th>
           <th class="col-md-2 text-center"># Correct difference <br> (<%= @p2 %> points)</th>
@@ -20,7 +20,10 @@
             <tr class="<%= value[0] == current_user.id ? "text-primary" : "" %>">
               <td><%= k + 1 %></td>
               <% u = @users.find(value[0]) %>
-              <td><%= u.name.nil? ? u.email : u.name%></td>
+              <td>
+                <%= link_to image_tag(u.image? ? u.image : "ui-sam.jpg", {class: "img-circle", width: "20"}), user_profile_path(u) %>
+                <span>  <%= u.name.nil? ? u.email : u.name%></span>
+              </td>
               <% value[1].each do |v| %>
                   <td class="text-center"><%= v[1] %> </td>
               <% end %>

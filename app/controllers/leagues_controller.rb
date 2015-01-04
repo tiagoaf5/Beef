@@ -6,9 +6,9 @@ class LeaguesController < ApplicationController
   # GET /leagues.json
   def index
     #@leagues = League.all
-   # (@myleagues && @myleagues.size != 0) ? redirect_to(league_path(@myleagues.first.league)) : redirect_to(new_league_path)
+    # (@myleagues && @myleagues.size != 0) ? redirect_to(league_path(@myleagues.first.league)) : redirect_to(new_league_path)
     #  @leagues = League.all.includes(:bets)
-   # InvitesNotification.notify(current_user.leagues.first,current_user)
+    # InvitesNotification.notify(current_user.leagues.first,current_user)
   end
 
   # GET /leagues/1
@@ -75,7 +75,7 @@ class LeaguesController < ApplicationController
           InviteMailer.invite_email(@league.owner, email, @league).deliver
           PendingUser.create(email: email, leagues_id: @league.id, read: false)
         end
-          format.html { redirect_to @league, notice: 'League was successfully created.' }
+        format.html { redirect_to @league, notice: 'League was successfully created.' }
         format.json { render :show, status: :created, location: @league }
       else
         format.html { render :new }
@@ -184,6 +184,7 @@ class LeaguesController < ApplicationController
     @p3 = @league.score_prediction
 
     @data = {}
+    # calculates each type of score for each user in league
     @users.each do |user|
       my_bets = bets.where(user_id: user.id)
       n_bets = my_bets.count
@@ -201,6 +202,7 @@ class LeaguesController < ApplicationController
 
   end
 
+  #handles data to a page with points of users per matchday
   def scoreboard
     @users = @league.users
     @bets = []
@@ -226,6 +228,8 @@ class LeaguesController < ApplicationController
 
   end
 
+
+  #handles all games in league
   def games
     if League.exists?(id: params[:id])
       @league = League.find(params[:id])
@@ -235,8 +239,8 @@ class LeaguesController < ApplicationController
       @games = Hash.new()
 
       @match_days.each do |day|
-         @games[day] = games.where(matchday: day).order("time asc")
-       end
+        @games[day] = games.where(matchday: day).order("time asc")
+      end
 
     else
       redirect_to(new_league_path)
@@ -286,11 +290,12 @@ class LeaguesController < ApplicationController
     @league = League.find(params[:id])
   end
 
-# Never trust parameters from the scary internet, only allow the white list through.
+  # Never trust parameters from the scary internet, only allow the white list through.
   def league_params
     params.require(:league).permit(:name, :score_correct, :score_difference, :score_prediction, :user_id, :users => [], :championships => [])
   end
 
+  #return user's listsa
   def list_mine
     if(user_signed_in?)
       @myleagues = LeagueUser.where(user_id: current_user.id)
@@ -299,6 +304,7 @@ class LeaguesController < ApplicationController
     end
   end
 
+  #return users order by score
   def get_users_score_order score
     users_order = []
     score.each_with_index do |v, k|
@@ -316,10 +322,10 @@ class LeaguesController < ApplicationController
     usersTop = usersTop.sort_by { |k, v| v }.reverse
     oldPos = 0;
     usersTop.each{|x|
-    if(x.at(0) == current_user.id)
-      oldPos = usersTop.index(x)
-      break
-    end
+      if(x.at(0) == current_user.id)
+        oldPos = usersTop.index(x)
+        break
+      end
     }
 
     nusersTop = league.bets.joins(:game).group("user_id").sum(:score)
