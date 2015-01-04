@@ -28,8 +28,9 @@ end
 
 schedule_update scheduler, fdatadb
 
+## add notifications to games that start in less than 24 hours - runs every hour
 scheduler.every '1h' do
-  games = Game.where('time < ? and time > ?',DateTime.now + 1,DateTime.now) ##em menos de 1 dia
+  games = Game.where('time < ? and time > ?',DateTime.now + 1,DateTime.now) ## + 1 means +1 day
   games.each do |game|
     PendingGamesNotification.notify(game)
   end

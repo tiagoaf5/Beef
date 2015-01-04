@@ -1,8 +1,9 @@
+<!--shows the 3 notification panels-->
 <% if user_signed_in? %>
     <div class="nav notify-row" id="top_menu">
   <!--  notification start -->
   <ul class="nav top-menu">
-    <!-- settings start PENDING -->
+    <!-- Pending Games Notifications -->
     <li class="dropdown">
       <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
         <i class="fa fa-clock-o"></i>
@@ -31,8 +32,7 @@
             </div>
       </ul>
     </li>
-    <!-- settings end -->
-    <!-- inbox dropdown start INVITES-->
+    <!-- Invites notifications -->
     <li id="header_inbox_bar" class="dropdown">
       <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
         <i class="fa fa-group"></i>
@@ -64,8 +64,7 @@
             </div>
       </ul>
     </li>
-    <!-- inbox dropdown end -->
-    <!-- notification dropdown start RESULTS-->
+    <!-- Game results notifications-->
     <li id="header_notification_bar" class="dropdown">
       <a data-toggle="dropdown" class="dropdown-toggle" href="index.html#">
         <i class="fa fa-sort"></i>
@@ -102,7 +101,6 @@
             </div>
       </ul>
     </li>
-    <!-- notification dropdown end -->
   </ul>
   <!--  notification end -->
 </div>
