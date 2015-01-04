@@ -15,8 +15,12 @@
 
 
       <div class="col-sm-4 profile-text"> <!-- top: user information -->
-        <h3><%= @name %></h3>
-        <h5><%= @email %></h5>
+        <% if @name!="" && @name!=nil %>
+            <h3><%= @name %></h3>
+            <h5><%= @email %></h5>
+        <% else %>
+            <h3><%= @email %></h3>
+        <% end %>
         <br><br>
         <% if @owner==1 %>
             <p><button class="btn btn-theme" data-toggle="modal" data-target="#edit_profile" name="edit_profile"><i class="fa fa-cogs"></i> Edit profile</button>
