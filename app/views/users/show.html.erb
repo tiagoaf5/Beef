@@ -19,7 +19,7 @@
         <br><br>
         <% if @owner==1 %>
             <p><button class="btn btn-theme" data-toggle="modal" data-target="#edit_profile" name="edit_profile"><i class="fa fa-cogs"></i> Edit profile</button>
-            <button class="btn btn-theme04" data-toggle="modal" data-target="#edit_password" id="button_edit_pass"><i class="fa fa-lock"></i> Edit password</button>
+              <button class="btn btn-theme04" data-toggle="modal" data-target="#edit_password" id="button_edit_pass"><i class="fa fa-lock"></i> Edit password</button>
             </p>
 
             <div class="modal fade" id="edit_profile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -31,57 +31,57 @@
                     <h4 class="modal-title" id="myModalLabel" style="color: white;">EDIT PROFILE</h4>
                   </div>
                   <%= form_tag(edit_user_profile_path(current_user.id), method: "put") do %>
-                  <div class="modal-body">
-                    <div class="form-group row">
-                      <%= label_tag(:name, "Name:", class: 'control-label col-sm-3 text-right') %>
-                      <div class="col-sm-6 text-left">
-                        <% if @name!="" && @name!=nil %>
-                          <%= text_field_tag(:name, @name, class: 'form-control')%>
-                        <% else %>
-                          <%= text_field_tag(:name, "Enter name", class: 'form-control')%>
-                        <% end %>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                        <%= label_tag(:email, "Email:", class: 'control-label col-sm-3 text-right')%>
-                        <div class="col-sm-6 text-left">
-                            <%= email_field_tag(:email, @email, class: 'form-control', disabled: true) %>
+                      <div class="modal-body">
+                        <div class="form-group row">
+                          <%= label_tag(:name, "Name:", class: 'control-label col-sm-3 text-right') %>
+                          <div class="col-sm-6 text-left">
+                            <% if @name!="" && @name!=nil %>
+                                <%= text_field_tag(:name, @name, class: 'form-control')%>
+                            <% else %>
+                                <%= text_field_tag(:name, "Enter name", class: 'form-control')%>
+                            <% end %>
+                          </div>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <%= label_tag(:photo, "Photo URL:", class: 'control-label col-sm-3 text-right')%>
-                        <div class="col-sm-6 text-left">
+                        <div class="form-group row">
+                          <%= label_tag(:email, "Email:", class: 'control-label col-sm-3 text-right')%>
+                          <div class="col-sm-6 text-left">
+                            <%= email_field_tag(:email, @email, class: 'form-control', disabled: true) %>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <%= label_tag(:photo, "Photo URL:", class: 'control-label col-sm-3 text-right')%>
+                          <div class="col-sm-6 text-left">
                             <% if @profile_pic!="ui-sam.jpg" && @profile_pic!=nil %>
-                              <%= url_field_tag(:photo, @profile_pic, class: 'form-control') %>
+                                <%= url_field_tag(:photo, @profile_pic, class: 'form-control') %>
                             <% else %>
                                 <%= url_field_tag(:photo, "", class: 'form-control') %>
                             <% end %>
+                          </div>
                         </div>
-                    </div>
-                    </div>
-                  <div class="modal-footer">
-                    <%= submit_tag("Save changes", class: "btn btn-primary") %>
-                  </div>
-                 <% end %>
+                      </div>
+                      <div class="modal-footer">
+                        <%= submit_tag("Save changes", class: "btn btn-primary") %>
+                      </div>
+                  <% end %>
                 </div>
               </div>
             </div>
 
-          <div class="modal fade" id="edit_password" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
+            <div class="modal fade" id="edit_password" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
 
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                  <h4 class="modal-title" id="myModalLabel" style="color: white;">EDIT PASSWORD</h4>
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel" style="color: white;">EDIT PASSWORD</h4>
+                  </div>
+                  <div class="modal-body">
+                    <%= render template: 'devise/registrations/_edit'%>
+                  </div>
                 </div>
-                <div class="modal-body">
-                  <%= render template: 'devise/registrations/_edit'%>
-                </div>
-                </div>
-             </div>
-           </div>
-         <% end %>
+              </div>
+            </div>
+        <% end %>
       </div><! --/col-md-4 -->
     </div>
     <div class="row content-panel"></div>
@@ -312,7 +312,8 @@
               <div id="buddies" class="tab-pane">
                 <div class="row">
                   <div class="col-lg-12">
-                    <% if @buddies_leagues!=nil %>
+
+                    <% if @buddies_leagues!=nil  &&  @buddies_leagues.length != 0%>
                         <% @buddies_leagues.each do |buddy, leagues| %>
                             <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
                               <div class="custom-box">
@@ -345,7 +346,12 @@
                               </div><!-- end custombox -->
                             </div><!-- end col-4 -->
                         <%end %>
-                    <%end %>
+
+                    <%else%>
+                        <div class="col-sm-8 col-md-offset-1">
+                          <h5>You don't have any buddies <i class="fa fa-frown-o"></i></h5>
+                        </div>
+                    <% end %>
                   </div>
                 </div><! --/row -->
               </div><! --/tab-pane -->
