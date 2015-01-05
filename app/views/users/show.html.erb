@@ -1,15 +1,10 @@
 <%= stylesheet_link_tag    'theme/bootstrap-fileupload/bootstrap-fileupload.css', media: 'all', 'data-turbolinks-track' => true %>
 <div class="row mt">
-<% if @error_editing != nil %>
-<div class="alert alert-danger">oooo</div>
-<br>
-<% end %>
-
   <div class="col-lg-12">
     <div class="row content-panel">
       <div class="col-sm-4 centered">
         <div class="profile-pic">
-          <p><%= image_tag "ui-sam.jpg", {class: "img-circle", width: "90"} %></p>
+          <p><%= image_tag @profile_pic, {class: "img-circle", width: "90"} %></p>
         </div>
       </div><! --/col-md-4 -->
 
@@ -37,20 +32,32 @@
                   </div>
                   <%= form_tag(edit_user_profile_path(current_user.id), method: "put") do %>
                   <div class="modal-body">
-                    <div class="form-group">
+                    <div class="form-group row">
                       <%= label_tag(:name, "Name:", class: 'control-label col-sm-3 text-right') %>
-                      <% if @name!="" && @name!=nil %>
-                          <%= text_field_tag(:name, @name, class: 'col-sm-6 text-left')%>
-                      <% else %>
-                          <%= text_field_tag(:name, "Enter name", class: 'col-sm-6 text-left')%>
-                      <% end %>
+                      <div class="col-sm-6 text-left">
+                        <% if @name!="" && @name!=nil %>
+                          <%= text_field_tag(:name, @name, class: 'form-control')%>
+                        <% else %>
+                          <%= text_field_tag(:name, "Enter name", class: 'form-control')%>
+                        <% end %>
+                      </div>
                     </div>
-                    <br>
-                    <div class="form-group">
+                    <div class="form-group row">
                         <%= label_tag(:email, "Email:", class: 'control-label col-sm-3 text-right')%>
-                        <%= email_field_tag(:email, @email, class: 'col-sm-6 text-left', disabled: true) %>
+                        <div class="col-sm-6 text-left">
+                            <%= email_field_tag(:email, @email, class: 'form-control', disabled: true) %>
+                        </div>
                     </div>
-                    <br>
+                    <div class="form-group row">
+                        <%= label_tag(:photo, "Photo URL:", class: 'control-label col-sm-3 text-right')%>
+                        <div class="col-sm-6 text-left">
+                            <% if @profile_pic!="ui-sam.jpg" && @profile_pic!=nil %>
+                              <%= url_field_tag(:photo, @profile_pic, class: 'form-control') %>
+                            <% else %>
+                                <%= url_field_tag(:photo, "", class: 'form-control') %>
+                            <% end %>
+                        </div>
+                    </div>
                     </div>
                   <div class="modal-footer">
                     <%= submit_tag("Save changes", class: "btn btn-primary") %>

@@ -11,6 +11,10 @@ class UsersController < ApplicationController
       user_to_edit.name = params[:name]
     end
 
+    if(params[:photo] != "")
+      user_to_edit.image = params[:photo]
+    end
+
 =begin
     if(params[:email] != "" && params[:email] != user_to_edit.email)
       email_exist = User.where(email: params[:email])
@@ -34,6 +38,7 @@ class UsersController < ApplicationController
       @user=User.find(params[:id])
       @name=@user.name
       @email=@user.email
+      @profile_pic=@user.image? ? @user.image : "ui-sam.jpg"
       @owner=0
       @friend=0
 
