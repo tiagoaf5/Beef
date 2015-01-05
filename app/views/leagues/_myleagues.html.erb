@@ -1,3 +1,4 @@
+<!-- Display the user leagues on sidebar-->
 <% if user_signed_in? && @user_leagues %>
     <li>
       <%= link_to raw(("<i class='glyphicon glyphicon-certificate'></i>")+" New League"), new_league_path%>
@@ -18,4 +19,5 @@
           </ul>
         </li>
     <% end %>
+    <br/><br/><br/><br/>
 <% end %>

@@ -1,9 +1,12 @@
+//HTML object for a friend (newleague)
 var friends_object1 = "<span class=\"friend-obj btn btn-primary\">";
 var friends_object2 = "     <i onclick=\"removeUser(this)\" class=\"remove-user glyphicon glyphicon-remove\"></i></span>";
 
+//HTML object for a championship (newleague)
 var championship_object1 = "<span class=\"championship-obj btn btn-primary\">";
 var championship_object2 = "     <i onclick=\"removeChampionship(this)\" class=\"remove-user glyphicon glyphicon-remove\"></i></span>";
 
+//HTML object for an error  (newleague)
 var dismissable_error1 = "<div class=\"alert alert-danger alert-dismissible\" role=\"alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>";
 var dismissable_error2 = "</div>";
 
@@ -14,6 +17,7 @@ var init = function() {
     $("#league_championships").val('');
     $(".beth").popover();
 
+    //Gets values from DOM and submits a bet
     $(".bet_submit_new").on("click", function() {
         var data = {};
         data['team1_goals'] = $(this).parent().parent().find('.first_goals').val();
@@ -33,6 +37,7 @@ var init = function() {
         });
     });
 
+    //Gets values from DOM and edits a bet
     $(".bet_submit_edit").on("click", function() {
         var data = {};
         var id = $(this).parent().attr('id');
@@ -51,15 +56,18 @@ var init = function() {
         });
     });
 
+    //JQueryUI autocomplete setup for friends  (newleague)
     $("#friends").autocomplete({
         source: '/get_users/' + $("#friends").val(),
         minLength: 2
     });
 
+    //JQueryUI autocomplete setup for championships
     $("#championship").autocomplete({
         source: championships
     });
 
+    //Gets league values from DOM and creates a new league (newleague)
     $('form').submit(function() {
         var valuesToSubmit = {};
         valuesToSubmit['league'] = {};
@@ -131,7 +139,7 @@ function deleteLeague() {
     });
     return false; // prevents normal behaviour
 }
-
+//Gets values from DOM and submits a request to edit a league
 function submitEdit(obj) {
     var valuesToSubmit = {};
 
@@ -176,6 +184,7 @@ function submitEdit(obj) {
     return false; // prevents normal behaviour
 }
 
+//Removes a user from the friends array
 function removeUser(obj) {
     var elem = $(obj).parent().text().replace(/ /g,'').replace(/(\r\n|\n|\r)/gm,'');
     friends_added.splice(friends_added.indexOf(elem), 1);
@@ -183,6 +192,7 @@ function removeUser(obj) {
     $(obj).parent().remove();
 }
 
+//Adds a friend to the friends array
 function addFriend() {
     var f = $("#friends");
     if(friends_added.indexOf(f.val()) != -1 || !validateEmail(f.val())) {
@@ -198,6 +208,7 @@ function addFriend() {
     $("#friends-container").removeClass("has-error");
 }
 
+//Adds a championship to the championships array
 function addChampionship() {
     var f = $("#championship");
     if(championships.indexOf(f.val()) == -1 || championships_added.indexOf(f.val()) != -1) {
@@ -213,12 +224,14 @@ function addChampionship() {
     $("#championship-container").removeClass("has-error");
 }
 
+//Removes a championship from the championships array
 function removeChampionship(obj) {
     var elem = $(obj).parent().text().replace(/ /g,'').replace(/(\r\n|\n|\r)/gm,'');
     championships_added.splice(championships_added.indexOf(elem), 1);
     $("#league_championships").val(championships_added);
     $(obj).parent().remove();
 }
+
 
 function mybetsEdit() {
     $(".not-editable").hide();
@@ -329,6 +342,7 @@ function mybetsCancel() {
     $(".not-editable").show();
 }
 
+//Returns a true if an email is valid and vice-versa.
 function validateEmail(email) {
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
