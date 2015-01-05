@@ -17,12 +17,17 @@ def populate_db
   User.create! :email => 'beef1234@gmail.com', :password => 'beef1234', :password_confirmation => 'beef1234'
 
   puts 'Creating league and adding users...'
-  league_owner = User.create! :email => 'owner@a.com', :password => 'beef1234', :password_confirmation => 'beef1234'
-  league = League.create! name: "Bife com Atum", score_correct: 150, score_difference: 100, score_prediction: 75,
-                          owner: league_owner, championships: [Championship.take]
-  league.users << (User.create! :email => 'a@a.com', :password => 'beef1234', :password_confirmation => 'beef1234')
-  league.users << (User.create! :email => 'b@a.com', :password => 'beef1234', :password_confirmation => 'beef1234')
-  league.users << (User.create! :email => 'c@a.com', :password => 'beef1234', :password_confirmation => 'beef1234')
+  league_owner = User.create! :image => 'http://fc04.deviantart.net/fs71/i/2014/003/a/6/male_stock_249_by_birdsistersstock-d6ga4ec.jpg', :name => 'João Leitão', :email => 'joaoleitao@gmail.com', :password => 'beef1234', :password_confirmation => 'beef1234'
+  league_owner2 = User.create! :image => 'https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSsvrEcDIjdovB9QMSlrk4nejsWi1noEHzJF_bQ8wsCPWdS-EWmlg', :name => "Ana Manuela", :email => 'anamanuela@gmail.com', :password => 'beef1234', :password_confirmation => 'beef1234'
+  league = League.create! name: "Bife com Atum", score_correct: 150, score_difference: 100, score_prediction: 75, owner: league_owner, championships: [Championship.take]
+  league.users << league_owner2
+  league.users << league_owner
+  league.users << (User.create! :image => 'http://fc01.deviantart.net/fs71/i/2010/077/0/3/female_stock_2_by_ralucs_stock.jpg', :name => "Bernardo Silva", :email => 'bernardosilva@gmail.com', :password => 'beef1234', :password_confirmation => 'beef1234')
+  league.users << (User.create! :image => 'http://cdn.controlinveste.pt/storage/DN/2012/big/ng1893127.jpg', :name => "Carlos Alexandre", :email => 'carlosalexandre@gmail.com', :password => 'beef1234', :password_confirmation => 'beef1234')
+
+  league2 = League.create! name: "25 de Abril Sempre", score_correct: 200, score_difference: 150, score_prediction: 75, owner: league_owner2, championships: [Championship.take]
+  league2.users << league_owner
+  league2.users << league_owner2
 
   puts 'Filling random bets...'
   fdatadb.fill_random_bets league
