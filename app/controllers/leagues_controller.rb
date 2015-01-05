@@ -170,7 +170,28 @@ class LeaguesController < ApplicationController
   # DELETE /leagues/1
   # DELETE /leagues/1.json
   def destroy
+    if !InvitesNotification.find_by_league_id(@league.id).blank?
+      InvitesNotification.find_by_league_id(@league.id).each do |inv|
+        inv.destroy
+      end
+    end
+
+    if !PendingGamesNotification.find_by_league_id(@league.id).blank?
+      PendingGamesNotification.find_by_league_id(@league.id).each do |inv|
+        inv.destroy
+      end
+    end
+
+     @league.bets.each do |bet|
+      if !BetScoreNotification.find_by_bet_id(bet.id).blank?
+        BetScoreNotification.find_by_bet_id(bet.id).destroy
+      end
+    end
+
+
+
     @league.destroy
+
     respond_to do |format|
       format.html { redirect_to leagues_url, notice: 'League was successfully destroyed.' }
       format.json { head :no_content }
