@@ -59,7 +59,7 @@ MAIN SIDEBAR MENU
 
       <p class="centered"><a href="<%= user_profile_path(current_user.nil? ? 1 : current_user.id)%>">
         <% if user_signed_in? && current_user.image? %>
-            <%= image_tag current_user.image, {class: "img-circle", width: "80"} %>
+            <%= image_tag current_user.image, {class: "img-circle", width: "80", height: "80"} %>
         <% else %>
             <%= image_tag "ui-sam.jpg", {class: "img-circle", width: "80"} %>
         <% end %>
