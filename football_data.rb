@@ -87,7 +87,7 @@ class FootballData
   end
 
   def find_newest_to_update
-    @newest_to_update = {}
+    @newest_to_update = nil
     newest_league_name = nil
 
     @fixtures.each do |fixture|
@@ -105,6 +105,8 @@ class FootballData
         end
       end
     end
+
+    return {} if @newest_to_update.nil?
 
     @newest_to_update[:league_name] = newest_league_name
     @newest_to_update
@@ -133,7 +135,7 @@ class FootballData
 
     JSON.parse(response.body).select do |season|
       current_season = DateTime.now.year
-      current_season += 1 if DateTime.now.month < 8
+      current_season -= 1 if DateTime.now.month < 8
 
       season['year'].to_i == current_season
     end.map { |season| {id: season['id'], league_name: season['caption'], year: season['year']} }
